@@ -1,0 +1,104 @@
+swagger: '2.0'
+info:
+  version: 1.2.3
+  title: Fleet API Specifications Custom fields Vehicle financing API
+  x-logo:
+    url: logo.svg
+  description: "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`."
+host: api.avrios.com
+schemes:
+- https
+tags:
+- name: Vehicle financing
+paths:
+  /v1/vehicles/{uuid}/financing/current:
+    get:
+      tags:
+      - Vehicle financing
+      summary: GET current financing contract
+      description: Get the current financing contract of the specified vehicle.
+      operationId: getVehicleCurrentFinancing
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/FinancingDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '404':
+          description: Vehicle not found.
+definitions:
+  DurationDto:
+    type: object
+    properties:
+      startDate:
+        type: string
+        format: date-time
+      endDate:
+        type: string
+        format: date-time
+  FinancingDto:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      financingType:
+        type: string
+        enum:
+        - LEASING
+        - LONG_TERM_RENTAL_LEASING
+        - CREDIT
+        - PURCHASE
+        - LONG_TERM_RENTAL
+      supplier:
+        type: string
+      contractNumber:
+        type: string
+      duration:
+        $ref: '#/definitions/DurationDto'
+      monthlyFeeWithTax:
+        $ref: '#/definitions/AmountWithTaxExternalDto'
+      purchasePriceWithTax:
+        $ref: '#/definitions/AmountWithTaxExternalDto'
+      currencyUnit:
+        type: string
+        description: ISO 4217 alphabetic currency code
+  AmountWithTaxExternalDto:
+    type: object
+    properties:
+      amountNet:
+        type: number
+      amountGross:
+        type: number
+      taxPercent:
+        type: number
+      taxAmount:
+        type: number
+x-tagGroups:
+- name: Vehicles
+  tags:
+  - Vehicles
+  - Vehicle license plates
+  - Vehicle assignments
+  - Vehicle usages
+  - Vehicle custom fields
+  - Vehicle financing
+- name: Drivers
+  tags:
+  - Drivers
+  - Driver assignments
+  - Driver custom fields
+- name: Other
+  tags:
+  - Custom fields
+  - Invoices
+  - Organizations

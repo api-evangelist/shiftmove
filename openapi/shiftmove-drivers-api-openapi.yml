@@ -1,0 +1,745 @@
+swagger: '2.0'
+info:
+  version: 1.2.3
+  title: Fleet API Specifications Custom fields Drivers API
+  x-logo:
+    url: logo.svg
+  description: "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`."
+host: api.avrios.com
+schemes:
+- https
+tags:
+- name: Drivers
+paths:
+  /v1/drivers:
+    get:
+      tags:
+      - Drivers
+      summary: GET paginated drivers
+      description: Access pages of drivers
+      operationId: getAllDrivers
+      produces:
+      - application/json
+      parameters:
+      - name: limit
+        in: query
+        description: Number of items in a page
+        required: false
+        type: integer
+        maximum: 100
+        minimum: 1
+      - name: pageNumber
+        in: query
+        description: Number of the page
+        required: false
+        type: integer
+        minimum: 1
+      - name: sortBy
+        in: query
+        description: Sorting key
+        required: false
+        type: string
+        enum:
+        - uuid
+        - firstName
+        - lastName
+        - internalId
+        - state
+      - name: reverse
+        in: query
+        description: Sorting order
+        required: false
+        type: boolean
+        enum:
+        - 'false'
+        - 'true'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/ApiPageMinimalDriverDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+    post:
+      tags:
+      - Drivers
+      summary: POST driver
+      description: Create a new driver.
+      operationId: createDriver
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        required: false
+        schema:
+          $ref: '#/definitions/DriverCreateApiParams'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/DriverDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+  /v1/drivers/query:
+    post:
+      tags:
+      - Drivers
+      summary: QUERY paginated drivers
+      description: Query drivers based on specific criteria. The result is paginated
+      operationId: queryDrivers
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        required: false
+        schema:
+          $ref: '#/definitions/DriverQueryApiParams'
+      - name: limit
+        in: query
+        description: Number of items in a page
+        required: false
+        type: integer
+        maximum: 100
+        minimum: 1
+      - name: pageNumber
+        in: query
+        description: Number of the page
+        required: false
+        type: integer
+        minimum: 1
+      - name: sortBy
+        in: query
+        description: Sorting key
+        required: false
+        type: string
+        enum:
+        - uuid
+        - firstName
+        - lastName
+        - internalId
+        - state
+      - name: reverse
+        in: query
+        description: Sorting order
+        required: false
+        type: boolean
+        enum:
+        - 'false'
+        - 'true'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/ApiPageMinimalDriverDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+  /v1/drivers/{uuid}:
+    get:
+      tags:
+      - Drivers
+      summary: GET driver by UUID
+      description: Get detailed information about a specific driver.
+      operationId: findDriverByUuid
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/DriverDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '404':
+          description: Driver not found.
+    post:
+      tags:
+      - Drivers
+      summary: UPDATE a specific driver
+      description: Post a map of key value pairs for fields with the new value. A value of `null` is accepted (where marked as nullable) and will clear that field. Cleared fields will not be shown in the response, as `null` fields are stripped by default. If a field is not present in the map it will not be altered. **Fields not marked as nullable can be left out of the map all together so as not to be changed**
+      operationId: updateDriverByUuid
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - in: body
+        name: body
+        required: false
+        schema:
+          $ref: '#/definitions/DriverUpdateApiParams'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/DriverDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '404':
+          description: Driver not found.
+  /v1/drivers/{uuid}/customFieldValues/{customFieldUuid}:
+    post:
+      tags:
+      - Drivers
+      summary: UPDATE driver custom field value
+      description: Update a custom field value for a driver, identified by driver UUID and custom field UUID. It doesn't matter whether the custom field value has been set for this driver previously.
+      operationId: setDriverCustomFieldValue
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - name: customFieldUuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - in: body
+        name: body
+        required: false
+        schema:
+          $ref: '#/definitions/CustomFieldValueUpdateRequest'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/CustomFieldValueDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '404':
+          description: Driver or custom field not found
+  /v1/drivers/{uuid}/stateHistory:
+    post:
+      tags:
+      - Drivers
+      summary: CREATE driver state history entry
+      description: Adds an entry to the driver state history. This cannot be added on the same day as an existing entry. If the driver is archived, any fuel card or vehicle assignments associated with this driver will be automatically ended on the archive date.
+      operationId: setDriverState
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - in: body
+        name: body
+        required: false
+        schema:
+          $ref: '#/definitions/DriverStateHistoryApiParams'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/DriverStateHistoryDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '409':
+          description: There is an existing driver state entry on this date
+definitions:
+  ApiPageInformation:
+    type: object
+    properties:
+      pageNumber:
+        type: integer
+        format: int32
+      limit:
+        type: integer
+        format: int32
+  DateRangeDto:
+    type: object
+    properties:
+      startDate:
+        type: string
+        format: date
+        description: Inclusive start date.
+      endDate:
+        type: string
+        format: date
+        description: Exclusive end date.
+  PhoneNumberApiParams:
+    type: object
+    properties:
+      number:
+        type: string
+        description: A valid phone number.
+      country:
+        type: string
+        description: ISO 3166-1 Alpha-2 country code
+  CustomFieldValueDto:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      textValue:
+        type: string
+      dateValue:
+        type: string
+        format: date-time
+      booleanValue:
+        type: boolean
+      integerValue:
+        type: integer
+        format: int32
+      decimalValue:
+        type: number
+      monetaryAmountValue:
+        $ref: '#/definitions/MonetaryAmountDto'
+  DriverUpdateApiParams:
+    type: object
+    properties:
+      startDate:
+        type: string
+        nullable: true
+        format: date
+      organizationUuid:
+        type: string
+        nullable: false
+        format: uuid
+      gender:
+        type: string
+        nullable: true
+        enum:
+        - MALE
+        - FEMALE
+      firstName:
+        type: string
+        nullable: false
+      middleName:
+        type: string
+        nullable: true
+      lastName:
+        type: string
+        nullable: false
+      emailWork:
+        type: string
+        nullable: true
+        description: A valid email address.
+      emailPrivate:
+        type: string
+        nullable: true
+        description: A valid email address.
+      phoneNumber:
+        $ref: '#/definitions/PhoneNumberDto'
+        nullable: true
+      mobilePhoneNumber:
+        $ref: '#/definitions/PhoneNumberDto'
+        nullable: true
+      notificationChannel:
+        type: string
+        nullable: true
+        enum:
+        - EMAIL
+        - SMS
+      address:
+        type: string
+        nullable: true
+      zipCode:
+        type: string
+        nullable: true
+      city:
+        type: string
+        nullable: true
+      country:
+        type: string
+        nullable: true
+        description: ISO 3166-1 Alpha-2 country code
+      language:
+        type: string
+        nullable: true
+        description: ISO 639-1 Language Code
+      nationality:
+        type: string
+        nullable: true
+        description: ISO 3166-1 Alpha-2 country code
+      placeOfBirth:
+        type: string
+        nullable: true
+      birthDate:
+        type: string
+        nullable: true
+        format: date
+      internalId:
+        type: string
+        nullable: true
+      costCenter:
+        type: string
+        nullable: true
+      subCompany:
+        type: string
+        nullable: true
+      department:
+        type: string
+        nullable: true
+      location:
+        type: string
+        nullable: true
+      comment:
+        type: string
+        nullable: true
+      distanceToWorkplace:
+        type: number
+        nullable: true
+      employeePayment:
+        type: number
+        nullable: true
+  DriverDto:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      state:
+        type: string
+        enum:
+        - ACTIVE
+        - INACTIVE
+        - LEAVE
+      startDate:
+        type: string
+        format: date
+      gender:
+        type: string
+        enum:
+        - MALE
+        - FEMALE
+      firstName:
+        type: string
+      middleName:
+        type: string
+      lastName:
+        type: string
+      emailWork:
+        type: string
+        description: A valid email address.
+      emailWorkType:
+        type: string
+        enum:
+        - MANUAL
+        - AUTOMATIC
+      emailPrivate:
+        type: string
+        description: A valid email address.
+      phoneNumber:
+        $ref: '#/definitions/PhoneNumberDto'
+      mobilePhoneNumber:
+        $ref: '#/definitions/PhoneNumberDto'
+      notificationChannel:
+        type: string
+        enum:
+        - EMAIL
+        - SMS
+      address:
+        type: string
+      zipCode:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+        description: ISO 3166-1 Alpha-2 country code
+      language:
+        type: string
+        description: ISO 639-1 Language Code
+      nationality:
+        type: string
+        description: ISO 3166-1 Alpha-2 country code
+      placeOfBirth:
+        type: string
+      birthDate:
+        type: string
+        format: date
+      internalId:
+        type: string
+      costCenter:
+        type: string
+      subCompany:
+        type: string
+      department:
+        type: string
+      location:
+        type: string
+      comment:
+        type: string
+      distanceToWorkplace:
+        type: number
+      employeePayment:
+        type: number
+      eligibleForDriverBriefings:
+        type: boolean
+      eligibleForDriverLicenseChecks:
+        type: boolean
+      managementType:
+        type: string
+        enum:
+        - MANUAL
+        - AUTOMATIC
+      customFieldValuesByCategory:
+        type: array
+        items:
+          $ref: '#/definitions/CustomFieldCategoryWithValuesDto'
+      organizationUuid:
+        type: string
+        format: uuid
+  DriverQueryApiParams:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      firstName:
+        type: string
+      lastName:
+        type: string
+      internalId:
+        type: string
+      state:
+        type: string
+        enum:
+        - ACTIVE
+        - INACTIVE
+        - LEAVE
+      lastModified:
+        $ref: '#/definitions/InstantRangeApiParams'
+  CustomFieldValueUpdateRequest:
+    type: object
+    properties:
+      textValue:
+        type: string
+      dateValue:
+        type: string
+        format: date-time
+      booleanValue:
+        type: boolean
+      integerValue:
+        type: integer
+        format: int32
+      decimalValue:
+        type: number
+      monetaryAmountValue:
+        $ref: '#/definitions/MonetaryAmountApiParams'
+      exactlyOneValueSet:
+        type: boolean
+  MinimalDriverDto:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      firstName:
+        type: string
+      lastName:
+        type: string
+      internalId:
+        type: string
+      state:
+        type: string
+        enum:
+        - ACTIVE
+        - INACTIVE
+        - LEAVE
+      lastModified:
+        type: string
+        format: date-time
+  DriverStateHistoryDto:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      driverUuid:
+        type: string
+        format: uuid
+      state:
+        type: string
+        enum:
+        - ACTIVE
+        - INACTIVE
+        - LEAVE
+      dateRange:
+        $ref: '#/definitions/DateRangeDto'
+  MonetaryAmountApiParams:
+    type: object
+    properties:
+      amount:
+        type: number
+      currency:
+        type: string
+        description: ISO 4217 alphabetic currency code
+  DriverCreateApiParams:
+    type: object
+    properties:
+      state:
+        type: string
+        enum:
+        - ACTIVE
+        - INACTIVE
+        - LEAVE
+      startDate:
+        type: string
+        format: date
+      organizationUuid:
+        type: string
+        format: uuid
+        description: If not provided the organization will be set to that of the API token
+      gender:
+        type: string
+        enum:
+        - MALE
+        - FEMALE
+      firstName:
+        type: string
+      middleName:
+        type: string
+      lastName:
+        type: string
+      emailWork:
+        type: string
+        description: A valid email address.
+      emailPrivate:
+        type: string
+        description: A valid email address.
+      phoneNumber:
+        $ref: '#/definitions/PhoneNumberApiParams'
+      mobilePhoneNumber:
+        $ref: '#/definitions/PhoneNumberApiParams'
+      notificationChannel:
+        type: string
+        enum:
+        - EMAIL
+        - SMS
+      address:
+        type: string
+      zipCode:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+        description: ISO 3166-1 Alpha-2 country code
+      language:
+        type: string
+        description: ISO 639-1 language code
+      nationality:
+        type: string
+        description: ISO 3166-1 Alpha-2 country code
+      placeOfBirth:
+        type: string
+      birthDate:
+        type: string
+        format: date
+      internalId:
+        type: string
+      costCenter:
+        type: string
+      subCompany:
+        type: string
+      department:
+        type: string
+      location:
+        type: string
+      comment:
+        type: string
+      distanceToWorkplace:
+        type: number
+      employeePayment:
+        type: number
+  InstantRangeApiParams:
+    type: object
+    properties:
+      atOrAfter:
+        type: string
+        format: date-time
+      before:
+        type: string
+        format: date-time
+  CustomFieldCategoryWithValuesDto:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      name:
+        type: string
+      position:
+        type: integer
+        format: int32
+      customFieldValues:
+        type: array
+        items:
+          $ref: '#/definitions/CustomFieldValueDto'
+  PhoneNumberDto:
+    type: object
+    properties:
+      number:
+        type: string
+        description: A valid phone number.
+      country:
+        type: string
+        description: ISO 3166-1 Alpha-2 country code
+  DriverStateHistoryApiParams:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date
+      state:
+        type: string
+        enum:
+        - ACTIVE
+        - INACTIVE
+        - LEAVE
+  ApiPageMinimalDriverDto:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/MinimalDriverDto'
+      page:
+        $ref: '#/definitions/ApiPageInformation'
+      totalItems:
+        type: integer
+        format: int64
+  MonetaryAmountDto:
+    type: object
+    properties:
+      amount:
+        type: number
+      currency:
+        type: string
+        description: ISO 4217 alphabetic currency code
+x-tagGroups:
+- name: Vehicles
+  tags:
+  - Vehicles
+  - Vehicle license plates
+  - Vehicle assignments
+  - Vehicle usages
+  - Vehicle custom fields
+  - Vehicle financing
+- name: Drivers
+  tags:
+  - Drivers
+  - Driver assignments
+  - Driver custom fields
+- name: Other
+  tags:
+  - Custom fields
+  - Invoices
+  - Organizations

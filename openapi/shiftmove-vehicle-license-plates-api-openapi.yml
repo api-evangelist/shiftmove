@@ -1,0 +1,248 @@
+swagger: '2.0'
+info:
+  version: 1.2.3
+  title: Fleet API Specifications Custom fields Vehicle license plates API
+  x-logo:
+    url: logo.svg
+  description: "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`."
+host: api.avrios.com
+schemes:
+- https
+tags:
+- name: Vehicle license plates
+paths:
+  /v1/vehicles/{uuid}/licensePlates:
+    get:
+      tags:
+      - Vehicle license plates
+      summary: GET vehicle license plates
+      description: Get all license plates over time of a specific vehicle.
+      operationId: findVehicleLicensePlates
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - name: limit
+        in: query
+        description: Number of items in a page
+        required: false
+        type: integer
+        maximum: 100
+        minimum: 1
+      - name: pageNumber
+        in: query
+        description: Number of the page
+        required: false
+        type: integer
+        minimum: 1
+      - name: sortBy
+        in: query
+        description: Sorting key
+        required: false
+        type: string
+        enum:
+        - uuid
+        - plate
+        - duration_startDate
+        - duration_endDate
+        - active
+      - name: reverse
+        in: query
+        description: Sorting order
+        required: false
+        type: boolean
+        enum:
+        - 'false'
+        - 'true'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/ApiPageLicensePlateDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '404':
+          description: Vehicle not found.
+    post:
+      tags:
+      - Vehicle license plates
+      summary: ASSIGN a license plate to this vehicle
+      description: Assign a license plate (specified in the request body) to the vehicle under this url.
+      operationId: createVehicleLicensePlates
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - in: body
+        name: body
+        required: false
+        schema:
+          $ref: '#/definitions/CreateLicensePlateRequest'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/LicensePlateDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '404':
+          description: Vehicle not found.
+        '409':
+          description: The new license plate conflicts with one or more others. The conflicting license plates will be returned in an error response.
+  /v1/vehicles/{uuid}/licensePlates/{licensePlateUuid}:
+    delete:
+      tags:
+      - Vehicle license plates
+      summary: DELETE vehicle license plate
+      description: Delete license plate identified by uuid path parameter from vehicle.
+      operationId: deleteVehicleLicensePlates
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - name: licensePlateUuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Void'
+        '204':
+          description: Successful operation - no content is expected.
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '404':
+          description: Vehicle not found or this license plate was not found for this vehicle.
+  /v1/vehicles/{uuid}/licensePlates/{licensePlateUuid}/duration:
+    post:
+      tags:
+      - Vehicle license plates
+      summary: UPDATE the duration of an existing license plate
+      description: Change the timing of a specific license plate. Body is a map of fields to update.
+      operationId: updateVehicleLicensePlates
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - name: licensePlateUuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - in: body
+        name: body
+        required: false
+        schema:
+          $ref: '#/definitions/DurationUpdateApiParams'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/LicensePlateDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '404':
+          description: Vehicle or assignment not found.
+        '409':
+          description: The new license plate timing conflicts with one or multiple others. The conflicting license plates will be returned in an error response.
+definitions:
+  ApiPageInformation:
+    type: object
+    properties:
+      pageNumber:
+        type: integer
+        format: int32
+      limit:
+        type: integer
+        format: int32
+  Void:
+    type: object
+  DurationUpdateApiParams:
+    type: object
+    properties:
+      startDate:
+        type: string
+        nullable: false
+        format: date-time
+      endDate:
+        type: string
+        nullable: true
+        format: date-time
+  CreateLicensePlateRequest:
+    type: object
+    properties:
+      plate:
+        type: string
+      duration:
+        $ref: '#/definitions/DurationDto'
+  LicensePlateDto:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      plate:
+        type: string
+      duration:
+        $ref: '#/definitions/DurationDto'
+      active:
+        type: boolean
+  DurationDto:
+    type: object
+    properties:
+      startDate:
+        type: string
+        format: date-time
+      endDate:
+        type: string
+        format: date-time
+  ApiPageLicensePlateDto:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/LicensePlateDto'
+      page:
+        $ref: '#/definitions/ApiPageInformation'
+      totalItems:
+        type: integer
+        format: int64
+x-tagGroups:
+- name: Vehicles
+  tags:
+  - Vehicles
+  - Vehicle license plates
+  - Vehicle assignments
+  - Vehicle usages
+  - Vehicle custom fields
+  - Vehicle financing
+- name: Drivers
+  tags:
+  - Drivers
+  - Driver assignments
+  - Driver custom fields
+- name: Other
+  tags:
+  - Custom fields
+  - Invoices
+  - Organizations

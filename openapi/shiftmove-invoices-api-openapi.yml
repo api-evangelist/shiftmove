@@ -1,0 +1,375 @@
+swagger: '2.0'
+info:
+  version: 1.2.3
+  title: Fleet API Specifications Custom fields Invoices API
+  x-logo:
+    url: logo.svg
+  description: "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`."
+host: api.avrios.com
+schemes:
+- https
+tags:
+- name: Invoices
+paths:
+  /v1/invoices:
+    get:
+      tags:
+      - Invoices
+      summary: GET paginated invoices
+      description: Access pages of invoices.
+      operationId: getAllInvoices
+      produces:
+      - application/json
+      parameters:
+      - name: limit
+        in: query
+        description: Number of items in a page
+        required: false
+        type: integer
+        maximum: 100
+        minimum: 1
+      - name: pageNumber
+        in: query
+        description: Number of the page
+        required: false
+        type: integer
+        minimum: 1
+      - name: sortBy
+        in: query
+        description: Sorting key
+        required: false
+        type: string
+        enum:
+        - uuid
+        - state
+        - invoiceDate
+        - releaseDate
+        - supplier
+        - invoiceNumber
+        - net
+        - gross
+        - currency
+      - name: reverse
+        in: query
+        description: Sorting order
+        required: false
+        type: boolean
+        enum:
+        - 'false'
+        - 'true'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/ApiPageInvoiceExternalDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+  /v1/invoices/query:
+    post:
+      tags:
+      - Invoices
+      summary: QUERY paginated invoices
+      description: Query invoices based on specific criteria. The result is paginated
+      operationId: queryInvoices
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        required: false
+        schema:
+          $ref: '#/definitions/InvoiceQueryApiParams'
+      - name: limit
+        in: query
+        description: Number of items in a page
+        required: false
+        type: integer
+        maximum: 100
+        minimum: 1
+      - name: pageNumber
+        in: query
+        description: Number of the page
+        required: false
+        type: integer
+        minimum: 1
+      - name: sortBy
+        in: query
+        description: Sorting key
+        required: false
+        type: string
+        enum:
+        - uuid
+        - state
+        - invoiceDate
+        - releaseDate
+        - supplier
+        - invoiceNumber
+        - net
+        - gross
+        - currency
+      - name: reverse
+        in: query
+        description: Sorting order
+        required: false
+        type: boolean
+        enum:
+        - 'false'
+        - 'true'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/ApiPageInvoiceExternalDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+  /v1/invoices/{invoiceUuid}/items:
+    get:
+      tags:
+      - Invoices
+      summary: GET paginated invoice items
+      description: Access pages of invoice items.
+      operationId: getAllInvoicesItems
+      produces:
+      - application/json
+      parameters:
+      - name: invoiceUuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - name: limit
+        in: query
+        description: Number of items in a page
+        required: false
+        type: integer
+        maximum: 100
+        minimum: 1
+      - name: pageNumber
+        in: query
+        description: Number of the page
+        required: false
+        type: integer
+        minimum: 1
+      - name: sortBy
+        in: query
+        description: Sorting key
+        required: false
+        type: string
+        enum:
+        - uuid
+        - transactionTime
+        - quantity
+        - net
+        - gross
+        - vatPercentage
+      - name: reverse
+        in: query
+        description: Sorting order
+        required: false
+        type: boolean
+        enum:
+        - 'false'
+        - 'true'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/ApiPageInvoiceItemDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+  /v1/invoices/{invoiceUuid}/rawFile:
+    get:
+      tags:
+      - Invoices
+      summary: GET invoice raw file upload
+      description: ''
+      operationId: getInvoiceRawFileUpload
+      produces:
+      - application/octet-stream
+      parameters:
+      - name: invoiceUuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/Void'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '404':
+          description: Invoice file upload not found.
+definitions:
+  ApiPageInvoiceItemDto:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/InvoiceItemDto'
+      page:
+        $ref: '#/definitions/ApiPageInformation'
+      totalItems:
+        type: integer
+        format: int64
+  ApiPageInformation:
+    type: object
+    properties:
+      pageNumber:
+        type: integer
+        format: int32
+      limit:
+        type: integer
+        format: int32
+  ApiPageInvoiceExternalDto:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/InvoiceExternalDto'
+      page:
+        $ref: '#/definitions/ApiPageInformation'
+      totalItems:
+        type: integer
+        format: int64
+  InvoiceQueryApiParams:
+    type: object
+    properties:
+      invoiceNumber:
+        type: string
+      supplier:
+        type: string
+      invoiceDate:
+        $ref: '#/definitions/DateRangeApiParams'
+      releaseDate:
+        $ref: '#/definitions/InstantRangeApiParams'
+  Void:
+    type: object
+  DateRangeApiParams:
+    type: object
+    properties:
+      onOrAfter:
+        type: string
+        format: date
+      before:
+        type: string
+        format: date
+  InstantRangeApiParams:
+    type: object
+    properties:
+      atOrAfter:
+        type: string
+        format: date-time
+      before:
+        type: string
+        format: date-time
+  InvoiceExternalDto:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      state:
+        type: string
+        enum:
+        - IN_PROGRESS
+        - IMPORTED_WITH_ERRORS
+        - IMPORTED
+        - RELEASED
+        - FAILED
+      invoiceDate:
+        type: string
+        format: date
+      releaseDate:
+        type: string
+        format: date-time
+      supplier:
+        type: string
+      invoiceNumber:
+        type: string
+      net:
+        type: number
+      gross:
+        type: number
+      currency:
+        type: string
+        description: ISO 4217 alphabetic currency code
+  InvoiceItemDto:
+    type: object
+    discriminator: itemType
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      itemType:
+        type: string
+        description: Pick the expected item type to display the respective attributes (This field is only used for ui documentation purpose).
+        readOnly: true
+      transactionTime:
+        type: string
+        format: date-time
+      description:
+        type: string
+      costType:
+        type: string
+      costGroup:
+        type: string
+      productDescription:
+        type: string
+      vehicleUuid:
+        type: string
+        format: uuid
+        description: The vehicle this invoice item relates to. Set when the item is booked directly on a vehicle or on a damage of a vehicle.
+      driverUuid:
+        type: string
+        format: uuid
+      quantity:
+        type: number
+      quantityUnit:
+        type: string
+        description: The units the quantity of this item is given in. "PCE" is pieces and so is the raw quantity of items. "LABOUR_VALUE" is for any labour costs. "KWH" is kilowatt-hours.
+        enum:
+        - LITER
+        - US_GALLON
+        - UK_GALLON
+        - PCE
+        - KG
+        - HOUR
+        - LABOR_VALUE
+        - KWH
+      vatPercentage:
+        type: number
+      net:
+        type: number
+      gross:
+        type: number
+      currency:
+        type: string
+        description: ISO 4217 alphabetic currency code
+      invoiceType:
+        type: string
+        enum:
+        - FUEL
+        - OTHER
+x-tagGroups:
+- name: Vehicles
+  tags:
+  - Vehicles
+  - Vehicle license plates
+  - Vehicle assignments
+  - Vehicle usages
+  - Vehicle custom fields
+  - Vehicle financing
+- name: Drivers
+  tags:
+  - Drivers
+  - Driver assignments
+  - Driver custom fields
+- name: Other
+  tags:
+  - Custom fields
+  - Invoices
+  - Organizations

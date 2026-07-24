@@ -1,0 +1,199 @@
+swagger: '2.0'
+info:
+  version: 1.2.3
+  title: Fleet API Specifications Custom fields Vehicle usages API
+  x-logo:
+    url: logo.svg
+  description: "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`."
+host: api.avrios.com
+schemes:
+- https
+tags:
+- name: Vehicle usages
+paths:
+  /v1/vehicles/{uuid}/usages:
+    get:
+      tags:
+      - Vehicle usages
+      summary: GET vehicle usage
+      description: Get all vehicle usage records, paginated.
+      operationId: findVehicleUsage
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - name: limit
+        in: query
+        description: Number of items in a page
+        required: false
+        type: integer
+        maximum: 100
+        minimum: 1
+      - name: pageNumber
+        in: query
+        description: Number of the page
+        required: false
+        type: integer
+        minimum: 1
+      - name: sortBy
+        in: query
+        description: Sorting key
+        required: false
+        type: string
+        enum:
+        - uuid
+        - source
+        - date
+        - current
+        - usage
+        - state
+        - usageType
+      - name: reverse
+        in: query
+        description: Sorting order
+        required: false
+        type: boolean
+        enum:
+        - 'false'
+        - 'true'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/ApiPageUsageDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+        '404':
+          description: Vehicle not found.
+    post:
+      tags:
+      - Vehicle usages
+      summary: CREATE a new vehicle usage entry
+      description: Adds a new usage entry for the given vehicle. This will be validated and added to the vehicle's usage history asynchronously. The entry will appear in the history with usageSource == MANUAL_FLEET_MANAGER. Distance values must be provided in kilometres.
+      operationId: createVehicleUsage
+      produces:
+      - application/json
+      parameters:
+      - name: uuid
+        in: path
+        required: true
+        type: string
+        format: uuid
+      - in: body
+        name: body
+        required: false
+        schema:
+          $ref: '#/definitions/VehicleUsageCreationApiRequest'
+      responses:
+        '200':
+          description: Successful operation.
+          schema:
+            $ref: '#/definitions/VehicleManualUsageDto'
+        '400':
+          description: Bad request - information on the invalid fields will be provided in the response body
+definitions:
+  ApiPageInformation:
+    type: object
+    properties:
+      pageNumber:
+        type: integer
+        format: int32
+      limit:
+        type: integer
+        format: int32
+  UsageDto:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+      source:
+        type: string
+        enum:
+        - MANUAL_DRIVER
+        - MANUAL_FLEET_MANAGER
+        - INVOICE
+        - FUEL_PURCHASE
+        - TELEMATICS
+        - VEHICLE_CHECK
+      date:
+        type: string
+        format: date-time
+      current:
+        type: boolean
+      usage:
+        type: number
+      state:
+        type: string
+        enum:
+        - ACCEPTED
+        - NOT_ACCEPTED
+      usageType:
+        type: string
+        enum:
+        - DISTANCE
+        - OPERATING_HOURS
+  ApiPageUsageDto:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/UsageDto'
+      page:
+        $ref: '#/definitions/ApiPageInformation'
+      totalItems:
+        type: integer
+        format: int64
+  VehicleManualUsageDto:
+    type: object
+    properties:
+      usageType:
+        type: string
+        enum:
+        - DISTANCE
+        - OPERATING_HOURS
+      usageValue:
+        type: number
+      date:
+        type: string
+        format: date-time
+      vehicleUuid:
+        type: string
+        format: uuid
+  VehicleUsageCreationApiRequest:
+    type: object
+    properties:
+      usageType:
+        type: string
+        enum:
+        - DISTANCE
+        - OPERATING_HOURS
+      usageValue:
+        type: number
+      date:
+        type: string
+        format: date-time
+x-tagGroups:
+- name: Vehicles
+  tags:
+  - Vehicles
+  - Vehicle license plates
+  - Vehicle assignments
+  - Vehicle usages
+  - Vehicle custom fields
+  - Vehicle financing
+- name: Drivers
+  tags:
+  - Drivers
+  - Driver assignments
+  - Driver custom fields
+- name: Other
+  tags:
+  - Custom fields
+  - Invoices
+  - Organizations
