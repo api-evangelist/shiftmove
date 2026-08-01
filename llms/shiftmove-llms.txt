@@ -1,0 +1,27 @@
+# Shiftmove (Avrios Fleet-API)
+
+> Shiftmove GmbH (Berlin) is a European fleet management software company, backed by Battery Ventures, operating the Vimcar, Fleet, Avrios, Optimum and Océan brands. Its developer surface is the Avrios Fleet-API, which syncs fleet data — vehicles, drivers, assignments, license plates, financing, usages, invoices and custom fields — with the Avrios/Shiftmove platform. HTTP Basic auth, 300 requests/minute, Swagger 2.0.
+
+## API
+
+- [Avrios Fleet-API reference (Redoc)](https://developers.avrios.com/): 40 operations across vehicles, drivers, assignments, invoices, organizations, custom fields, license plates, financing and usages. Base URL https://api.avrios.com, paths under /v1.
+
+## Specs
+
+- [OpenAPI (Swagger 2.0)](openapi/shiftmove-fleet-openapi.json): the harvested Fleet-API specification.
+
+## Docs
+
+- [Release notes / changelog](https://developers.avrios.com/release-notes.html)
+- [Authentication profile](authentication/shiftmove-authentication.yml): HTTP Basic.
+- [API conventions](conventions/shiftmove-conventions.yml): pagination, rate limits, null handling, date interpretation.
+- [Error catalog](errors/shiftmove-problem-types.yml): 400 ValidationFailed, 404, 409 conflict semantics.
+- [Data model](data-model/shiftmove-data-model.yml): vehicle/driver/assignment entity graph.
+- [Lifecycle](lifecycle/shiftmove-lifecycle.yml): semantic versioning and deprecation policy.
+- [Rate limits](rate-limits/shiftmove-rate-limits.yml): 300 requests per minute.
+
+## Company
+
+- [Shiftmove](https://www.shiftmove.com/)
+- [Avrios](https://www.avrios.com/)
+- [Legal overview](https://www.shiftmove.com/legal/legal-overview)

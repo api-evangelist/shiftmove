@@ -1,0 +1,66 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.avrios.com/
+docs: https://developers.avrios.com/
+spec: openapi/shiftmove-fleet-openapi.json
+notes: >-
+  Cross-cutting request/response semantics for the Avrios Fleet-API (the API of
+  Shiftmove GmbH), captured from the API documentation prose and derived from the
+  Swagger 2.0 spec.
+authentication:
+  style: http-basic
+  header: 'Authorization: Basic {base64(username:password)}'
+  ref: authentication/shiftmove-authentication.yml
+pagination:
+  style: page-number
+  request_params:
+    - pageNumber
+    - limit
+    - sortBy
+    - reverse
+  response_envelope: ApiPage
+  response_fields:
+    - items
+    - page
+    - totalItems
+  page_information_fields:
+    - pageNumber
+    - limit
+  query_variant: >-
+    List endpoints expose a POST `/query` sibling (e.g. POST /v1/vehicles/query,
+    POST /v1/drivers/query) that accepts a filter body alongside the same paging
+    parameters.
+rate_limiting:
+  limit: 300
+  window: per-minute
+  documented: true
+  ref: rate-limits/shiftmove-rate-limits.yml
+idempotency:
+  supported: false
+  notes: >-
+    The Avrios Fleet-API does not document an idempotency-key mechanism. Writes
+    are modeled as explicit POST create/update operations; assignment/license-plate
+    conflicts are surfaced as 409 with the conflicting entities returned.
+null_handling:
+  response: >-
+    Only populated fields are returned; null fields are stripped from response
+    objects.
+  update: >-
+    Update endpoints only modify properties present in the request (all properties
+    optional). A property can be explicitly cleared by sending `null`.
+date_interpretation: >-
+  Some endpoints accept dates as `yyyy-MM-dd` rather than timestamps. For
+  filtering/business logic these are interpreted as the first second of the day
+  in the company timezone (e.g. `2020-01-01` in CET becomes 2019-12-31T23:00:00Z).
+versioning:
+  scheme: uri-path
+  current: v1
+  spec_version: 1.2.3
+  semver: true
+  ref: lifecycle/shiftmove-lifecycle.yml
+error_envelope:
+  format: custom-json
+  ref: errors/shiftmove-problem-types.yml
+  notes: >-
+    400 returns invalid-field detail; 409 returns the conflicting entities in the
+    body. Not RFC 9457 problem+json.

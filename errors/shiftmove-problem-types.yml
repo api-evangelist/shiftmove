@@ -1,0 +1,59 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/shiftmove-fleet-openapi.json
+docs: https://developers.avrios.com/
+format: custom-json
+notes: >-
+  Derived from the Avrios Fleet-API (Shiftmove) Swagger 2.0 responses. The API
+  does not use RFC 9457 application/problem+json. On a 400 the response body
+  carries information on the invalid fields (a `ValidationFailed` reason since
+  v1.2.3); on a 409 the conflicting entities (assignments, license plates, cost
+  centers, sub companies, vehicles) are returned in the error body so the caller
+  can reconcile. Titles/remediation enriched from response descriptions and the
+  release notes.
+envelope:
+  description: >-
+    Error responses return a JSON body. 400 responses enumerate the invalid
+    fields; 409 responses include the conflicting entities that caused the
+    conflict.
+problems:
+  - status: 400
+    title: Bad request / ValidationFailed
+    description: >-
+      The request failed validation. Information on the invalid fields is
+      provided in the response body. Since v1.2.3 oversized usage payloads that
+      previously returned 500 now return 400 ValidationFailed with a reason.
+    remediation: Correct the invalid fields listed in the response body and retry.
+    occurrences: 38
+  - status: 404
+    title: Resource not found
+    description: >-
+      The referenced vehicle, driver, assignment, license plate, custom field,
+      organization or invoice file could not be found (or does not belong to the
+      referenced parent entity).
+    remediation: Verify the UUID(s) in the path exist and belong to your company.
+    occurrences: 26
+    variants:
+      - Vehicle not found.
+      - Driver not found.
+      - Vehicle or assignment not found.
+      - Driver or assignment not found.
+      - Vehicle or driver not found.
+      - Vehicle or custom field not found.
+      - Driver or custom field not found.
+      - Vehicle not found or this assignment was not found for this vehicle.
+      - Vehicle not found or this license plate was not found for this vehicle.
+      - Invoice file upload not found.
+  - status: 409
+    title: Conflict
+    description: >-
+      The requested change conflicts with existing data. The conflicting
+      entities are returned in the error response body so they can be reconciled.
+      Applies to overlapping assignments, license plate periods, cost center
+      start dates, sub company start dates, duplicate driver state entries, and
+      vehicles whose license plate or VIN is already in use after the commission
+      date.
+    remediation: >-
+      Inspect the conflicting entities returned in the body, adjust the timing or
+      identifiers, and retry.
+    occurrences: 10

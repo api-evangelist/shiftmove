@@ -1,0 +1,27 @@
+generated: '2026-07-21'
+method: probed
+source: live probes of api.avrios.com + www.shiftmove.com
+notes: >-
+  Probed the /.well-known/ discovery surface on the API host (api.avrios.com) and
+  the corporate host (www.shiftmove.com). The API host returns 403 (WAF) for
+  well-known paths and the corporate host returns 404 — no discovery documents
+  are published. No WellKnown/SecurityTxt pointer is emitted (nothing found).
+hosts:
+  - host: https://api.avrios.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+  - host: https://www.shiftmove.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+  - host: https://avrios.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404

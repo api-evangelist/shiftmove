@@ -1,0 +1,44 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/shiftmove-fleet-openapi.json
+notes: >-
+  Cross-cutting standards conformance for the Avrios Fleet-API (Shiftmove),
+  derived from the Swagger 2.0 spec and API documentation. Shiftmove publishes a
+  GDPR compliance program (Data Processing Agreement with a TOMs appendix,
+  privacy policy) and a TÜV-certified data-protection claim for the Vimcar
+  logbook — captured in security/shiftmove-trust-center.yml and surfaced via a
+  `Compliance` pointer. No SOC 2 / ISO 27001 certification was found published.
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: API uses HTTP Basic auth; no oauth2 security schemes.
+  - id: oidc
+    conforms: false
+  - id: basic-auth
+    conforms: true
+    evidence: 'Authorization: Basic header documented and required on every request.'
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Error responses use a custom JSON envelope, not application/problem+json.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Page-number pagination (pageNumber, limit, sortBy, reverse) with an ApiPage
+      envelope (items, page, totalItems) across list endpoints.
+  - id: idempotency
+    conforms: false
+    evidence: No idempotency-key mechanism documented.
+  - id: semver
+    conforms: true
+    evidence: Release notes state the API follows Semantic Versioning.
+  - id: json:api
+    conforms: false
+  - id: rate-limiting
+    conforms: true
+    evidence: Documented global limit of 300 requests per minute.
+  - id: gdpr
+    conforms: true
+    evidence: >-
+      Publishes a GDPR Data Processing Agreement with a technical-and-
+      organizational-measures appendix and a GDPR privacy policy; Vimcar logbook
+      carries a TÜV data-protection certification.

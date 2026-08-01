@@ -1,0 +1,68 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.avrios.com/release-notes.html
+scheme: semver
+current_version: 1.2.3
+notes: >-
+  Dated release notes for the Avrios Fleet-API (the API surface of Shiftmove
+  GmbH). Captured verbatim from the published release-notes page.
+entries:
+  - version: 1.2.3
+    date: '2023-05-11'
+    breaking: false
+    highlights:
+      - Overly large usages sent to a post endpoint now return 400 ValidationFailed
+        with a reason instead of a 500.
+  - version: 1.2.2
+    date: '2023-04-04'
+    breaking: false
+    highlights:
+      - Fixed a swagger-spec bug where certain properties (e.g. emailWork) were not
+        documented correctly, which caused failing client generations.
+  - version: 1.2.1
+    date: '2022-12-20'
+    breaking: false
+    highlights:
+      - Fixed a bug that returned inactive organizations from the organizations
+        endpoint and allowed them in requests.
+  - version: 1.2.0
+    date: '2022-04-12'
+    breaking: false
+    additions:
+      - Support for vehicle emission class AX.
+      - Dedicated error response for duplicate driver emails from Driver App
+        account linking.
+  - version: 1.1.2
+    date: '2022-03-10'
+    breaking: false
+    highlights:
+      - Improved error response for invalid page parameters.
+  - version: 1.1.1
+    date: '2022-01-17'
+    breaking: false
+    highlights:
+      - GET /customFields/* responses are now correctly mapped to an array.
+  - version: 1.1.0
+    date: '2020-11-26'
+    breaking: false
+    additions:
+      - Allow querying of vehicle-driver assignments.
+    highlights:
+      - Reject modifications of Vehicle#internalId for vehicles managed via the
+        vehicle import integration.
+      - Invalid input now correctly returns 400 (bad request) rather than 500.
+      - Documented which vehicle and driver fields cannot be updated to null.
+  - version: 1.0.0
+    date: '2020-10-15'
+    breaking: false
+    highlights:
+      - Introduced release notes.
+      - Fixed an enum auto-generation bug.
+      - Deprecated internal fields importVehicleModel and baseModelDisplayName in
+        vehicle responses, replaced by modelName (scheduled for removal in next
+        major version).
+  - version: 1.0.0-beta
+    date: '2020-02-20'
+    breaking: false
+    highlights:
+      - Initial public beta release.

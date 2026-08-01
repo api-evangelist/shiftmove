@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/shiftmove-fleet-openapi.json
+skills:
+  - file: shiftmove-sync-vehicle-and-assign-driver.md
+    name: Sync a vehicle and assign a driver
+    api: openapi/shiftmove-fleet-openapi.json
+    operations: [createVehicle, findVehicleByUuid, updateVehicleByUuid, getAllDrivers, createVehicleAssignment, findVehicleAssignments]
+  - file: shiftmove-query-fleet-and-invoices.md
+    name: Query fleet vehicles, drivers and invoices
+    api: openapi/shiftmove-fleet-openapi.json
+    operations: [getAllVehicles, queryVehicles, getAllDrivers, queryDrivers, getAllInvoices, queryInvoices, getAllInvoicesItems, getVehicleCurrentFinancing]

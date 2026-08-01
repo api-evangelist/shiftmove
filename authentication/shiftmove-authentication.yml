@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.avrios.com/
+docs: https://developers.avrios.com/
+summary:
+  types: [http]
+  http_schemes: [basic]
+  api_key_in: []
+  oauth2_flows: []
+  notes: >-
+    The Avrios Fleet-API (the API surface of Shiftmove GmbH) uses HTTP Basic
+    authentication. A base64-encoded `username:password` credential pair must be
+    supplied on every request via the `Authorization: Basic {credentials}` header.
+    Credentials are issued by Avrios/Shiftmove per company account. The published
+    Swagger 2.0 document does not declare a `securityDefinitions` block, so this
+    profile is captured from the API documentation prose rather than derived from
+    the spec.
+schemes:
+  - name: basicAuth
+    type: http
+    scheme: basic
+    description: >-
+      HTTP Basic authentication. Set `Authorization: Basic {base64(username:password)}`
+      on every request. Documented in the Fleet-API "Access and usage / Authorization"
+      section.
+    sources: [docs]

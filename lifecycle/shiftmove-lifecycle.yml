@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.avrios.com/release-notes.html
+versioning:
+  scheme: uri-path
+  current: v1
+  spec_version: 1.2.3
+  semver: true
+  policy: >-
+    The Avrios Fleet-API follows Semantic Versioning (MAJOR.MINOR.PATCH). MAJOR
+    denotes incompatible API changes, MINOR backwards-compatible added
+    functionality, PATCH backwards-compatible bug fixes.
+  docs: https://developers.avrios.com/release-notes.html
+deprecation:
+  policy: >-
+    Deprecated fields are announced in the release notes and scheduled for
+    removal in the next MAJOR version. Example: v1.0.0 deprecated the internal
+    vehicle fields `importVehicleModel` and `baseModelDisplayName`, replaced by
+    `modelName`, for removal in the next major version.
+  sunset_header: false
+  docs: https://developers.avrios.com/release-notes.html
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+deprecated_operations: []

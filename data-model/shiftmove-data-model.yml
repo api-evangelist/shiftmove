@@ -1,0 +1,112 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/shiftmove-fleet-openapi.json
+notes: >-
+  Entity-relationship graph derived from the Avrios Fleet-API (Shiftmove) Swagger
+  2.0 definitions and id-reference fields (organizationUuid, vehicleUuid,
+  driverUuid) plus the resource path structure. All entities are keyed by `uuid`.
+entities:
+  - name: Vehicle
+    schema: VehicleDto
+    key: uuid
+    id_fields: [uuid, internalId, additionalId, organizationUuid]
+  - name: Driver
+    schema: DriverDto
+    key: uuid
+    id_fields: [uuid, internalId, organizationUuid]
+  - name: Assignment
+    schema: AssignmentDto
+    key: uuid
+    id_fields: [uuid, vehicleUuid, driverUuid]
+    notes: Join entity linking a vehicle and a driver over a duration.
+  - name: Organization
+    schema: OrganizationDto
+    key: uuid
+  - name: LicensePlate
+    schema: LicensePlateDto
+    key: uuid
+  - name: Financing
+    schema: FinancingDto
+    key: uuid
+  - name: Usage
+    schema: UsageDto
+    key: uuid
+  - name: Invoice
+    schema: InvoiceExternalDto
+    key: uuid
+  - name: InvoiceItem
+    schema: InvoiceItemDto
+    key: uuid
+  - name: CustomField
+    schema: CustomFieldDto
+    key: uuid
+  - name: CustomFieldValue
+    schema: CustomFieldValueDto
+    key: uuid
+  - name: VehicleCostCenterHistory
+    schema: VehicleCostCenterHistoryDto
+  - name: VehicleSubCompanyHistory
+    schema: VehicleSubCompanyHistoryDto
+  - name: DriverStateHistory
+    schema: DriverStateHistoryDto
+relationships:
+  - from: Vehicle
+    to: Organization
+    kind: belongs_to
+    via: organizationUuid
+  - from: Driver
+    to: Organization
+    kind: belongs_to
+    via: organizationUuid
+  - from: Vehicle
+    to: Assignment
+    kind: has_many
+    via: /v1/vehicles/{uuid}/assignments
+  - from: Driver
+    to: Assignment
+    kind: has_many
+    via: /v1/drivers/{uuid}/assignments
+  - from: Assignment
+    to: Vehicle
+    kind: belongs_to
+    via: vehicleUuid
+  - from: Assignment
+    to: Driver
+    kind: belongs_to
+    via: driverUuid
+  - from: Vehicle
+    to: LicensePlate
+    kind: has_many
+    via: /v1/vehicles/{uuid}/licensePlates
+  - from: Vehicle
+    to: Financing
+    kind: has_one
+    via: /v1/vehicles/{uuid}/financing/current
+  - from: Vehicle
+    to: Usage
+    kind: has_many
+    via: /v1/vehicles/{uuid}/usages
+  - from: Vehicle
+    to: VehicleCostCenterHistory
+    kind: has_many
+    via: /v1/vehicles/{uuid}/costCenter
+  - from: Vehicle
+    to: VehicleSubCompanyHistory
+    kind: has_many
+    via: /v1/vehicles/{uuid}/subCompany
+  - from: Vehicle
+    to: CustomFieldValue
+    kind: has_many
+    via: /v1/vehicles/{uuid}/customFieldValues/{customFieldUuid}
+  - from: Driver
+    to: CustomFieldValue
+    kind: has_many
+    via: /v1/drivers/{uuid}/customFieldValues/{customFieldUuid}
+  - from: Driver
+    to: DriverStateHistory
+    kind: has_many
+    via: /v1/drivers/{uuid}/stateHistory
+  - from: Invoice
+    to: InvoiceItem
+    kind: has_many
+    via: /v1/invoices/{invoiceUuid}/items

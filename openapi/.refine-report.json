@@ -1,0 +1,32 @@
+{
+  "provider": "shiftmove",
+  "sources": [
+    "shiftmove-custom-fields-api-openapi.yml",
+    "shiftmove-driver-assignments-api-openapi.yml",
+    "shiftmove-drivers-api-openapi.yml",
+    "shiftmove-invoices-api-openapi.yml",
+    "shiftmove-organizations-api-openapi.yml",
+    "shiftmove-vehicle-assignments-api-openapi.yml",
+    "shiftmove-vehicle-financing-api-openapi.yml",
+    "shiftmove-vehicle-license-plates-api-openapi.yml",
+    "shiftmove-vehicle-usages-api-openapi.yml",
+    "shiftmove-vehicles-api-openapi.yml"
+  ],
+  "outputs": [
+    "shiftmove-custom-fields-api-openapi.yml",
+    "shiftmove-driver-assignments-api-openapi.yml",
+    "shiftmove-drivers-api-openapi.yml",
+    "shiftmove-invoices-api-openapi.yml",
+    "shiftmove-organizations-api-openapi.yml",
+    "shiftmove-vehicle-assignments-api-openapi.yml",
+    "shiftmove-vehicle-financing-api-openapi.yml",
+    "shiftmove-vehicle-license-plates-api-openapi.yml",
+    "shiftmove-vehicle-usages-api-openapi.yml",
+    "shiftmove-vehicles-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

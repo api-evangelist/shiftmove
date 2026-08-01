@@ -1,0 +1,130 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/shiftmove-fleet-openapi.json
+notes: Candidate MCP tool list derived one-per-operation from the Avrios Fleet-API (Shiftmove) Swagger
+  2.0 spec. No official hosted MCP server was found. Not published.
+server:
+  name: shiftmove-fleet
+  transport: stdio
+tools:
+- name: getDriverCustomFields
+  description: GET all driver custom fields
+  source_operation: openapi/shiftmove-fleet-openapi.json#getDriverCustomFields
+- name: getVehicleCustomFields
+  description: GET all vehicle custom fields
+  source_operation: openapi/shiftmove-fleet-openapi.json#getVehicleCustomFields
+- name: getAllDrivers
+  description: GET paginated drivers
+  source_operation: openapi/shiftmove-fleet-openapi.json#getAllDrivers
+- name: createDriver
+  description: POST driver
+  source_operation: openapi/shiftmove-fleet-openapi.json#createDriver
+- name: queryDrivers
+  description: QUERY paginated drivers
+  source_operation: openapi/shiftmove-fleet-openapi.json#queryDrivers
+- name: findDriverByUuid
+  description: GET driver by UUID
+  source_operation: openapi/shiftmove-fleet-openapi.json#findDriverByUuid
+- name: updateDriverByUuid
+  description: UPDATE a specific driver
+  source_operation: openapi/shiftmove-fleet-openapi.json#updateDriverByUuid
+- name: findDriverAssignments
+  description: GET driver assignments
+  source_operation: openapi/shiftmove-fleet-openapi.json#findDriverAssignments
+- name: createDriverAssignment
+  description: ASSIGN a specified vehicle to this driver
+  source_operation: openapi/shiftmove-fleet-openapi.json#createDriverAssignment
+- name: queryDriverAssignments
+  description: QUERY driver assignments
+  source_operation: openapi/shiftmove-fleet-openapi.json#queryDriverAssignments
+- name: deleteDriverAssignment
+  description: DELETE driver assignment
+  source_operation: openapi/shiftmove-fleet-openapi.json#deleteDriverAssignment
+- name: updateDriverAssignment
+  description: UPDATE the duration of an existing assignment
+  source_operation: openapi/shiftmove-fleet-openapi.json#updateDriverAssignment
+- name: setDriverCustomFieldValue
+  description: UPDATE driver custom field value
+  source_operation: openapi/shiftmove-fleet-openapi.json#setDriverCustomFieldValue
+- name: setDriverState
+  description: CREATE driver state history entry
+  source_operation: openapi/shiftmove-fleet-openapi.json#setDriverState
+- name: getAllInvoices
+  description: GET paginated invoices
+  source_operation: openapi/shiftmove-fleet-openapi.json#getAllInvoices
+- name: queryInvoices
+  description: QUERY paginated invoices
+  source_operation: openapi/shiftmove-fleet-openapi.json#queryInvoices
+- name: getAllInvoicesItems
+  description: GET paginated invoice items
+  source_operation: openapi/shiftmove-fleet-openapi.json#getAllInvoicesItems
+- name: getInvoiceRawFileUpload
+  description: GET invoice raw file upload
+  source_operation: openapi/shiftmove-fleet-openapi.json#getInvoiceRawFileUpload
+- name: getAllOrganizations
+  description: GET all organizations paged
+  source_operation: openapi/shiftmove-fleet-openapi.json#getAllOrganizations
+- name: getAllVehicles
+  description: GET paginated vehicles
+  source_operation: openapi/shiftmove-fleet-openapi.json#getAllVehicles
+- name: createVehicle
+  description: CREATE a new vehicle
+  source_operation: openapi/shiftmove-fleet-openapi.json#createVehicle
+- name: queryVehicles
+  description: QUERY paginated vehicles
+  source_operation: openapi/shiftmove-fleet-openapi.json#queryVehicles
+- name: findVehicleByUuid
+  description: GET vehicle by uuid
+  source_operation: openapi/shiftmove-fleet-openapi.json#findVehicleByUuid
+- name: updateVehicleByUuid
+  description: UPDATE a specific vehicle
+  source_operation: openapi/shiftmove-fleet-openapi.json#updateVehicleByUuid
+- name: archiveVehicle
+  description: ARCHIVE a vehicle
+  source_operation: openapi/shiftmove-fleet-openapi.json#archiveVehicle
+- name: findVehicleAssignments
+  description: GET vehicle assignments
+  source_operation: openapi/shiftmove-fleet-openapi.json#findVehicleAssignments
+- name: createVehicleAssignment
+  description: ASSIGN a specified driver to this vehicle
+  source_operation: openapi/shiftmove-fleet-openapi.json#createVehicleAssignment
+- name: queryVehicleAssignments
+  description: QUERY vehicle assignments
+  source_operation: openapi/shiftmove-fleet-openapi.json#queryVehicleAssignments
+- name: deleteVehicleAssignment
+  description: DELETE vehicle assignment
+  source_operation: openapi/shiftmove-fleet-openapi.json#deleteVehicleAssignment
+- name: updateVehicleAssignment
+  description: UPDATE the duration of an existing assignment
+  source_operation: openapi/shiftmove-fleet-openapi.json#updateVehicleAssignment
+- name: updateVehicleCostCenter
+  description: CREATE vehicle cost center history entry
+  source_operation: openapi/shiftmove-fleet-openapi.json#updateVehicleCostCenter
+- name: setVehicleCustomFieldValue
+  description: UPDATE vehicle custom field value
+  source_operation: openapi/shiftmove-fleet-openapi.json#setVehicleCustomFieldValue
+- name: getVehicleCurrentFinancing
+  description: GET current financing contract
+  source_operation: openapi/shiftmove-fleet-openapi.json#getVehicleCurrentFinancing
+- name: findVehicleLicensePlates
+  description: GET vehicle license plates
+  source_operation: openapi/shiftmove-fleet-openapi.json#findVehicleLicensePlates
+- name: createVehicleLicensePlates
+  description: ASSIGN a license plate to this vehicle
+  source_operation: openapi/shiftmove-fleet-openapi.json#createVehicleLicensePlates
+- name: deleteVehicleLicensePlates
+  description: DELETE vehicle license plate
+  source_operation: openapi/shiftmove-fleet-openapi.json#deleteVehicleLicensePlates
+- name: updateVehicleLicensePlates
+  description: UPDATE the duration of an existing license plate
+  source_operation: openapi/shiftmove-fleet-openapi.json#updateVehicleLicensePlates
+- name: createVehicleSubCompany
+  description: CREATE a vehicle's sub company
+  source_operation: openapi/shiftmove-fleet-openapi.json#createVehicleSubCompany
+- name: findVehicleUsage
+  description: GET vehicle usage
+  source_operation: openapi/shiftmove-fleet-openapi.json#findVehicleUsage
+- name: createVehicleUsage
+  description: CREATE a new vehicle usage entry
+  source_operation: openapi/shiftmove-fleet-openapi.json#createVehicleUsage

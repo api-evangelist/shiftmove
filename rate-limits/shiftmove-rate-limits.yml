@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.avrios.com/
+docs: https://developers.avrios.com/
+rate_limits:
+  - scope: global
+    limit_count: 300
+    window: minute
+    description: >-
+      Requests to the Avrios Fleet-API are limited to 300 requests per minute.
+      Documented in the "Access and usage / Rate limiting" section of the API
+      documentation.

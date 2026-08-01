@@ -1,7 +1,28 @@
 aid: shiftmove
 name: Shiftmove
-description: Shiftmove is a company surfaced as a portfolio company of battery-ventures and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Shiftmove GmbH is a Berlin-based European fleet management software company backed by
+  Battery Ventures, operating the Vimcar, Fleet, Avrios, Optimum and Océan brands and
+  managing 730,000+ vehicles for 25,000+ fleet customers. Its developer surface is the
+  Avrios Fleet-API, a Swagger 2.0 REST API (base URL https://api.avrios.com) that syncs
+  fleet data — vehicles, drivers, driver/vehicle assignments, license plates, vehicle
+  financing, usages, invoices, organizations and custom fields — with the Avrios/Shiftmove
+  platform. The API uses HTTP Basic authentication, is rate limited to 300 requests per
+  minute, exposes 40 operations across ten resource groups, follows semantic versioning,
+  and returns page-number paginated responses.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.shiftmove.com/
 url: https://raw.githubusercontent.com/api-evangelist/shiftmove/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,14 +30,244 @@ x-backed-by:
 - battery-ventures
 x-tier: stub
 x-tier-reason: portfolio-lead
+x-legal-name: Shiftmove GmbH
+x-headquarters: 'Warschauer Straße 57, 10243 Berlin, Germany'
+x-brands:
+- Vimcar
+- Fleet
+- Avrios
+- Optimum
+- Océan
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-apis: []
+- Fleet Management
+- Mobility
+- Automotive
+- Telematics
+- Vehicles
+- Fleet API
+- SaaS
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: shiftmove:shiftmove-custom-fields-api
+  name: Shiftmove Custom fields API
+  description: The Custom fields API from Shiftmove — 2 operation(s) for custom fields.
+  humanURL: https://developers.avrios.com/
+  baseURL: https://api.avrios.com
+  tags:
+  - Custom fields
+  properties:
+  - type: OpenAPI
+    url: openapi/shiftmove-custom-fields-api-openapi.yml
+  - type: APIReference
+    url: https://developers.avrios.com/
+  - type: Documentation
+    url: https://developers.avrios.com/
+  - type: ChangeLog
+    url: https://developers.avrios.com/release-notes.html
+- aid: shiftmove:shiftmove-driver-assignments-api
+  name: Shiftmove Driver assignments API
+  description: The Driver assignments API from Shiftmove — 4 operation(s) for driver assignments.
+  humanURL: https://developers.avrios.com/
+  baseURL: https://api.avrios.com
+  tags:
+  - Driver assignments
+  properties:
+  - type: OpenAPI
+    url: openapi/shiftmove-driver-assignments-api-openapi.yml
+  - type: APIReference
+    url: https://developers.avrios.com/
+  - type: Documentation
+    url: https://developers.avrios.com/
+  - type: ChangeLog
+    url: https://developers.avrios.com/release-notes.html
+- aid: shiftmove:shiftmove-drivers-api
+  name: Shiftmove Drivers API
+  description: The Drivers API from Shiftmove — 5 operation(s) for drivers.
+  humanURL: https://developers.avrios.com/
+  baseURL: https://api.avrios.com
+  tags:
+  - Drivers
+  properties:
+  - type: OpenAPI
+    url: openapi/shiftmove-drivers-api-openapi.yml
+  - type: APIReference
+    url: https://developers.avrios.com/
+  - type: Documentation
+    url: https://developers.avrios.com/
+  - type: ChangeLog
+    url: https://developers.avrios.com/release-notes.html
+- aid: shiftmove:shiftmove-invoices-api
+  name: Shiftmove Invoices API
+  description: The Invoices API from Shiftmove — 4 operation(s) for invoices.
+  humanURL: https://developers.avrios.com/
+  baseURL: https://api.avrios.com
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/shiftmove-invoices-api-openapi.yml
+  - type: APIReference
+    url: https://developers.avrios.com/
+  - type: Documentation
+    url: https://developers.avrios.com/
+  - type: ChangeLog
+    url: https://developers.avrios.com/release-notes.html
+- aid: shiftmove:shiftmove-organizations-api
+  name: Shiftmove Organizations API
+  description: The Organizations API from Shiftmove — 1 operation(s) for organizations.
+  humanURL: https://developers.avrios.com/
+  baseURL: https://api.avrios.com
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/shiftmove-organizations-api-openapi.yml
+  - type: APIReference
+    url: https://developers.avrios.com/
+  - type: Documentation
+    url: https://developers.avrios.com/
+  - type: ChangeLog
+    url: https://developers.avrios.com/release-notes.html
+- aid: shiftmove:shiftmove-vehicle-assignments-api
+  name: Shiftmove Vehicle assignments API
+  description: The Vehicle assignments API from Shiftmove — 4 operation(s) for vehicle assignments.
+  humanURL: https://developers.avrios.com/
+  baseURL: https://api.avrios.com
+  tags:
+  - Vehicle assignments
+  properties:
+  - type: OpenAPI
+    url: openapi/shiftmove-vehicle-assignments-api-openapi.yml
+  - type: APIReference
+    url: https://developers.avrios.com/
+  - type: Documentation
+    url: https://developers.avrios.com/
+  - type: ChangeLog
+    url: https://developers.avrios.com/release-notes.html
+- aid: shiftmove:shiftmove-vehicle-financing-api
+  name: Shiftmove Vehicle financing API
+  description: The Vehicle financing API from Shiftmove — 1 operation(s) for vehicle financing.
+  humanURL: https://developers.avrios.com/
+  baseURL: https://api.avrios.com
+  tags:
+  - Vehicle financing
+  properties:
+  - type: OpenAPI
+    url: openapi/shiftmove-vehicle-financing-api-openapi.yml
+  - type: APIReference
+    url: https://developers.avrios.com/
+  - type: Documentation
+    url: https://developers.avrios.com/
+  - type: ChangeLog
+    url: https://developers.avrios.com/release-notes.html
+- aid: shiftmove:shiftmove-vehicle-license-plates-api
+  name: Shiftmove Vehicle license plates API
+  description: >-
+    The Vehicle license plates API from Shiftmove — 3 operation(s) for vehicle license plates.
+  humanURL: https://developers.avrios.com/
+  baseURL: https://api.avrios.com
+  tags:
+  - Vehicle license plates
+  properties:
+  - type: OpenAPI
+    url: openapi/shiftmove-vehicle-license-plates-api-openapi.yml
+  - type: APIReference
+    url: https://developers.avrios.com/
+  - type: Documentation
+    url: https://developers.avrios.com/
+  - type: ChangeLog
+    url: https://developers.avrios.com/release-notes.html
+- aid: shiftmove:shiftmove-vehicle-usages-api
+  name: Shiftmove Vehicle usages API
+  description: The Vehicle usages API from Shiftmove — 1 operation(s) for vehicle usages.
+  humanURL: https://developers.avrios.com/
+  baseURL: https://api.avrios.com
+  tags:
+  - Vehicle usages
+  properties:
+  - type: OpenAPI
+    url: openapi/shiftmove-vehicle-usages-api-openapi.yml
+  - type: APIReference
+    url: https://developers.avrios.com/
+  - type: Documentation
+    url: https://developers.avrios.com/
+  - type: ChangeLog
+    url: https://developers.avrios.com/release-notes.html
+- aid: shiftmove:shiftmove-vehicles-api
+  name: Shiftmove Vehicles API
+  description: The Vehicles API from Shiftmove — 7 operation(s) for vehicles.
+  humanURL: https://developers.avrios.com/
+  baseURL: https://api.avrios.com
+  tags:
+  - Vehicles
+  properties:
+  - type: OpenAPI
+    url: openapi/shiftmove-vehicles-api-openapi.yml
+  - type: APIReference
+    url: https://developers.avrios.com/
+  - type: Documentation
+    url: https://developers.avrios.com/
+  - type: ChangeLog
+    url: https://developers.avrios.com/release-notes.html
+common:
+- type: DeveloperPortal
+  url: https://developers.avrios.com/
+- type: Documentation
+  url: https://developers.avrios.com/
+- type: APIReference
+  url: https://developers.avrios.com/
+- type: TermsOfService
+  url: https://www.shiftmove.com/legal/agb
+- type: PrivacyPolicy
+  url: https://www.shiftmove.com/legal/datenschutzerklarung
+- type: Support
+  url: https://www.shiftmove.com/contact
+- type: SignUp
+  url: https://www.avrios.com/
+- type: Authentication
+  url: authentication/shiftmove-authentication.yml
+- type: Conventions
+  url: conventions/shiftmove-conventions.yml
+- type: RateLimits
+  url: rate-limits/shiftmove-rate-limits.yml
+- type: ErrorCatalog
+  url: errors/shiftmove-problem-types.yml
+- type: DataModel
+  url: data-model/shiftmove-data-model.yml
+- type: Lifecycle
+  url: lifecycle/shiftmove-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/shiftmove-lifecycle.yml
+- type: ChangeLog
+  url: changelog/shiftmove-changelog.yml
+- type: Conformance
+  url: conformance/shiftmove-conformance.yml
+- type: TrustCenter
+  url: security/shiftmove-trust-center.yml
+- type: Compliance
+  url: https://www.shiftmove.com/legal/legal-overview
+- type: MCPServer
+  url: mcp/shiftmove-mcp.yml
+- type: LLMsTxt
+  url: llms/shiftmove-llms.txt
+- type: Overlay
+  url: overlays/shiftmove-fleet-overlay.yaml
+- type: DomainSecurity
+  url: security/shiftmove-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/shiftmove-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 1
+  pass: local-v1

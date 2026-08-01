@@ -1,0 +1,25 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Avrios Fleet-API (Shiftmove)
+  version: 1.0.0
+extends: openapi/shiftmove-fleet-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: shiftmove
+      x-apievangelist-brand: Avrios
+      x-apievangelist-auth: http-basic
+      x-apievangelist-rate-limit: 300/minute
+      x-apievangelist-pagination: page-number (pageNumber, limit, sortBy, reverse)
+      x-apievangelist-versioning: semver; uri-path v1
+      x-apievangelist-idempotency: not-supported
+  - target: $
+    update:
+      x-apievangelist-artifacts:
+        authentication: authentication/shiftmove-authentication.yml
+        conventions: conventions/shiftmove-conventions.yml
+        errors: errors/shiftmove-problem-types.yml
+        data-model: data-model/shiftmove-data-model.yml
+        lifecycle: lifecycle/shiftmove-lifecycle.yml
+        changelog: changelog/shiftmove-changelog.yml
+        rate-limits: rate-limits/shiftmove-rate-limits.yml

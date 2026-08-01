@@ -1,0 +1,4653 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.2.3",
+    "title": "Fleet API Specifications",
+    "x-logo": {
+      "url": "logo.svg"
+    },
+    "description": "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`."
+  },
+  "host": "api.avrios.com",
+  "tags": [
+    {
+      "name": "Custom fields"
+    },
+    {
+      "name": "Driver assignments"
+    },
+    {
+      "name": "Drivers"
+    },
+    {
+      "name": "Invoices"
+    },
+    {
+      "name": "Organizations"
+    },
+    {
+      "name": "Vehicle assignments"
+    },
+    {
+      "name": "Vehicle financing"
+    },
+    {
+      "name": "Vehicle license plates"
+    },
+    {
+      "name": "Vehicle usages"
+    },
+    {
+      "name": "Vehicles"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/v1/customFields/drivers": {
+      "get": {
+        "tags": [
+          "Custom fields"
+        ],
+        "summary": "GET all driver custom fields",
+        "description": "Return all the custom fields (user-defined fields) associated with drivers. New custom fields can be defined for drivers through the Avrios UI.",
+        "operationId": "getDriverCustomFields",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CustomFieldDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/customFields/vehicles": {
+      "get": {
+        "tags": [
+          "Custom fields"
+        ],
+        "summary": "GET all vehicle custom fields",
+        "description": "Return all the custom fields (user-defined fields) associated with vehicles. New custom fields can be defined for vehicles through the Avrios UI.",
+        "operationId": "getVehicleCustomFields",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CustomFieldDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/drivers": {
+      "get": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "GET paginated drivers",
+        "description": "Access pages of drivers",
+        "operationId": "getAllDrivers",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "firstName",
+              "lastName",
+              "internalId",
+              "state"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageMinimalDriverDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "POST driver",
+        "description": "Create a new driver.",
+        "operationId": "createDriver",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DriverCreateApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/DriverDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          }
+        }
+      }
+    },
+    "/v1/drivers/query": {
+      "post": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "QUERY paginated drivers",
+        "description": "Query drivers based on specific criteria. The result is paginated",
+        "operationId": "queryDrivers",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DriverQueryApiParams"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "firstName",
+              "lastName",
+              "internalId",
+              "state"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageMinimalDriverDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          }
+        }
+      }
+    },
+    "/v1/drivers/{uuid}": {
+      "get": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "GET driver by UUID",
+        "description": "Get detailed information about a specific driver.",
+        "operationId": "findDriverByUuid",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/DriverDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Driver not found."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "UPDATE a specific driver",
+        "description": "Post a map of key value pairs for fields with the new value. A value of `null` is accepted (where marked as nullable) and will clear that field. Cleared fields will not be shown in the response, as `null` fields are stripped by default. If a field is not present in the map it will not be altered. **Fields not marked as nullable can be left out of the map all together so as not to be changed**",
+        "operationId": "updateDriverByUuid",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DriverUpdateApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/DriverDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Driver not found."
+          }
+        }
+      }
+    },
+    "/v1/drivers/{uuid}/assignments": {
+      "get": {
+        "tags": [
+          "Driver assignments"
+        ],
+        "summary": "GET driver assignments",
+        "description": "Get all vehicle assignments of a specific driver.",
+        "operationId": "findDriverAssignments",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "vehicleUuid",
+              "driverUuid",
+              "duration_startDate",
+              "duration_endDate",
+              "active"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageAssignmentDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Driver not found."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Driver assignments"
+        ],
+        "summary": "ASSIGN a specified vehicle to this driver",
+        "description": "Assign a vehicle (specified in the request body) to the driver under this url.",
+        "operationId": "createDriverAssignment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CreateAssignmentByDriverRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/AssignmentDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Driver or vehicle not found."
+          },
+          "409": {
+            "description": "The new assignment is conflicted with one or multiple ones. The conflicting assignments will be returned in an error response."
+          }
+        }
+      }
+    },
+    "/v1/drivers/{uuid}/assignments/query": {
+      "post": {
+        "tags": [
+          "Driver assignments"
+        ],
+        "summary": "QUERY driver assignments",
+        "description": "Query vehicle assignments of a specific driver.",
+        "operationId": "queryDriverAssignments",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DriverAssignmentQueryApiParams"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "vehicleUuid",
+              "driverUuid",
+              "duration_startDate",
+              "duration_endDate",
+              "active"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageAssignmentDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Driver not found."
+          }
+        }
+      }
+    },
+    "/v1/drivers/{uuid}/assignments/{assignmentUuid}": {
+      "delete": {
+        "tags": [
+          "Driver assignments"
+        ],
+        "summary": "DELETE driver assignment",
+        "description": "Delete vehicle to driver assignment identified by uuid path parameter.",
+        "operationId": "deleteDriverAssignment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "assignmentUuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Void"
+            }
+          },
+          "204": {
+            "description": "Successful operation - no content is expected."
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Driver not found or this assignment was not found for this driver."
+          }
+        }
+      }
+    },
+    "/v1/drivers/{uuid}/assignments/{assignmentUuid}/duration": {
+      "post": {
+        "tags": [
+          "Driver assignments"
+        ],
+        "summary": "UPDATE the duration of an existing assignment",
+        "description": "Change the timing of a specific assignment. Body is a map of fields to update.",
+        "operationId": "updateDriverAssignment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "assignmentUuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DurationUpdateApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/AssignmentDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Driver or assignment not found."
+          },
+          "409": {
+            "description": "The new assignment timing conflicts with one or multiple ones. The conflicting assignments will be returned in an error response."
+          }
+        }
+      }
+    },
+    "/v1/drivers/{uuid}/customFieldValues/{customFieldUuid}": {
+      "post": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "UPDATE driver custom field value",
+        "description": "Update a custom field value for a driver, identified by driver UUID and custom field UUID. It doesn't matter whether the custom field value has been set for this driver previously.",
+        "operationId": "setDriverCustomFieldValue",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "customFieldUuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CustomFieldValueUpdateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/CustomFieldValueDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Driver or custom field not found"
+          }
+        }
+      }
+    },
+    "/v1/drivers/{uuid}/stateHistory": {
+      "post": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "CREATE driver state history entry",
+        "description": "Adds an entry to the driver state history. This cannot be added on the same day as an existing entry. If the driver is archived, any fuel card or vehicle assignments associated with this driver will be automatically ended on the archive date.",
+        "operationId": "setDriverState",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DriverStateHistoryApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/DriverStateHistoryDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "409": {
+            "description": "There is an existing driver state entry on this date"
+          }
+        }
+      }
+    },
+    "/v1/invoices": {
+      "get": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "GET paginated invoices",
+        "description": "Access pages of invoices.",
+        "operationId": "getAllInvoices",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "state",
+              "invoiceDate",
+              "releaseDate",
+              "supplier",
+              "invoiceNumber",
+              "net",
+              "gross",
+              "currency"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageInvoiceExternalDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          }
+        }
+      }
+    },
+    "/v1/invoices/query": {
+      "post": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "QUERY paginated invoices",
+        "description": "Query invoices based on specific criteria. The result is paginated",
+        "operationId": "queryInvoices",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/InvoiceQueryApiParams"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "state",
+              "invoiceDate",
+              "releaseDate",
+              "supplier",
+              "invoiceNumber",
+              "net",
+              "gross",
+              "currency"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageInvoiceExternalDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          }
+        }
+      }
+    },
+    "/v1/invoices/{invoiceUuid}/items": {
+      "get": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "GET paginated invoice items",
+        "description": "Access pages of invoice items.",
+        "operationId": "getAllInvoicesItems",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "invoiceUuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "transactionTime",
+              "quantity",
+              "net",
+              "gross",
+              "vatPercentage"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageInvoiceItemDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          }
+        }
+      }
+    },
+    "/v1/invoices/{invoiceUuid}/rawFile": {
+      "get": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "GET invoice raw file upload",
+        "description": "",
+        "operationId": "getInvoiceRawFileUpload",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "invoiceUuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/Void"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Invoice file upload not found."
+          }
+        }
+      }
+    },
+    "/v1/organizations": {
+      "get": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "GET all organizations paged",
+        "description": "Access paged organizations.",
+        "operationId": "getAllOrganizations",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "parentOrganization",
+              "name"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageOrganizationDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          }
+        }
+      }
+    },
+    "/v1/vehicles": {
+      "get": {
+        "tags": [
+          "Vehicles"
+        ],
+        "summary": "GET paginated vehicles",
+        "description": "Access pages of vehicles.",
+        "operationId": "getAllVehicles",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "vin",
+              "internalId",
+              "displayName",
+              "state",
+              "activeLicensePlate",
+              "chMasterNumber"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageMinimalVehicleDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehicles"
+        ],
+        "summary": "CREATE a new vehicle",
+        "description": "Create a new vehicle as defined within the request body.",
+        "operationId": "createVehicle",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/VehicleCreationApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/VehicleDto"
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "409": {
+            "description": "This vehicle conflicts with a vehicle already in the system. Either the license plate or the vin are already in use after the commission date."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/query": {
+      "post": {
+        "tags": [
+          "Vehicles"
+        ],
+        "summary": "QUERY paginated vehicles",
+        "description": "Query vehicles based on specific criteria. The result is paginated.",
+        "operationId": "queryVehicles",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/VehicleQueryApiParams"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "vin",
+              "internalId",
+              "displayName",
+              "state",
+              "activeLicensePlate",
+              "chMasterNumber"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageMinimalVehicleDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}": {
+      "get": {
+        "tags": [
+          "Vehicles"
+        ],
+        "summary": "GET vehicle by uuid",
+        "description": "Get detailed information about a specific vehicle.",
+        "operationId": "findVehicleByUuid",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/VehicleDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehicles"
+        ],
+        "summary": "UPDATE a specific vehicle",
+        "description": "Post a map of key value pairs for fields with the new value. A value of `null` is accepted (where marked as nullable) and will clear that field. Cleared fields will not be shown in the response, as `null` fields are stripped by default. If a field is not present in the map it will not be altered. **Fields not marked as nullable can be left out of the map all together so as not to be changed**",
+        "operationId": "updateVehicleByUuid",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/VehicleUpdateApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/VehicleDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/archive": {
+      "post": {
+        "tags": [
+          "Vehicles"
+        ],
+        "summary": "ARCHIVE a vehicle",
+        "description": "Avrios will end license plate and fuel card assignments on archive date, so that they can be assigned to other vehicles. No further costs from this vehicle will be taken into account after the archiving date. This is PERMANENT, archived vehicles CANNOT be re-activated. Archiving a vehicle will remove any ongoing decommissioning, this cannot be undone.",
+        "operationId": "archiveVehicle",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ArchiveVehicleApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/VehicleDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/assignments": {
+      "get": {
+        "tags": [
+          "Vehicle assignments"
+        ],
+        "summary": "GET vehicle assignments",
+        "description": "Get all driver assignments of a specific vehicle.",
+        "operationId": "findVehicleAssignments",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "vehicleUuid",
+              "driverUuid",
+              "duration_startDate",
+              "duration_endDate",
+              "active"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageAssignmentDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehicle assignments"
+        ],
+        "summary": "ASSIGN a specified driver to this vehicle",
+        "description": "Assign a driver (specified in the request body) to the vehicle under this url.",
+        "operationId": "createVehicleAssignment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CreateAssignmentByVehicleRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/AssignmentDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle or driver not found."
+          },
+          "409": {
+            "description": "The new assignment conflicts with one or more other assignments. The conflicting assignments will be returned in an error response."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/assignments/query": {
+      "post": {
+        "tags": [
+          "Vehicle assignments"
+        ],
+        "summary": "QUERY vehicle assignments",
+        "description": "Query driver assignments of a specific vehicle.",
+        "operationId": "queryVehicleAssignments",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/VehicleAssignmentQueryApiParams"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "vehicleUuid",
+              "driverUuid",
+              "duration_startDate",
+              "duration_endDate",
+              "active"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageAssignmentDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/assignments/{assignmentUuid}": {
+      "delete": {
+        "tags": [
+          "Vehicle assignments"
+        ],
+        "summary": "DELETE vehicle assignment",
+        "description": "Delete driver to vehicle assignment identified by uuid path parameter.",
+        "operationId": "deleteVehicleAssignment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "assignmentUuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Void"
+            }
+          },
+          "204": {
+            "description": "Successful operation - no content is expected."
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found or this assignment was not found for this vehicle."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/assignments/{assignmentUuid}/duration": {
+      "post": {
+        "tags": [
+          "Vehicle assignments"
+        ],
+        "summary": "UPDATE the duration of an existing assignment",
+        "description": "Change the timing of a specific assignment. Body is a map of fields to update.",
+        "operationId": "updateVehicleAssignment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "assignmentUuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DurationUpdateApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/AssignmentDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle or assignment not found."
+          },
+          "409": {
+            "description": "The new assignment timing conflicts with one or multiple ones. The conflicting assignments will be returned in an error response."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/costCenter": {
+      "post": {
+        "tags": [
+          "Vehicles"
+        ],
+        "summary": "CREATE vehicle cost center history entry",
+        "description": "Creates new cost center for the specified vehicle. This will be validated and added to vehicle's cost center history.The entry must not have the same startDate as an existing vehicle cost center history entry.",
+        "operationId": "updateVehicleCostCenter",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CostCenterApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/VehicleCostCenterHistoryDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          },
+          "409": {
+            "description": "The new cost center start startDate conflicts with an existing cost center. The conflicting cost center will be returned in an error response."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/customFieldValues/{customFieldUuid}": {
+      "post": {
+        "tags": [
+          "Vehicles"
+        ],
+        "summary": "UPDATE vehicle custom field value",
+        "description": "Update a custom field value for a vehicle, identified by vehicle UUID and custom field UUID. It doesn't matter whether the custom field value has been set for this vehicle previously.",
+        "operationId": "setVehicleCustomFieldValue",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "customFieldUuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CustomFieldValueUpdateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/CustomFieldValueDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle or custom field not found"
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/financing/current": {
+      "get": {
+        "tags": [
+          "Vehicle financing"
+        ],
+        "summary": "GET current financing contract",
+        "description": "Get the current financing contract of the specified vehicle.",
+        "operationId": "getVehicleCurrentFinancing",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/FinancingDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/licensePlates": {
+      "get": {
+        "tags": [
+          "Vehicle license plates"
+        ],
+        "summary": "GET vehicle license plates",
+        "description": "Get all license plates over time of a specific vehicle.",
+        "operationId": "findVehicleLicensePlates",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "plate",
+              "duration_startDate",
+              "duration_endDate",
+              "active"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageLicensePlateDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehicle license plates"
+        ],
+        "summary": "ASSIGN a license plate to this vehicle",
+        "description": "Assign a license plate (specified in the request body) to the vehicle under this url.",
+        "operationId": "createVehicleLicensePlates",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CreateLicensePlateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/LicensePlateDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          },
+          "409": {
+            "description": "The new license plate conflicts with one or more others. The conflicting license plates will be returned in an error response."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/licensePlates/{licensePlateUuid}": {
+      "delete": {
+        "tags": [
+          "Vehicle license plates"
+        ],
+        "summary": "DELETE vehicle license plate",
+        "description": "Delete license plate identified by uuid path parameter from vehicle.",
+        "operationId": "deleteVehicleLicensePlates",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "licensePlateUuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Void"
+            }
+          },
+          "204": {
+            "description": "Successful operation - no content is expected."
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found or this license plate was not found for this vehicle."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/licensePlates/{licensePlateUuid}/duration": {
+      "post": {
+        "tags": [
+          "Vehicle license plates"
+        ],
+        "summary": "UPDATE the duration of an existing license plate",
+        "description": "Change the timing of a specific license plate. Body is a map of fields to update.",
+        "operationId": "updateVehicleLicensePlates",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "licensePlateUuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DurationUpdateApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/LicensePlateDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle or assignment not found."
+          },
+          "409": {
+            "description": "The new license plate timing conflicts with one or multiple others. The conflicting license plates will be returned in an error response."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/subCompany": {
+      "post": {
+        "tags": [
+          "Vehicles"
+        ],
+        "summary": "CREATE a vehicle's sub company",
+        "description": "Creates a new sub company history entry for the specified vehicle. This will be validated and added to vehicle's sub company history.This sub company entry will end when the next one starts, or it will be indefinite, if last one chronological. The entry must not have the same startDate as an existing vehicle sub company history entry.",
+        "operationId": "createVehicleSubCompany",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/VehicleSubCompanyApiParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/VehicleSubCompanyHistoryDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          },
+          "409": {
+            "description": "The new sub company startDate conflicts with an existing sub company. The conflicting sub company will be returned in an error response."
+          }
+        }
+      }
+    },
+    "/v1/vehicles/{uuid}/usages": {
+      "get": {
+        "tags": [
+          "Vehicle usages"
+        ],
+        "summary": "GET vehicle usage",
+        "description": "Get all vehicle usage records, paginated.",
+        "operationId": "findVehicleUsage",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items in a page",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sorting key",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "uuid",
+              "source",
+              "date",
+              "current",
+              "usage",
+              "state",
+              "usageType"
+            ]
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/ApiPageUsageDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          },
+          "404": {
+            "description": "Vehicle not found."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehicle usages"
+        ],
+        "summary": "CREATE a new vehicle usage entry",
+        "description": "Adds a new usage entry for the given vehicle. This will be validated and added to the vehicle's usage history asynchronously. The entry will appear in the history with usageSource == MANUAL_FLEET_MANAGER. Distance values must be provided in kilometres.",
+        "operationId": "createVehicleUsage",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/VehicleUsageCreationApiRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/VehicleManualUsageDto"
+            }
+          },
+          "400": {
+            "description": "Bad request - information on the invalid fields will be provided in the response body"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AmountWithTaxExternalDto": {
+      "type": "object",
+      "properties": {
+        "amountNet": {
+          "type": "number"
+        },
+        "amountGross": {
+          "type": "number"
+        },
+        "taxPercent": {
+          "type": "number"
+        },
+        "taxAmount": {
+          "type": "number"
+        }
+      }
+    },
+    "ApiPage": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/ApiPageInformation"
+        },
+        "totalItems": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ApiPageAssignmentDto": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AssignmentDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/ApiPageInformation"
+        },
+        "totalItems": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ApiPageInformation": {
+      "type": "object",
+      "properties": {
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "ApiPageInvoiceExternalDto": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InvoiceExternalDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/ApiPageInformation"
+        },
+        "totalItems": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ApiPageInvoiceItemDto": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InvoiceItemDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/ApiPageInformation"
+        },
+        "totalItems": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ApiPageLicensePlateDto": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LicensePlateDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/ApiPageInformation"
+        },
+        "totalItems": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ApiPageMinimalDriverDto": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MinimalDriverDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/ApiPageInformation"
+        },
+        "totalItems": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ApiPageMinimalVehicleDto": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MinimalVehicleDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/ApiPageInformation"
+        },
+        "totalItems": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ApiPageOrganizationDto": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrganizationDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/ApiPageInformation"
+        },
+        "totalItems": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ApiPageUsageDto": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UsageDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/ApiPageInformation"
+        },
+        "totalItems": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ArchiveVehicleApiParams": {
+      "type": "object",
+      "properties": {
+        "archiveDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "AssignmentDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "vehicleUuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "driverUuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "duration": {
+          "$ref": "#/definitions/DurationDto"
+        },
+        "active": {
+          "type": "boolean"
+        }
+      }
+    },
+    "CostCenterApiParams": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "costCenter": {
+          "type": "string"
+        }
+      }
+    },
+    "CreateAssignmentByDriverRequest": {
+      "type": "object",
+      "properties": {
+        "vehicleUuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "duration": {
+          "$ref": "#/definitions/DurationDto"
+        }
+      }
+    },
+    "CreateAssignmentByVehicleRequest": {
+      "type": "object",
+      "properties": {
+        "driverUuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "duration": {
+          "$ref": "#/definitions/DurationDto"
+        }
+      }
+    },
+    "CreateLicensePlateRequest": {
+      "type": "object",
+      "properties": {
+        "plate": {
+          "type": "string"
+        },
+        "duration": {
+          "$ref": "#/definitions/DurationDto"
+        }
+      }
+    },
+    "CustomFieldCategoryDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "CustomFieldCategoryWithValuesDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "position": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "customFieldValues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomFieldValueDto"
+          }
+        }
+      }
+    },
+    "CustomFieldDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "identifier": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "TEXT",
+            "DATE",
+            "BOOLEAN",
+            "INTEGER",
+            "DECIMAL",
+            "MONETARY_AMOUNT"
+          ]
+        },
+        "category": {
+          "$ref": "#/definitions/CustomFieldCategoryDto"
+        }
+      }
+    },
+    "CustomFieldValueDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "textValue": {
+          "type": "string"
+        },
+        "dateValue": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "booleanValue": {
+          "type": "boolean"
+        },
+        "integerValue": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "decimalValue": {
+          "type": "number"
+        },
+        "monetaryAmountValue": {
+          "$ref": "#/definitions/MonetaryAmountDto"
+        }
+      }
+    },
+    "CustomFieldValueUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "textValue": {
+          "type": "string"
+        },
+        "dateValue": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "booleanValue": {
+          "type": "boolean"
+        },
+        "integerValue": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "decimalValue": {
+          "type": "number"
+        },
+        "monetaryAmountValue": {
+          "$ref": "#/definitions/MonetaryAmountApiParams"
+        },
+        "exactlyOneValueSet": {
+          "type": "boolean"
+        }
+      }
+    },
+    "DateRangeApiParams": {
+      "type": "object",
+      "properties": {
+        "onOrAfter": {
+          "type": "string",
+          "format": "date"
+        },
+        "before": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "DateRangeDto": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Inclusive start date."
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Exclusive end date."
+        }
+      }
+    },
+    "DriverAssignmentQueryApiParams": {
+      "type": "object",
+      "properties": {
+        "vehicleUuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "when": {
+          "description": "Date range assignments active within. Cannot have a value when `starting` or `ending` have a value.",
+          "$ref": "#/definitions/InstantRangeApiParams"
+        },
+        "starting": {
+          "$ref": "#/definitions/InstantRangeApiParams"
+        },
+        "ending": {
+          "$ref": "#/definitions/InstantRangeApiParams"
+        }
+      }
+    },
+    "DriverCreateApiParams": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "LEAVE"
+          ]
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "organizationUuid": {
+          "type": "string",
+          "format": "uuid",
+          "description": "If not provided the organization will be set to that of the API token"
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "MALE",
+            "FEMALE"
+          ]
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "emailWork": {
+          "type": "string",
+          "description": "A valid email address."
+        },
+        "emailPrivate": {
+          "type": "string",
+          "description": "A valid email address."
+        },
+        "phoneNumber": {
+          "$ref": "#/definitions/PhoneNumberApiParams"
+        },
+        "mobilePhoneNumber": {
+          "$ref": "#/definitions/PhoneNumberApiParams"
+        },
+        "notificationChannel": {
+          "type": "string",
+          "enum": [
+            "EMAIL",
+            "SMS"
+          ]
+        },
+        "address": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 Alpha-2 country code"
+        },
+        "language": {
+          "type": "string",
+          "description": "ISO 639-1 language code"
+        },
+        "nationality": {
+          "type": "string",
+          "description": "ISO 3166-1 Alpha-2 country code"
+        },
+        "placeOfBirth": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "internalId": {
+          "type": "string"
+        },
+        "costCenter": {
+          "type": "string"
+        },
+        "subCompany": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "distanceToWorkplace": {
+          "type": "number"
+        },
+        "employeePayment": {
+          "type": "number"
+        }
+      }
+    },
+    "DriverDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "LEAVE"
+          ]
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "MALE",
+            "FEMALE"
+          ]
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "middleName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "emailWork": {
+          "type": "string",
+          "description": "A valid email address."
+        },
+        "emailWorkType": {
+          "type": "string",
+          "enum": [
+            "MANUAL",
+            "AUTOMATIC"
+          ]
+        },
+        "emailPrivate": {
+          "type": "string",
+          "description": "A valid email address."
+        },
+        "phoneNumber": {
+          "$ref": "#/definitions/PhoneNumberDto"
+        },
+        "mobilePhoneNumber": {
+          "$ref": "#/definitions/PhoneNumberDto"
+        },
+        "notificationChannel": {
+          "type": "string",
+          "enum": [
+            "EMAIL",
+            "SMS"
+          ]
+        },
+        "address": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 Alpha-2 country code"
+        },
+        "language": {
+          "type": "string",
+          "description": "ISO 639-1 Language Code"
+        },
+        "nationality": {
+          "type": "string",
+          "description": "ISO 3166-1 Alpha-2 country code"
+        },
+        "placeOfBirth": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "internalId": {
+          "type": "string"
+        },
+        "costCenter": {
+          "type": "string"
+        },
+        "subCompany": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "distanceToWorkplace": {
+          "type": "number"
+        },
+        "employeePayment": {
+          "type": "number"
+        },
+        "eligibleForDriverBriefings": {
+          "type": "boolean"
+        },
+        "eligibleForDriverLicenseChecks": {
+          "type": "boolean"
+        },
+        "managementType": {
+          "type": "string",
+          "enum": [
+            "MANUAL",
+            "AUTOMATIC"
+          ]
+        },
+        "customFieldValuesByCategory": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomFieldCategoryWithValuesDto"
+          }
+        },
+        "organizationUuid": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "DriverQueryApiParams": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "internalId": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "LEAVE"
+          ]
+        },
+        "lastModified": {
+          "$ref": "#/definitions/InstantRangeApiParams"
+        }
+      }
+    },
+    "DriverStateHistoryApiParams": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "LEAVE"
+          ]
+        }
+      }
+    },
+    "DriverStateHistoryDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "driverUuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "LEAVE"
+          ]
+        },
+        "dateRange": {
+          "$ref": "#/definitions/DateRangeDto"
+        }
+      }
+    },
+    "DurationDto": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "FallbackSpecification": {
+      "type": "object",
+      "properties": {
+        "manufacturerName": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "vehicleType": {
+          "type": "string",
+          "enum": [
+            "BUILD_UP",
+            "BUS",
+            "CAR",
+            "COST",
+            "EXCAVATOR",
+            "INDUSTRIAL_TRUCK",
+            "SPECIAL",
+            "TWO_WHEELER",
+            "TRUCK",
+            "TRACTOR",
+            "TRAILER",
+            "VAN",
+            "SWAP_BODY"
+          ]
+        }
+      }
+    },
+    "FinancingDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "financingType": {
+          "type": "string",
+          "enum": [
+            "LEASING",
+            "LONG_TERM_RENTAL_LEASING",
+            "CREDIT",
+            "PURCHASE",
+            "LONG_TERM_RENTAL"
+          ]
+        },
+        "supplier": {
+          "type": "string"
+        },
+        "contractNumber": {
+          "type": "string"
+        },
+        "duration": {
+          "$ref": "#/definitions/DurationDto"
+        },
+        "monthlyFeeWithTax": {
+          "$ref": "#/definitions/AmountWithTaxExternalDto"
+        },
+        "purchasePriceWithTax": {
+          "$ref": "#/definitions/AmountWithTaxExternalDto"
+        },
+        "currencyUnit": {
+          "type": "string",
+          "description": "ISO 4217 alphabetic currency code"
+        }
+      }
+    },
+    "FuelInvoiceItemDto": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InvoiceItemDto"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "fuelType": {
+              "type": "string",
+              "enum": [
+                "CNG",
+                "DIESEL",
+                "ELECTRIC",
+                "GAS",
+                "GASOLINE",
+                "HYBRID_DIESEL",
+                "HYBRID_DIESEL_CNG",
+                "HYBRID_DIESEL_LNG",
+                "HYBRID_DIESEL_LPG",
+                "HYBRID_GASOLINE",
+                "HYBRID_GASOLINE_CNG",
+                "HYBRID_GASOLINE_LNG",
+                "HYBRID_GASOLINE_LPG",
+                "LPG",
+                "LNG",
+                "OTHER"
+              ]
+            },
+            "premiumFuel": {
+              "type": "boolean"
+            },
+            "fuelCardNumber": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "InstantRangeApiParams": {
+      "type": "object",
+      "properties": {
+        "atOrAfter": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "before": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "InvoiceExternalDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "IN_PROGRESS",
+            "IMPORTED_WITH_ERRORS",
+            "IMPORTED",
+            "RELEASED",
+            "FAILED"
+          ]
+        },
+        "invoiceDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "releaseDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "supplier": {
+          "type": "string"
+        },
+        "invoiceNumber": {
+          "type": "string"
+        },
+        "net": {
+          "type": "number"
+        },
+        "gross": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 alphabetic currency code"
+        }
+      }
+    },
+    "InvoiceItemDto": {
+      "type": "object",
+      "discriminator": "itemType",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "itemType": {
+          "type": "string",
+          "description": "Pick the expected item type to display the respective attributes (This field is only used for ui documentation purpose).",
+          "readOnly": true
+        },
+        "transactionTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "description": {
+          "type": "string"
+        },
+        "costType": {
+          "type": "string"
+        },
+        "costGroup": {
+          "type": "string"
+        },
+        "productDescription": {
+          "type": "string"
+        },
+        "vehicleUuid": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The vehicle this invoice item relates to. Set when the item is booked directly on a vehicle or on a damage of a vehicle."
+        },
+        "driverUuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "quantityUnit": {
+          "type": "string",
+          "description": "The units the quantity of this item is given in. \"PCE\" is pieces and so is the raw quantity of items. \"LABOUR_VALUE\" is for any labour costs. \"KWH\" is kilowatt-hours.",
+          "enum": [
+            "LITER",
+            "US_GALLON",
+            "UK_GALLON",
+            "PCE",
+            "KG",
+            "HOUR",
+            "LABOR_VALUE",
+            "KWH"
+          ]
+        },
+        "vatPercentage": {
+          "type": "number"
+        },
+        "net": {
+          "type": "number"
+        },
+        "gross": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 alphabetic currency code"
+        },
+        "invoiceType": {
+          "type": "string",
+          "enum": [
+            "FUEL",
+            "OTHER"
+          ]
+        }
+      }
+    },
+    "InvoiceQueryApiParams": {
+      "type": "object",
+      "properties": {
+        "invoiceNumber": {
+          "type": "string"
+        },
+        "supplier": {
+          "type": "string"
+        },
+        "invoiceDate": {
+          "$ref": "#/definitions/DateRangeApiParams"
+        },
+        "releaseDate": {
+          "$ref": "#/definitions/InstantRangeApiParams"
+        }
+      }
+    },
+    "LicensePlateDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "plate": {
+          "type": "string"
+        },
+        "duration": {
+          "$ref": "#/definitions/DurationDto"
+        },
+        "active": {
+          "type": "boolean"
+        }
+      }
+    },
+    "LicensePlateQueryApiParams": {
+      "type": "object",
+      "properties": {
+        "plate": {
+          "type": "string"
+        },
+        "when": {
+          "$ref": "#/definitions/InstantRangeApiParams"
+        }
+      }
+    },
+    "MinimalDriverDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "internalId": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "LEAVE"
+          ]
+        },
+        "lastModified": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "MinimalVehicleDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "vin": {
+          "type": "string"
+        },
+        "internalId": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "DECOMMISSIONED",
+            "IN_PROCUREMENT",
+            "ARCHIVED"
+          ]
+        },
+        "activeLicensePlate": {
+          "type": "string"
+        },
+        "chMasterNumber": {
+          "type": "string"
+        },
+        "lastModified": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "MonetaryAmountApiParams": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 alphabetic currency code"
+        }
+      }
+    },
+    "MonetaryAmountDto": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 alphabetic currency code"
+        }
+      }
+    },
+    "OrganizationDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "parentOrganization": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "OtherInvoiceItemDto": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InvoiceItemDto"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "PhoneNumberApiParams": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "A valid phone number."
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 Alpha-2 country code"
+        }
+      }
+    },
+    "PhoneNumberDto": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "A valid phone number."
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 Alpha-2 country code"
+        }
+      }
+    },
+    "UsageDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "MANUAL_DRIVER",
+            "MANUAL_FLEET_MANAGER",
+            "INVOICE",
+            "FUEL_PURCHASE",
+            "TELEMATICS",
+            "VEHICLE_CHECK"
+          ]
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "current": {
+          "type": "boolean"
+        },
+        "usage": {
+          "type": "number"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACCEPTED",
+            "NOT_ACCEPTED"
+          ]
+        },
+        "usageType": {
+          "type": "string",
+          "enum": [
+            "DISTANCE",
+            "OPERATING_HOURS"
+          ]
+        }
+      }
+    },
+    "VehicleAssignmentQueryApiParams": {
+      "type": "object",
+      "properties": {
+        "driverUuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "when": {
+          "description": "Date range assignments active within. Cannot have a value when `starting` or `ending` have a value.",
+          "$ref": "#/definitions/InstantRangeApiParams"
+        },
+        "starting": {
+          "$ref": "#/definitions/InstantRangeApiParams"
+        },
+        "ending": {
+          "$ref": "#/definitions/InstantRangeApiParams"
+        }
+      }
+    },
+    "VehicleCostCenterHistoryDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "costCenter": {
+          "type": "string"
+        },
+        "dateRange": {
+          "$ref": "#/definitions/DateRangeDto"
+        }
+      }
+    },
+    "VehicleCreationApiParams": {
+      "type": "object",
+      "properties": {
+        "activeLicensePlate": {
+          "type": "string"
+        },
+        "customName": {
+          "type": "string",
+          "description": "Used to override the vehicle's displayName, which is a generated property that otherwise defaults to the current license plate."
+        },
+        "vin": {
+          "type": "string"
+        },
+        "organizationUuid": {
+          "type": "string",
+          "format": "uuid",
+          "description": "If not provided the organization will be set to that of the API token"
+        },
+        "commissionDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "costCenter": {
+          "type": "string"
+        },
+        "jobAccountNumber": {
+          "type": "string"
+        },
+        "registrationDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "registrationCountry": {
+          "type": "string",
+          "description": "ISO 3166-1 Alpha-2 country code"
+        },
+        "fallbackSpecification": {
+          "description": "This will be used if no vehicle description can be sourced for the given VIN",
+          "$ref": "#/definitions/FallbackSpecification"
+        },
+        "tensileLoad": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "internalId": {
+          "type": "string"
+        },
+        "additionalId": {
+          "type": "string"
+        },
+        "euLicenseNumber": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "licensePlateColor": {
+          "type": "string",
+          "enum": [
+            "BLACK",
+            "BLUE",
+            "BROWN",
+            "GREEN",
+            "RED",
+            "YELLOW",
+            "WHITE"
+          ]
+        },
+        "tax": {
+          "$ref": "#/definitions/MonetaryAmountApiParams"
+        },
+        "subCompany": {
+          "type": "string"
+        },
+        "tireStorageLocation": {
+          "type": "string"
+        },
+        "atAkoGross": {
+          "$ref": "#/definitions/MonetaryAmountApiParams"
+        },
+        "atAkoNet": {
+          "$ref": "#/definitions/MonetaryAmountApiParams"
+        },
+        "atLuxuryTangent": {
+          "$ref": "#/definitions/MonetaryAmountApiParams"
+        },
+        "atNova": {
+          "type": "number"
+        },
+        "atVatExempt": {
+          "type": "boolean"
+        },
+        "chMasterNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "VehicleDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "activeLicensePlate": {
+          "type": "string",
+          "readOnly": true
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "customName": {
+          "type": "string"
+        },
+        "vin": {
+          "type": "string",
+          "readOnly": true
+        },
+        "commissionDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "fuelTankSize": {
+          "type": "number"
+        },
+        "fuelType": {
+          "type": "string",
+          "enum": [
+            "CNG",
+            "DIESEL",
+            "ELECTRIC",
+            "GAS",
+            "GASOLINE",
+            "HYBRID_DIESEL",
+            "HYBRID_DIESEL_CNG",
+            "HYBRID_DIESEL_LNG",
+            "HYBRID_DIESEL_LPG",
+            "HYBRID_GASOLINE",
+            "HYBRID_GASOLINE_CNG",
+            "HYBRID_GASOLINE_LNG",
+            "HYBRID_GASOLINE_LPG",
+            "LPG",
+            "LNG",
+            "OTHER"
+          ]
+        },
+        "transmissionType": {
+          "type": "string",
+          "enum": [
+            "AUTOMATIC",
+            "MANUAL"
+          ]
+        },
+        "costCenter": {
+          "type": "string",
+          "readOnly": true
+        },
+        "jobAccountNumber": {
+          "type": "string"
+        },
+        "registrationDate": {
+          "type": "string",
+          "format": "date",
+          "readOnly": true
+        },
+        "registrationCountry": {
+          "type": "string",
+          "description": "ISO 3166-1 Alpha-2 country code"
+        },
+        "emissionClass": {
+          "type": "string",
+          "enum": [
+            "EURO_0",
+            "EURO_1",
+            "EURO_2",
+            "EURO_3",
+            "EURO_4",
+            "EURO_5",
+            "EURO_5A",
+            "EURO_5B",
+            "EURO_6",
+            "EURO_6A",
+            "EURO_6B",
+            "EURO_6C",
+            "EURO_6C_EVAP",
+            "EURO_6D_TEMP",
+            "EURO_6D_TEMP_EVAP",
+            "EURO_6D_TEMP_ISC",
+            "EURO_6D_TEMP_EVAP_ISC",
+            "EURO_6D_ISC",
+            "EURO_6D_ISC_FCM",
+            "EURO_6D",
+            "EURO_6E",
+            "EURO_6E_BIS",
+            "EURO_6E_BIS_FCM",
+            "EURO_I",
+            "EURO_II",
+            "EURO_III",
+            "EURO_IV",
+            "EURO_V",
+            "EURO_VI",
+            "D3",
+            "D4",
+            "E00",
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "D50",
+            "D51",
+            "D52",
+            "D53",
+            "D54",
+            "F50",
+            "F51",
+            "F52",
+            "F53",
+            "F54",
+            "B00",
+            "B01",
+            "B02",
+            "B03",
+            "B04",
+            "B5A",
+            "B5B",
+            "B6A",
+            "B6B",
+            "B6C",
+            "B6D",
+            "B6E",
+            "AX",
+            "A00",
+            "A01",
+            "A02",
+            "A03",
+            "A04",
+            "A05",
+            "A06",
+            "A07",
+            "A08",
+            "A09",
+            "A10",
+            "A11",
+            "A12",
+            "A13",
+            "A14",
+            "A15",
+            "A16",
+            "A17",
+            "A18",
+            "A19",
+            "A20",
+            "A21",
+            "A22",
+            "A23",
+            "A24",
+            "A25",
+            "A26",
+            "A27",
+            "C00",
+            "C01",
+            "C02",
+            "C03",
+            "D00",
+            "D01",
+            "D02",
+            "D03",
+            "D04",
+            "F00",
+            "F01",
+            "F02",
+            "F03",
+            "F04",
+            "STUFE_I",
+            "STUFE_II",
+            "STUFE_III_A",
+            "STUFE_III_B",
+            "STUFE_IV",
+            "STUFE_V",
+            "TIER_I",
+            "TIER_II",
+            "TIER_III",
+            "TIER_IV_INTERIM",
+            "TIER_IV",
+            "TIER_V"
+          ]
+        },
+        "tareWeight": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "loadCapacity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "maxWeight": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "tensileLoad": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "trailerLoad": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "combinedFuelConsumptionPerKm": {
+          "type": "number"
+        },
+        "urbanFuelConsumptionPerKm": {
+          "type": "number"
+        },
+        "extraUrbanFuelConsumptionPerKm": {
+          "type": "number"
+        },
+        "combinedElectricityConsumptionPerKm": {
+          "type": "number"
+        },
+        "urbanElectricityConsumptionPerKm": {
+          "type": "number"
+        },
+        "extraUrbanElectricityConsumptionPerKm": {
+          "type": "number"
+        },
+        "internalId": {
+          "type": "string"
+        },
+        "additionalId": {
+          "type": "string"
+        },
+        "euLicenseNumber": {
+          "type": "string"
+        },
+        "yearOfConstruction": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "licensePlateColor": {
+          "type": "string",
+          "enum": [
+            "BLACK",
+            "BLUE",
+            "BROWN",
+            "GREEN",
+            "RED",
+            "YELLOW",
+            "WHITE"
+          ]
+        },
+        "grossListPrice": {
+          "type": "number"
+        },
+        "grossListPriceCurrency": {
+          "type": "string",
+          "description": "ISO 4217 alphabetic currency code"
+        },
+        "grossListPriceSource": {
+          "type": "string",
+          "enum": [
+            "DAT",
+            "PROCUREMENT_OFFER",
+            "MANUAL"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "readOnly": true,
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "DECOMMISSIONED",
+            "IN_PROCUREMENT",
+            "ARCHIVED"
+          ]
+        },
+        "co2Emission": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "displacement": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "kilowatt": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "tax": {
+          "type": "number",
+          "readOnly": true
+        },
+        "taxCurrency": {
+          "type": "string",
+          "description": "ISO 4217 alphabetic currency code",
+          "readOnly": true
+        },
+        "manufacturerName": {
+          "type": "string"
+        },
+        "modelName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "baseModelDisplayName": {
+          "type": "string",
+          "description": "DEPRECATED: use modelName instead (will be removed in next release)",
+          "readOnly": true
+        },
+        "importVehicleModel": {
+          "type": "string",
+          "description": "DEPRECATED: use modelName instead (will be removed in next release)",
+          "readOnly": true
+        },
+        "subCompany": {
+          "type": "string",
+          "readOnly": true
+        },
+        "vehicleColor": {
+          "type": "string"
+        },
+        "interiorColor": {
+          "type": "string"
+        },
+        "cushionColor": {
+          "type": "string"
+        },
+        "vehicleAvailable": {
+          "type": "boolean"
+        },
+        "tireStorageLocation": {
+          "type": "string"
+        },
+        "atAkoGross": {
+          "$ref": "#/definitions/MonetaryAmountDto"
+        },
+        "atAkoNet": {
+          "$ref": "#/definitions/MonetaryAmountDto"
+        },
+        "atLuxuryTangent": {
+          "$ref": "#/definitions/MonetaryAmountDto"
+        },
+        "atNova": {
+          "type": "number"
+        },
+        "atVatExempt": {
+          "type": "boolean"
+        },
+        "chMasterNumber": {
+          "type": "string"
+        },
+        "vehicleType": {
+          "type": "string",
+          "enum": [
+            "BUILD_UP",
+            "BUS",
+            "CAR",
+            "COST",
+            "EXCAVATOR",
+            "INDUSTRIAL_TRUCK",
+            "SPECIAL",
+            "TWO_WHEELER",
+            "TRUCK",
+            "TRACTOR",
+            "TRAILER",
+            "VAN",
+            "SWAP_BODY"
+          ]
+        },
+        "handoverDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "location": {
+          "type": "string"
+        },
+        "customFieldValuesByCategory": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomFieldCategoryWithValuesDto"
+          }
+        },
+        "organizationUuid": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "VehicleManualUsageDto": {
+      "type": "object",
+      "properties": {
+        "usageType": {
+          "type": "string",
+          "enum": [
+            "DISTANCE",
+            "OPERATING_HOURS"
+          ]
+        },
+        "usageValue": {
+          "type": "number"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "vehicleUuid": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "VehicleQueryApiParams": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "vin": {
+          "type": "string"
+        },
+        "internalId": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE",
+            "DECOMMISSIONED",
+            "IN_PROCUREMENT",
+            "ARCHIVED"
+          ]
+        },
+        "activeLicensePlate": {
+          "type": "string"
+        },
+        "chMasterNumber": {
+          "type": "string"
+        },
+        "lastModified": {
+          "$ref": "#/definitions/InstantRangeApiParams"
+        },
+        "assignedToPlate": {
+          "$ref": "#/definitions/LicensePlateQueryApiParams"
+        }
+      }
+    },
+    "VehicleSubCompanyApiParams": {
+      "type": "object",
+      "properties": {
+        "subCompany": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "VehicleSubCompanyHistoryDto": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "subCompany": {
+          "type": "string"
+        },
+        "dateRange": {
+          "$ref": "#/definitions/DateRangeDto"
+        }
+      }
+    },
+    "VehicleUsageCreationApiRequest": {
+      "type": "object",
+      "properties": {
+        "usageType": {
+          "type": "string",
+          "enum": [
+            "DISTANCE",
+            "OPERATING_HOURS"
+          ]
+        },
+        "usageValue": {
+          "type": "number"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Void": {
+      "type": "object"
+    },
+    "DriverUpdateApiParams": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "nullable": true,
+          "format": "date"
+        },
+        "organizationUuid": {
+          "type": "string",
+          "nullable": false,
+          "format": "uuid"
+        },
+        "gender": {
+          "type": "string",
+          "nullable": true,
+          "enum": [
+            "MALE",
+            "FEMALE"
+          ]
+        },
+        "firstName": {
+          "type": "string",
+          "nullable": false
+        },
+        "middleName": {
+          "type": "string",
+          "nullable": true
+        },
+        "lastName": {
+          "type": "string",
+          "nullable": false
+        },
+        "emailWork": {
+          "type": "string",
+          "nullable": true,
+          "description": "A valid email address."
+        },
+        "emailPrivate": {
+          "type": "string",
+          "nullable": true,
+          "description": "A valid email address."
+        },
+        "phoneNumber": {
+          "$ref": "#/definitions/PhoneNumberDto",
+          "nullable": true
+        },
+        "mobilePhoneNumber": {
+          "$ref": "#/definitions/PhoneNumberDto",
+          "nullable": true
+        },
+        "notificationChannel": {
+          "type": "string",
+          "nullable": true,
+          "enum": [
+            "EMAIL",
+            "SMS"
+          ]
+        },
+        "address": {
+          "type": "string",
+          "nullable": true
+        },
+        "zipCode": {
+          "type": "string",
+          "nullable": true
+        },
+        "city": {
+          "type": "string",
+          "nullable": true
+        },
+        "country": {
+          "type": "string",
+          "nullable": true,
+          "description": "ISO 3166-1 Alpha-2 country code"
+        },
+        "language": {
+          "type": "string",
+          "nullable": true,
+          "description": "ISO 639-1 Language Code"
+        },
+        "nationality": {
+          "type": "string",
+          "nullable": true,
+          "description": "ISO 3166-1 Alpha-2 country code"
+        },
+        "placeOfBirth": {
+          "type": "string",
+          "nullable": true
+        },
+        "birthDate": {
+          "type": "string",
+          "nullable": true,
+          "format": "date"
+        },
+        "internalId": {
+          "type": "string",
+          "nullable": true
+        },
+        "costCenter": {
+          "type": "string",
+          "nullable": true
+        },
+        "subCompany": {
+          "type": "string",
+          "nullable": true
+        },
+        "department": {
+          "type": "string",
+          "nullable": true
+        },
+        "location": {
+          "type": "string",
+          "nullable": true
+        },
+        "comment": {
+          "type": "string",
+          "nullable": true
+        },
+        "distanceToWorkplace": {
+          "type": "number",
+          "nullable": true
+        },
+        "employeePayment": {
+          "type": "number",
+          "nullable": true
+        }
+      }
+    },
+    "VehicleUpdateApiParams": {
+      "type": "object",
+      "properties": {
+        "customName": {
+          "type": "string",
+          "nullable": true,
+          "description": "Used to override the vehicle's display name, which is a generated property that otherwise defaults to the current license plate"
+        },
+        "commissionDate": {
+          "type": "string",
+          "nullable": true,
+          "format": "date"
+        },
+        "registrationDate": {
+          "type": "string",
+          "nullable": true,
+          "format": "date"
+        },
+        "organizationUuid": {
+          "type": "string",
+          "nullable": false,
+          "format": "uuid"
+        },
+        "fuelTankSize": {
+          "type": "number",
+          "nullable": true
+        },
+        "fuelType": {
+          "type": "string",
+          "nullable": true,
+          "enum": [
+            "CNG",
+            "DIESEL",
+            "ELECTRIC",
+            "GAS",
+            "GASOLINE",
+            "HYBRID_DIESEL",
+            "HYBRID_DIESEL_CNG",
+            "HYBRID_DIESEL_LNG",
+            "HYBRID_DIESEL_LPG",
+            "HYBRID_GASOLINE",
+            "HYBRID_GASOLINE_CNG",
+            "HYBRID_GASOLINE_LNG",
+            "HYBRID_GASOLINE_LPG",
+            "LPG",
+            "LNG",
+            "OTHER"
+          ]
+        },
+        "transmissionType": {
+          "type": "string",
+          "nullable": true,
+          "enum": [
+            "AUTOMATIC",
+            "MANUAL"
+          ]
+        },
+        "jobAccountNumber": {
+          "type": "string",
+          "nullable": true
+        },
+        "registrationCountry": {
+          "type": "string",
+          "nullable": false,
+          "enum": [
+            "ISO 3166-1 Alpha-2 country code"
+          ]
+        },
+        "emissionClass": {
+          "type": "string",
+          "nullable": true,
+          "enum": [
+            "EURO_1",
+            "EURO_2",
+            "EURO_3",
+            "EURO_4",
+            "EURO_5",
+            "EURO_5A",
+            "EURO_5B",
+            "EURO_6",
+            "EURO_6B",
+            "EURO_6C",
+            "EURO_6D_TEMP",
+            "EURO_6D",
+            "EURO_I",
+            "EURO_II",
+            "EURO_III",
+            "EURO_IV",
+            "EURO_V",
+            "EURO_VI",
+            "D3",
+            "D4",
+            "E00",
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "D50",
+            "D51",
+            "D52",
+            "D53",
+            "D54",
+            "F50",
+            "F51",
+            "F52",
+            "F53",
+            "F54",
+            "B00",
+            "B01",
+            "B02",
+            "B03",
+            "B04",
+            "B5A",
+            "B5B",
+            "B6A",
+            "B6B",
+            "B6C",
+            "B6D",
+            "A00",
+            "A01",
+            "A02",
+            "A03",
+            "A04",
+            "A05",
+            "A06",
+            "A07",
+            "A08",
+            "A09",
+            "A10",
+            "A11",
+            "A12",
+            "A13",
+            "A14",
+            "A15",
+            "A16",
+            "A17",
+            "A18",
+            "A19",
+            "A20",
+            "A21",
+            "A22",
+            "A23",
+            "A24",
+            "A25",
+            "A26",
+            "A27",
+            "C00",
+            "C01",
+            "C02",
+            "C03",
+            "D00",
+            "D01",
+            "D02",
+            "D03",
+            "D04",
+            "F00",
+            "F01",
+            "F02",
+            "F03",
+            "F04",
+            "STUFE_I",
+            "STUFE_II",
+            "STUFE_III_A",
+            "STUFE_III_B",
+            "STUFE_IV",
+            "STUFE_V",
+            "TIER_I",
+            "TIER_II",
+            "TIER_III",
+            "TIER_IV_INTERIM",
+            "TIER_IV",
+            "TIER_V"
+          ]
+        },
+        "tareWeight": {
+          "type": "integer",
+          "nullable": true,
+          "format": "int32"
+        },
+        "loadCapacity": {
+          "type": "integer",
+          "nullable": true,
+          "format": "int32"
+        },
+        "maxWeight": {
+          "type": "integer",
+          "nullable": true,
+          "format": "int32"
+        },
+        "tensileLoad": {
+          "type": "integer",
+          "nullable": true,
+          "format": "int32"
+        },
+        "trailerLoad": {
+          "type": "integer",
+          "nullable": true,
+          "format": "int32"
+        },
+        "combinedFuelConsumptionPerKm": {
+          "type": "number",
+          "nullable": true
+        },
+        "urbanFuelConsumptionPerKm": {
+          "type": "number",
+          "nullable": true
+        },
+        "extraUrbanFuelConsumptionPerKm": {
+          "type": "number",
+          "nullable": true
+        },
+        "combinedElectricityConsumptionPerKm": {
+          "type": "number",
+          "nullable": true
+        },
+        "urbanElectricityConsumptionPerKm": {
+          "type": "number",
+          "nullable": true
+        },
+        "extraUrbanElectricityConsumptionPerKm": {
+          "type": "number",
+          "nullable": true
+        },
+        "internalId": {
+          "type": "string",
+          "nullable": true
+        },
+        "additionalId": {
+          "type": "string",
+          "nullable": true
+        },
+        "euLicenseNumber": {
+          "type": "string",
+          "nullable": true
+        },
+        "yearOfConstruction": {
+          "type": "integer",
+          "nullable": true,
+          "format": "int32"
+        },
+        "comment": {
+          "type": "string",
+          "nullable": true
+        },
+        "licensePlateColor": {
+          "type": "string",
+          "nullable": true,
+          "enum": [
+            "BLACK",
+            "BLUE",
+            "BROWN",
+            "GREEN",
+            "RED",
+            "YELLOW",
+            "WHITE"
+          ]
+        },
+        "grossListPrice": {
+          "type": "number",
+          "nullable": true
+        },
+        "grossListPriceCurrency": {
+          "type": "string",
+          "nullable": true,
+          "enum": [
+            "ISO 4217 alphabetic currency code"
+          ]
+        },
+        "grossListPriceSource": {
+          "type": "string",
+          "nullable": true,
+          "enum": [
+            "DAT",
+            "MANUAL"
+          ]
+        },
+        "co2Emission": {
+          "type": "integer",
+          "nullable": true,
+          "format": "int32"
+        },
+        "displacement": {
+          "type": "integer",
+          "nullable": true,
+          "format": "int32"
+        },
+        "kilowatt": {
+          "type": "integer",
+          "nullable": true,
+          "format": "int32"
+        },
+        "manufacturerName": {
+          "type": "string",
+          "nullable": true
+        },
+        "vehicleColor": {
+          "type": "string",
+          "nullable": true
+        },
+        "interiorColor": {
+          "type": "string",
+          "nullable": true
+        },
+        "cushionColor": {
+          "type": "string",
+          "nullable": true
+        },
+        "vehicleAvailable": {
+          "type": "boolean",
+          "nullable": false
+        },
+        "tireStorageLocation": {
+          "type": "string",
+          "nullable": true
+        },
+        "atAkoGross": {
+          "$ref": "#/definitions/MonetaryAmountDto",
+          "nullable": true
+        },
+        "atAkoNet": {
+          "$ref": "#/definitions/MonetaryAmountDto",
+          "nullable": true
+        },
+        "atLuxuryTangent": {
+          "$ref": "#/definitions/MonetaryAmountDto",
+          "nullable": true
+        },
+        "atNova": {
+          "type": "number",
+          "nullable": true
+        },
+        "atVatExempt": {
+          "type": "boolean",
+          "nullable": false
+        },
+        "chMasterNumber": {
+          "type": "string",
+          "nullable": true
+        },
+        "vehicleType": {
+          "type": "string",
+          "nullable": false,
+          "enum": [
+            "BUILD_UP",
+            "BUS",
+            "CAR",
+            "COST",
+            "EXCAVATOR",
+            "INDUSTRIAL_TRUCK",
+            "SPECIAL",
+            "TWO_WHEELER",
+            "TRUCK",
+            "TRACTOR",
+            "TRAILER",
+            "VAN"
+          ]
+        },
+        "location": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "DurationUpdateApiParams": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "nullable": false,
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "nullable": true,
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "x-tagGroups": [
+    {
+      "name": "Vehicles",
+      "tags": [
+        "Vehicles",
+        "Vehicle license plates",
+        "Vehicle assignments",
+        "Vehicle usages",
+        "Vehicle custom fields",
+        "Vehicle financing"
+      ]
+    },
+    {
+      "name": "Drivers",
+      "tags": [
+        "Drivers",
+        "Driver assignments",
+        "Driver custom fields"
+      ]
+    },
+    {
+      "name": "Other",
+      "tags": [
+        "Custom fields",
+        "Invoices",
+        "Organizations"
+      ]
+    }
+  ]
+}

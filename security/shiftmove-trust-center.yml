@@ -1,0 +1,28 @@
+generated: '2026-07-21'
+method: searched
+probe: false
+source: https://www.shiftmove.com/legal/dpa
+notes: >-
+  Shiftmove GmbH (Avrios + Vimcar) does not operate a dedicated trust portal
+  (no trust.shiftmove.com / security.shiftmove.com), but publishes a real
+  compliance posture across its legal pages: a GDPR Data Processing Agreement
+  with a technical-and-organizational-measures (TOMs) appendix, a GDPR privacy
+  policy, and a TÜV-certified data-protection claim for the Vimcar digital
+  logbook. Captured by search of the public shiftmove.com legal surface; no
+  SOC 2 / ISO 27001 certification was found published.
+url: https://www.shiftmove.com/legal/legal-overview
+certifications:
+  - GDPR
+  - TÜV data-protection certification (Vimcar digital logbook)
+pages:
+  - label: Data Processing Agreement (DPA) with TOMs appendix
+    url: https://www.shiftmove.com/legal/dpa
+  - label: Privacy policy (Datenschutzerklärung)
+    url: https://www.shiftmove.com/legal/datenschutzerklarung
+  - label: Legal overview
+    url: https://www.shiftmove.com/legal/legal-overview
+evidence:
+  - source: https://www.shiftmove.com/legal/dpa
+    keywords: [gdpr, data processing agreement, technical and organizational measures]
+  - source: https://www.vimcar.de/
+    keywords: [tüv-certified data protection, gdpr]
