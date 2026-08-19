@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fleet API Specifications Custom fields Organizations API",
+    "version": "1.2.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET all organizations paged",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/organizations",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items in a page"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Number of the page"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sorting key"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "query",
+                "description": "Sorting order"
+              }
+            ]
+          },
+          "docs": "Access paged organizations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

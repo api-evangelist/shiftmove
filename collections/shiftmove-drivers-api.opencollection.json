@@ -1,0 +1,180 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fleet API Specifications Custom fields Drivers API",
+    "version": "1.2.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Drivers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET paginated drivers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/drivers",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items in a page"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Number of the page"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sorting key"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "query",
+                "description": "Sorting order"
+              }
+            ]
+          },
+          "docs": "Access pages of drivers"
+        },
+        {
+          "info": {
+            "name": "POST driver",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/drivers"
+          },
+          "docs": "Create a new driver."
+        },
+        {
+          "info": {
+            "name": "QUERY paginated drivers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/drivers/query",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items in a page"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Number of the page"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sorting key"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "query",
+                "description": "Sorting order"
+              }
+            ]
+          },
+          "docs": "Query drivers based on specific criteria. The result is paginated"
+        },
+        {
+          "info": {
+            "name": "GET driver by UUID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/drivers/:uuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get detailed information about a specific driver."
+        },
+        {
+          "info": {
+            "name": "UPDATE a specific driver",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/drivers/:uuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Post a map of key value pairs for fields with the new value. A value of `null` is accepted (where marked as nullable) and will clear that field. Cleared fields will not be shown in the response, as `null` fields are stripped by default. If a field is not present in the map it will not be altered. **Fields not marked as nullable can be left out of the map all together so as not to be changed**"
+        },
+        {
+          "info": {
+            "name": "UPDATE driver custom field value",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/drivers/:uuid/customFieldValues/:customFieldUuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "customFieldUuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a custom field value for a driver, identified by driver UUID and custom field UUID. It doesn't matter whether the custom field value has been set for this driver previously."
+        },
+        {
+          "info": {
+            "name": "CREATE driver state history entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/drivers/:uuid/stateHistory",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Adds an entry to the driver state history. This cannot be added on the same day as an existing entry. If the driver is archived, any fuel card or vehicle assignments associated with this driver will be automatically ended on the archive date."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

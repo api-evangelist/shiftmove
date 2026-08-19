@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fleet API Specifications Custom fields API",
+    "version": "1.2.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Custom fields",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET all driver custom fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/customFields/drivers"
+          },
+          "docs": "Return all the custom fields (user-defined fields) associated with drivers. New custom fields can be defined for drivers through the Avrios UI."
+        },
+        {
+          "info": {
+            "name": "GET all vehicle custom fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/customFields/vehicles"
+          },
+          "docs": "Return all the custom fields (user-defined fields) associated with vehicles. New custom fields can be defined for vehicles through the Avrios UI."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

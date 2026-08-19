@@ -1,0 +1,1340 @@
+{
+  "item": [
+    {
+      "id": "fe14d841-ee9b-448e-9ef5-77f095fa4c81",
+      "name": "Drivers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "72d7956c-3ae1-4e1e-b102-500c1b818c55",
+          "name": "GET paginated drivers",
+          "request": {
+            "name": "GET paginated drivers",
+            "description": {
+              "content": "Access pages of drivers",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items in a page"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "Number of the page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Sorting key"
+                },
+                {
+                  "disabled": false,
+                  "key": "reverse",
+                  "value": "<boolean>",
+                  "description": "Sorting order"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a8418a63-4b11-4992-94ff-d8b346391529",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"uuid\": \"be211006-b416-81ff-7b86-ea89f7b759d1\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"internalId\": \"string\",\n      \"state\": \"LEAVE\",\n      \"lastModified\": \"1991-07-12T20:19:14.033Z\"\n    },\n    {\n      \"uuid\": \"cd2eb6c9-b6e9-34c2-7d51-f32901809575\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"internalId\": \"string\",\n      \"state\": \"ACTIVE\",\n      \"lastModified\": \"1958-11-23T06:49:59.872Z\"\n    }\n  ],\n  \"page\": {\n    \"pageNumber\": 4093,\n    \"limit\": 9375\n  },\n  \"totalItems\": 2455\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8ffcfa6-b8c0-4774-89f0-181076500b5d",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04d7e215-34e3-460c-9f0b-ff29843d82b3",
+          "name": "POST driver",
+          "request": {
+            "name": "POST driver",
+            "description": {
+              "content": "Create a new driver.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"state\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"gender\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"emailWork\": \"<string>\",\n  \"emailPrivate\": \"<string>\",\n  \"phoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"mobilePhoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"notificationChannel\": \"<string>\",\n  \"address\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"language\": \"<string>\",\n  \"nationality\": \"<string>\",\n  \"placeOfBirth\": \"<string>\",\n  \"birthDate\": \"<date>\",\n  \"internalId\": \"<string>\",\n  \"costCenter\": \"<string>\",\n  \"subCompany\": \"<string>\",\n  \"department\": \"<string>\",\n  \"location\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"distanceToWorkplace\": \"<number>\",\n  \"employeePayment\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3b7c5b3f-7f04-42dc-93ad-7beb7c0a98aa",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"gender\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"emailWork\": \"<string>\",\n  \"emailPrivate\": \"<string>\",\n  \"phoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"mobilePhoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"notificationChannel\": \"<string>\",\n  \"address\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"language\": \"<string>\",\n  \"nationality\": \"<string>\",\n  \"placeOfBirth\": \"<string>\",\n  \"birthDate\": \"<date>\",\n  \"internalId\": \"<string>\",\n  \"costCenter\": \"<string>\",\n  \"subCompany\": \"<string>\",\n  \"department\": \"<string>\",\n  \"location\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"distanceToWorkplace\": \"<number>\",\n  \"employeePayment\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"c723244c-74b0-06a0-1069-a4808ffdd4bd\",\n  \"state\": \"INACTIVE\",\n  \"startDate\": \"1978-03-26\",\n  \"gender\": \"FEMALE\",\n  \"firstName\": \"string\",\n  \"middleName\": \"string\",\n  \"lastName\": \"string\",\n  \"emailWork\": \"string\",\n  \"emailWorkType\": \"MANUAL\",\n  \"emailPrivate\": \"string\",\n  \"phoneNumber\": {\n    \"number\": \"string\",\n    \"country\": \"string\"\n  },\n  \"mobilePhoneNumber\": {\n    \"number\": \"string\",\n    \"country\": \"string\"\n  },\n  \"notificationChannel\": \"EMAIL\",\n  \"address\": \"string\",\n  \"zipCode\": \"string\",\n  \"city\": \"string\",\n  \"country\": \"string\",\n  \"language\": \"string\",\n  \"nationality\": \"string\",\n  \"placeOfBirth\": \"string\",\n  \"birthDate\": \"2011-02-12\",\n  \"internalId\": \"string\",\n  \"costCenter\": \"string\",\n  \"subCompany\": \"string\",\n  \"department\": \"string\",\n  \"location\": \"string\",\n  \"comment\": \"string\",\n  \"distanceToWorkplace\": 2841.1187203912104,\n  \"employeePayment\": 9654.099873121268,\n  \"eligibleForDriverBriefings\": false,\n  \"eligibleForDriverLicenseChecks\": false,\n  \"managementType\": \"AUTOMATIC\",\n  \"customFieldValuesByCategory\": [\n    {\n      \"uuid\": \"be02cd12-2c57-720c-40bb-14f0d82260c7\",\n      \"name\": \"string\",\n      \"position\": 5431,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"309f2981-1878-a8e1-36e0-353a357cc9cd\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1949-08-20T08:03:28.475Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 6134,\n          \"decimalValue\": 364.1060682911168,\n          \"monetaryAmountValue\": {\n            \"amount\": 2332.489150457315,\n            \"currency\": \"string\"\n          }\n        },\n        {\n          \"uuid\": \"c3406084-f293-27e4-9370-ac085eec8d80\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"2013-03-13T04:57:40.544Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 1004,\n          \"decimalValue\": 6309.069663509521,\n          \"monetaryAmountValue\": {\n            \"amount\": 7270.489547611824,\n            \"currency\": \"string\"\n          }\n        }\n      ]\n    },\n    {\n      \"uuid\": \"6dc7e790-d89d-0ddb-6fa8-de9782dbd26a\",\n      \"name\": \"string\",\n      \"position\": 3928,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"d97bc754-c459-a4e4-6de6-8c8615ad0454\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1992-04-08T09:11:59.382Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 7489,\n          \"decimalValue\": 7864.926655864184,\n          \"monetaryAmountValue\": {\n            \"amount\": 4511.773265970891,\n            \"currency\": \"string\"\n          }\n        },\n        {\n          \"uuid\": \"baacd2ab-faa4-333a-29cb-39293d108108\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1999-11-01T14:14:41.809Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 1490,\n          \"decimalValue\": 2379.6487778223664,\n          \"monetaryAmountValue\": {\n            \"amount\": 4505.034075359205,\n            \"currency\": \"string\"\n          }\n        }\n      ]\n    }\n  ],\n  \"organizationUuid\": \"04d31a89-d8f5-f6b6-2eea-af65c53c0aab\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcf3468c-9fe8-46aa-9d6d-b24f316ad89d",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"state\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"gender\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"emailWork\": \"<string>\",\n  \"emailPrivate\": \"<string>\",\n  \"phoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"mobilePhoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"notificationChannel\": \"<string>\",\n  \"address\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"language\": \"<string>\",\n  \"nationality\": \"<string>\",\n  \"placeOfBirth\": \"<string>\",\n  \"birthDate\": \"<date>\",\n  \"internalId\": \"<string>\",\n  \"costCenter\": \"<string>\",\n  \"subCompany\": \"<string>\",\n  \"department\": \"<string>\",\n  \"location\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"distanceToWorkplace\": \"<number>\",\n  \"employeePayment\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10732b0f-3f70-4b09-9d6d-3a37010ec1f4",
+          "name": "QUERY paginated drivers",
+          "request": {
+            "name": "QUERY paginated drivers",
+            "description": {
+              "content": "Query drivers based on specific criteria. The result is paginated",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items in a page"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "Number of the page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Sorting key"
+                },
+                {
+                  "disabled": false,
+                  "key": "reverse",
+                  "value": "<boolean>",
+                  "description": "Sorting order"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uuid\": \"<uuid>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"internalId\": \"<string>\",\n  \"state\": \"<string>\",\n  \"lastModified\": {\n    \"atOrAfter\": \"<dateTime>\",\n    \"before\": \"<dateTime>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a9c15a0e-24fd-4bcc-ae8b-c5a4435738ea",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"uuid\": \"<uuid>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"internalId\": \"<string>\",\n  \"state\": \"<string>\",\n  \"lastModified\": {\n    \"atOrAfter\": \"<dateTime>\",\n    \"before\": \"<dateTime>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"uuid\": \"ce5e2d7f-1ca8-0304-f133-bd7aaa648dce\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"internalId\": \"string\",\n      \"state\": \"ACTIVE\",\n      \"lastModified\": \"1988-07-04T04:15:05.820Z\"\n    },\n    {\n      \"uuid\": \"f61b803f-a753-f76b-4d9a-7f717e1b90c9\",\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"internalId\": \"string\",\n      \"state\": \"LEAVE\",\n      \"lastModified\": \"2023-12-13T10:21:23.236Z\"\n    }\n  ],\n  \"page\": {\n    \"pageNumber\": 836,\n    \"limit\": 9767\n  },\n  \"totalItems\": 6139\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f607319-96c5-4938-969c-93923b2a4bcf",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"uuid\": \"<uuid>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"internalId\": \"<string>\",\n  \"state\": \"<string>\",\n  \"lastModified\": {\n    \"atOrAfter\": \"<dateTime>\",\n    \"before\": \"<dateTime>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a63a1bb-c6e7-4fa3-b1c3-332b9e867213",
+          "name": "GET driver by UUID",
+          "request": {
+            "name": "GET driver by UUID",
+            "description": {
+              "content": "Get detailed information about a specific driver.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                ":uuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "193d9aaf-f142-491e-a873-6eeb5e232393",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"1bfe02de-9a9e-bb26-c2d0-8a5848bede63\",\n  \"state\": \"INACTIVE\",\n  \"startDate\": \"1991-01-19\",\n  \"gender\": \"MALE\",\n  \"firstName\": \"string\",\n  \"middleName\": \"string\",\n  \"lastName\": \"string\",\n  \"emailWork\": \"string\",\n  \"emailWorkType\": \"MANUAL\",\n  \"emailPrivate\": \"string\",\n  \"phoneNumber\": {\n    \"number\": \"string\",\n    \"country\": \"string\"\n  },\n  \"mobilePhoneNumber\": {\n    \"number\": \"string\",\n    \"country\": \"string\"\n  },\n  \"notificationChannel\": \"EMAIL\",\n  \"address\": \"string\",\n  \"zipCode\": \"string\",\n  \"city\": \"string\",\n  \"country\": \"string\",\n  \"language\": \"string\",\n  \"nationality\": \"string\",\n  \"placeOfBirth\": \"string\",\n  \"birthDate\": \"2026-03-21\",\n  \"internalId\": \"string\",\n  \"costCenter\": \"string\",\n  \"subCompany\": \"string\",\n  \"department\": \"string\",\n  \"location\": \"string\",\n  \"comment\": \"string\",\n  \"distanceToWorkplace\": 8819.494782200554,\n  \"employeePayment\": 8907.651272377387,\n  \"eligibleForDriverBriefings\": true,\n  \"eligibleForDriverLicenseChecks\": true,\n  \"managementType\": \"MANUAL\",\n  \"customFieldValuesByCategory\": [\n    {\n      \"uuid\": \"1d2c7789-0f2f-0380-7e4d-9ebf2f6ddacb\",\n      \"name\": \"string\",\n      \"position\": 484,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"0d444781-10f8-a42e-ee74-56226ec22f72\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"2000-12-27T02:34:06.131Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 1540,\n          \"decimalValue\": 5266.911098451602,\n          \"monetaryAmountValue\": {\n            \"amount\": 5469.691457683119,\n            \"currency\": \"string\"\n          }\n        },\n        {\n          \"uuid\": \"d3273c2a-9138-c7d4-b66b-653196fc2947\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1993-10-01T15:38:24.414Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 1447,\n          \"decimalValue\": 4735.788775096888,\n          \"monetaryAmountValue\": {\n            \"amount\": 2102.5101655843346,\n            \"currency\": \"string\"\n          }\n        }\n      ]\n    },\n    {\n      \"uuid\": \"fed46c63-c479-07d7-2bee-cbb591a118e9\",\n      \"name\": \"string\",\n      \"position\": 4841,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"055a9e68-da7b-e23a-2eaf-eed9f62ea793\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1961-10-30T23:29:20.027Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 8707,\n          \"decimalValue\": 8480.469393647985,\n          \"monetaryAmountValue\": {\n            \"amount\": 9435.090356635495,\n            \"currency\": \"string\"\n          }\n        },\n        {\n          \"uuid\": \"37c7f35c-f42a-d041-faa4-369342e54004\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1999-06-06T04:33:54.512Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 1357,\n          \"decimalValue\": 6897.755766509428,\n          \"monetaryAmountValue\": {\n            \"amount\": 4946.36847762103,\n            \"currency\": \"string\"\n          }\n        }\n      ]\n    }\n  ],\n  \"organizationUuid\": \"7befcb7b-7cbd-afcd-48f1-4b9a20806b02\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "824bcd4a-d32d-48ae-99de-16b937d2d4a9",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1661dcb4-badf-43cb-8177-0461b62f8640",
+              "name": "Driver not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ee48c74-c172-403f-999e-f38c0f2e9a39",
+          "name": "UPDATE a specific driver",
+          "request": {
+            "name": "UPDATE a specific driver",
+            "description": {
+              "content": "Post a map of key value pairs for fields with the new value. A value of `null` is accepted (where marked as nullable) and will clear that field. Cleared fields will not be shown in the response, as `null` fields are stripped by default. If a field is not present in the map it will not be altered. **Fields not marked as nullable can be left out of the map all together so as not to be changed**",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                ":uuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"gender\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"emailWork\": \"<string>\",\n  \"emailPrivate\": \"<string>\",\n  \"phoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"mobilePhoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"notificationChannel\": \"<string>\",\n  \"address\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"language\": \"<string>\",\n  \"nationality\": \"<string>\",\n  \"placeOfBirth\": \"<string>\",\n  \"birthDate\": \"<date>\",\n  \"internalId\": \"<string>\",\n  \"costCenter\": \"<string>\",\n  \"subCompany\": \"<string>\",\n  \"department\": \"<string>\",\n  \"location\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"distanceToWorkplace\": \"<number>\",\n  \"employeePayment\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d27e393c-d312-4971-b9ea-18e8689c3d08",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"gender\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"emailWork\": \"<string>\",\n  \"emailPrivate\": \"<string>\",\n  \"phoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"mobilePhoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"notificationChannel\": \"<string>\",\n  \"address\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"language\": \"<string>\",\n  \"nationality\": \"<string>\",\n  \"placeOfBirth\": \"<string>\",\n  \"birthDate\": \"<date>\",\n  \"internalId\": \"<string>\",\n  \"costCenter\": \"<string>\",\n  \"subCompany\": \"<string>\",\n  \"department\": \"<string>\",\n  \"location\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"distanceToWorkplace\": \"<number>\",\n  \"employeePayment\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"6ac9139d-8ace-38be-7253-257222b5d781\",\n  \"state\": \"ACTIVE\",\n  \"startDate\": \"2001-11-02\",\n  \"gender\": \"MALE\",\n  \"firstName\": \"string\",\n  \"middleName\": \"string\",\n  \"lastName\": \"string\",\n  \"emailWork\": \"string\",\n  \"emailWorkType\": \"MANUAL\",\n  \"emailPrivate\": \"string\",\n  \"phoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"mobilePhoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"notificationChannel\": \"SMS\",\n  \"address\": \"string\",\n  \"zipCode\": \"string\",\n  \"city\": \"string\",\n  \"country\": \"string\",\n  \"language\": \"string\",\n  \"nationality\": \"string\",\n  \"placeOfBirth\": \"string\",\n  \"birthDate\": \"1985-09-28\",\n  \"internalId\": \"string\",\n  \"costCenter\": \"string\",\n  \"subCompany\": \"string\",\n  \"department\": \"string\",\n  \"location\": \"string\",\n  \"comment\": \"string\",\n  \"distanceToWorkplace\": 5120.683830841519,\n  \"employeePayment\": 9744.307923941898,\n  \"eligibleForDriverBriefings\": false,\n  \"eligibleForDriverLicenseChecks\": true,\n  \"managementType\": \"AUTOMATIC\",\n  \"customFieldValuesByCategory\": [\n    {\n      \"uuid\": \"0afb5bc3-6ecd-d2b9-d147-f8ef9ed890a6\",\n      \"name\": \"string\",\n      \"position\": 8457,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"f455c454-ed45-6282-cfef-53559b97582b\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"2021-06-13T08:40:45.763Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 9774,\n          \"decimalValue\": 8179.151209407617,\n          \"monetaryAmountValue\": {\n            \"amount\": 1203.7257672870837,\n            \"currency\": \"string\"\n          }\n        },\n        {\n          \"uuid\": \"120fc97b-cebe-2c87-c70d-08f95b208a50\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1961-08-01T23:55:16.192Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 5457,\n          \"decimalValue\": 4052.5952283175957,\n          \"monetaryAmountValue\": {\n            \"amount\": 7269.952048924997,\n            \"currency\": \"string\"\n          }\n        }\n      ]\n    },\n    {\n      \"uuid\": \"73d92aab-d731-46b5-9669-acb8e0494c45\",\n      \"name\": \"string\",\n      \"position\": 8637,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"606c2f4e-1cc6-99fe-7b4f-dffc2991e43d\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1988-04-25T15:18:33.770Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 911,\n          \"decimalValue\": 8173.021098815658,\n          \"monetaryAmountValue\": {\n            \"amount\": 9727.462441560658,\n            \"currency\": \"string\"\n          }\n        },\n        {\n          \"uuid\": \"62206202-552c-ff87-4260-387faf152769\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1998-12-11T23:29:43.768Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 9257,\n          \"decimalValue\": 1270.2789784106872,\n          \"monetaryAmountValue\": {\n            \"amount\": 1016.2293784107857,\n            \"currency\": \"string\"\n          }\n        }\n      ]\n    }\n  ],\n  \"organizationUuid\": \"100c17dd-b6f0-5458-2e0f-8a6f7cf3fc41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07ad6d61-2ac8-454c-91ac-caaaf1accc52",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"gender\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"emailWork\": \"<string>\",\n  \"emailPrivate\": \"<string>\",\n  \"phoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"mobilePhoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"notificationChannel\": \"<string>\",\n  \"address\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"language\": \"<string>\",\n  \"nationality\": \"<string>\",\n  \"placeOfBirth\": \"<string>\",\n  \"birthDate\": \"<date>\",\n  \"internalId\": \"<string>\",\n  \"costCenter\": \"<string>\",\n  \"subCompany\": \"<string>\",\n  \"department\": \"<string>\",\n  \"location\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"distanceToWorkplace\": \"<number>\",\n  \"employeePayment\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "755028a5-428f-476d-a6ea-e08b4bd7100b",
+              "name": "Driver not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"gender\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"emailWork\": \"<string>\",\n  \"emailPrivate\": \"<string>\",\n  \"phoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"mobilePhoneNumber\": {\n    \"number\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"notificationChannel\": \"<string>\",\n  \"address\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"language\": \"<string>\",\n  \"nationality\": \"<string>\",\n  \"placeOfBirth\": \"<string>\",\n  \"birthDate\": \"<date>\",\n  \"internalId\": \"<string>\",\n  \"costCenter\": \"<string>\",\n  \"subCompany\": \"<string>\",\n  \"department\": \"<string>\",\n  \"location\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"distanceToWorkplace\": \"<number>\",\n  \"employeePayment\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c52759ad-fcf1-4abb-bfa2-8b6b4cf28d6a",
+          "name": "UPDATE driver custom field value",
+          "request": {
+            "name": "UPDATE driver custom field value",
+            "description": {
+              "content": "Update a custom field value for a driver, identified by driver UUID and custom field UUID. It doesn't matter whether the custom field value has been set for this driver previously.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                ":uuid",
+                "customFieldValues",
+                ":customFieldUuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "customFieldUuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"textValue\": \"<string>\",\n  \"dateValue\": \"<dateTime>\",\n  \"booleanValue\": \"<boolean>\",\n  \"integerValue\": \"<integer>\",\n  \"decimalValue\": \"<number>\",\n  \"monetaryAmountValue\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"exactlyOneValueSet\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bf51a9f6-1afa-4c72-8a07-5d6816e06715",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid",
+                    "customFieldValues",
+                    ":customFieldUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customFieldUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"textValue\": \"<string>\",\n  \"dateValue\": \"<dateTime>\",\n  \"booleanValue\": \"<boolean>\",\n  \"integerValue\": \"<integer>\",\n  \"decimalValue\": \"<number>\",\n  \"monetaryAmountValue\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"exactlyOneValueSet\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"96c778e7-3d2c-349a-a43b-32d93281dda2\",\n  \"textValue\": \"string\",\n  \"dateValue\": \"1951-07-08T08:35:08.436Z\",\n  \"booleanValue\": false,\n  \"integerValue\": 6877,\n  \"decimalValue\": 4428.34406803969,\n  \"monetaryAmountValue\": {\n    \"amount\": 2772.9091750134503,\n    \"currency\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1aba9e3e-9fa6-421d-9262-e53bcaed3964",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid",
+                    "customFieldValues",
+                    ":customFieldUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customFieldUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"textValue\": \"<string>\",\n  \"dateValue\": \"<dateTime>\",\n  \"booleanValue\": \"<boolean>\",\n  \"integerValue\": \"<integer>\",\n  \"decimalValue\": \"<number>\",\n  \"monetaryAmountValue\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"exactlyOneValueSet\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0ce94586-34ed-4b1f-acb7-c126f3889d80",
+              "name": "Driver or custom field not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid",
+                    "customFieldValues",
+                    ":customFieldUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customFieldUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"textValue\": \"<string>\",\n  \"dateValue\": \"<dateTime>\",\n  \"booleanValue\": \"<boolean>\",\n  \"integerValue\": \"<integer>\",\n  \"decimalValue\": \"<number>\",\n  \"monetaryAmountValue\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"exactlyOneValueSet\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4152fee-83a5-49a0-bd80-9c1ad281981c",
+          "name": "CREATE driver state history entry",
+          "request": {
+            "name": "CREATE driver state history entry",
+            "description": {
+              "content": "Adds an entry to the driver state history. This cannot be added on the same day as an existing entry. If the driver is archived, any fuel card or vehicle assignments associated with this driver will be automatically ended on the archive date.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "drivers",
+                ":uuid",
+                "stateHistory"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"<date>\",\n  \"state\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "34bb0b59-b342-4a8b-a484-0f5a62e258fc",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid",
+                    "stateHistory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"<date>\",\n  \"state\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"fb2beff7-a053-04c8-0d57-1a1b091ca0cc\",\n  \"driverUuid\": \"513165e6-6e11-2e94-f0d3-c93471ab7d80\",\n  \"state\": \"LEAVE\",\n  \"dateRange\": {\n    \"startDate\": \"2009-05-09\",\n    \"endDate\": \"1975-11-14\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f59e594-a922-436a-89a9-d839f4a58cac",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid",
+                    "stateHistory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"<date>\",\n  \"state\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cdfd0c6a-dcb9-46c3-bd0f-b65e7d14913d",
+              "name": "There is an existing driver state entry on this date",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "drivers",
+                    ":uuid",
+                    "stateHistory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"<date>\",\n  \"state\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.avrios.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "990d98ea-b22c-400b-8de9-9f5d22f0d4cd",
+    "name": "Fleet API Specifications Custom fields Drivers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`.",
+      "type": "text/plain"
+    }
+  }
+}

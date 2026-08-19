@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fleet API Specifications Custom fields Vehicle usages API",
+    "version": "1.2.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicle usages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET vehicle usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/usages",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items in a page"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Number of the page"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sorting key"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "query",
+                "description": "Sorting order"
+              }
+            ]
+          },
+          "docs": "Get all vehicle usage records, paginated."
+        },
+        {
+          "info": {
+            "name": "CREATE a new vehicle usage entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/usages",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Adds a new usage entry for the given vehicle. This will be validated and added to the vehicle's usage history asynchronously. The entry will appear in the history with usageSource == MANUAL_FLEET_MANAGER. Distance values must be provided in kilometres."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

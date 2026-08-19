@@ -128,3 +128,9 @@ tools:
 - name: createVehicleUsage
   description: CREATE a new vehicle usage entry
   source_operation: openapi/shiftmove-fleet-openapi.json#createVehicleUsage
+deployment:
+  mode: none
+  verified: derived
+  tools: 40
+  checked: '2026-08-12'
+  source: catalog MCP census

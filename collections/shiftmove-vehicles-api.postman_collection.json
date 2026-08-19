@@ -1,0 +1,1892 @@
+{
+  "item": [
+    {
+      "id": "0425de12-da7e-4737-925b-1bec70756b8c",
+      "name": "Vehicles",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bf9a3f09-af48-452e-8061-b331ef71ceb7",
+          "name": "GET paginated vehicles",
+          "request": {
+            "name": "GET paginated vehicles",
+            "description": {
+              "content": "Access pages of vehicles.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items in a page"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "Number of the page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Sorting key"
+                },
+                {
+                  "disabled": false,
+                  "key": "reverse",
+                  "value": "<boolean>",
+                  "description": "Sorting order"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "08885fd2-7a51-45fb-b04e-72d3e17d9eb7",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"uuid\": \"89a4d41c-066c-00ad-6b38-2e3919724cac\",\n      \"vin\": \"string\",\n      \"internalId\": \"string\",\n      \"displayName\": \"string\",\n      \"state\": \"INACTIVE\",\n      \"activeLicensePlate\": \"string\",\n      \"chMasterNumber\": \"string\",\n      \"lastModified\": \"2023-04-05T11:48:48.667Z\"\n    },\n    {\n      \"uuid\": \"5ea624b4-da11-b43a-6488-c75449f1e20a\",\n      \"vin\": \"string\",\n      \"internalId\": \"string\",\n      \"displayName\": \"string\",\n      \"state\": \"ACTIVE\",\n      \"activeLicensePlate\": \"string\",\n      \"chMasterNumber\": \"string\",\n      \"lastModified\": \"2021-01-21T00:16:11.817Z\"\n    }\n  ],\n  \"page\": {\n    \"pageNumber\": 1728,\n    \"limit\": 8206\n  },\n  \"totalItems\": 525\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf73b6eb-d37a-42c6-89ff-8851673ec306",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "379f313d-693d-46bc-b6d0-fa3cccaa528a",
+          "name": "CREATE a new vehicle",
+          "request": {
+            "name": "CREATE a new vehicle",
+            "description": {
+              "content": "Create a new vehicle as defined within the request body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activeLicensePlate\": \"<string>\",\n  \"customName\": \"<string>\",\n  \"vin\": \"<string>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"commissionDate\": \"<date>\",\n  \"costCenter\": \"<string>\",\n  \"jobAccountNumber\": \"<string>\",\n  \"registrationDate\": \"<date>\",\n  \"registrationCountry\": \"<string>\",\n  \"fallbackSpecification\": {\n    \"manufacturerName\": \"<string>\",\n    \"model\": \"<string>\",\n    \"vehicleType\": \"<string>\"\n  },\n  \"tensileLoad\": \"<integer>\",\n  \"internalId\": \"<string>\",\n  \"additionalId\": \"<string>\",\n  \"euLicenseNumber\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"licensePlateColor\": \"<string>\",\n  \"tax\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"subCompany\": \"<string>\",\n  \"tireStorageLocation\": \"<string>\",\n  \"atAkoGross\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atAkoNet\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atNova\": \"<number>\",\n  \"atVatExempt\": \"<boolean>\",\n  \"chMasterNumber\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7f6fa614-ebe0-4e4b-8742-555ce030ebd6",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activeLicensePlate\": \"<string>\",\n  \"customName\": \"<string>\",\n  \"vin\": \"<string>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"commissionDate\": \"<date>\",\n  \"costCenter\": \"<string>\",\n  \"jobAccountNumber\": \"<string>\",\n  \"registrationDate\": \"<date>\",\n  \"registrationCountry\": \"<string>\",\n  \"fallbackSpecification\": {\n    \"manufacturerName\": \"<string>\",\n    \"model\": \"<string>\",\n    \"vehicleType\": \"<string>\"\n  },\n  \"tensileLoad\": \"<integer>\",\n  \"internalId\": \"<string>\",\n  \"additionalId\": \"<string>\",\n  \"euLicenseNumber\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"licensePlateColor\": \"<string>\",\n  \"tax\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"subCompany\": \"<string>\",\n  \"tireStorageLocation\": \"<string>\",\n  \"atAkoGross\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atAkoNet\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atNova\": \"<number>\",\n  \"atVatExempt\": \"<boolean>\",\n  \"chMasterNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"fa0591e7-40a3-51b6-1836-9dfc30b007de\",\n  \"activeLicensePlate\": \"string\",\n  \"displayName\": \"string\",\n  \"customName\": \"string\",\n  \"vin\": \"string\",\n  \"commissionDate\": \"1967-03-29\",\n  \"fuelTankSize\": 6053.7878766948415,\n  \"fuelType\": \"GAS\",\n  \"transmissionType\": \"MANUAL\",\n  \"costCenter\": \"string\",\n  \"jobAccountNumber\": \"string\",\n  \"registrationDate\": \"1975-10-30\",\n  \"registrationCountry\": \"string\",\n  \"emissionClass\": \"A08\",\n  \"tareWeight\": 5841,\n  \"loadCapacity\": 2169,\n  \"maxWeight\": 592,\n  \"tensileLoad\": 9820,\n  \"trailerLoad\": 1744,\n  \"combinedFuelConsumptionPerKm\": 5099.375806213555,\n  \"urbanFuelConsumptionPerKm\": 166.4355762793446,\n  \"extraUrbanFuelConsumptionPerKm\": 4220.166295577339,\n  \"combinedElectricityConsumptionPerKm\": 5237.752919029042,\n  \"urbanElectricityConsumptionPerKm\": 4793.205524506877,\n  \"extraUrbanElectricityConsumptionPerKm\": 4930.828526910284,\n  \"internalId\": \"string\",\n  \"additionalId\": \"string\",\n  \"euLicenseNumber\": \"string\",\n  \"yearOfConstruction\": 9917,\n  \"comment\": \"string\",\n  \"licensePlateColor\": \"RED\",\n  \"grossListPrice\": 917.079126956275,\n  \"grossListPriceCurrency\": \"string\",\n  \"grossListPriceSource\": \"PROCUREMENT_OFFER\",\n  \"state\": \"IN_PROCUREMENT\",\n  \"co2Emission\": 1973,\n  \"displacement\": 6221,\n  \"kilowatt\": 2497,\n  \"tax\": 8998.927150425177,\n  \"taxCurrency\": \"string\",\n  \"manufacturerName\": \"string\",\n  \"modelName\": \"string\",\n  \"baseModelDisplayName\": \"string\",\n  \"importVehicleModel\": \"string\",\n  \"subCompany\": \"string\",\n  \"vehicleColor\": \"string\",\n  \"interiorColor\": \"string\",\n  \"cushionColor\": \"string\",\n  \"vehicleAvailable\": true,\n  \"tireStorageLocation\": \"string\",\n  \"atAkoGross\": {\n    \"amount\": 4975.914599696757,\n    \"currency\": \"string\"\n  },\n  \"atAkoNet\": {\n    \"amount\": 9546.978956397314,\n    \"currency\": \"string\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": 3142.531719166679,\n    \"currency\": \"string\"\n  },\n  \"atNova\": 3815.4376315090244,\n  \"atVatExempt\": true,\n  \"chMasterNumber\": \"string\",\n  \"vehicleType\": \"TRUCK\",\n  \"handoverDate\": \"1980-01-19T17:52:38.715Z\",\n  \"location\": \"string\",\n  \"customFieldValuesByCategory\": [\n    {\n      \"uuid\": \"968d3b7c-f996-a5e4-1c0c-9645bb0d0411\",\n      \"name\": \"string\",\n      \"position\": 6560,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"c42848ba-0897-870c-ad35-b11e972181a2\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1960-02-08T12:49:26.019Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 795,\n          \"decimalValue\": 6710.017112297281,\n          \"monetaryAmountValue\": {\n            \"amount\": 1926.44514687075,\n            \"currency\": \"string\"\n          }\n        },\n        {\n          \"uuid\": \"7124bef7-5186-ced5-9a10-9bf830a71276\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1978-03-06T22:14:35.958Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 9931,\n          \"decimalValue\": 3111.1118448538755,\n          \"monetaryAmountValue\": {\n            \"amount\": 1031.1080266824936,\n            \"currency\": \"string\"\n          }\n        }\n      ]\n    },\n    {\n      \"uuid\": \"c9dc2b89-dc1f-90d4-ab7b-c2d20baea908\",\n      \"name\": \"string\",\n      \"position\": 7437,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"995e8c9b-d3b4-7bcd-4a77-9af765d2546b\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1992-12-12T20:12:50.990Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 3049,\n          \"decimalValue\": 9636.487234516155,\n          \"monetaryAmountValue\": {\n            \"amount\": 7864.5043631848785,\n            \"currency\": \"string\"\n          }\n        },\n        {\n          \"uuid\": \"544399b0-41fe-4d92-0b3a-1f8a018b23d0\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1954-04-12T20:43:40.601Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 7010,\n          \"decimalValue\": 44.658796734162735,\n          \"monetaryAmountValue\": {\n            \"amount\": 9319.62409164935,\n            \"currency\": \"string\"\n          }\n        }\n      ]\n    }\n  ],\n  \"organizationUuid\": \"0a45301f-dc41-c989-0558-eafe7d59cf32\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5730585a-07ee-4286-8599-9c13dd72e51d",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activeLicensePlate\": \"<string>\",\n  \"customName\": \"<string>\",\n  \"vin\": \"<string>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"commissionDate\": \"<date>\",\n  \"costCenter\": \"<string>\",\n  \"jobAccountNumber\": \"<string>\",\n  \"registrationDate\": \"<date>\",\n  \"registrationCountry\": \"<string>\",\n  \"fallbackSpecification\": {\n    \"manufacturerName\": \"<string>\",\n    \"model\": \"<string>\",\n    \"vehicleType\": \"<string>\"\n  },\n  \"tensileLoad\": \"<integer>\",\n  \"internalId\": \"<string>\",\n  \"additionalId\": \"<string>\",\n  \"euLicenseNumber\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"licensePlateColor\": \"<string>\",\n  \"tax\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"subCompany\": \"<string>\",\n  \"tireStorageLocation\": \"<string>\",\n  \"atAkoGross\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atAkoNet\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atNova\": \"<number>\",\n  \"atVatExempt\": \"<boolean>\",\n  \"chMasterNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e56f6a1d-f7e2-47ad-b5f1-ef7eb967dda4",
+              "name": "This vehicle conflicts with a vehicle already in the system. Either the license plate or the vin are already in use after the commission date.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activeLicensePlate\": \"<string>\",\n  \"customName\": \"<string>\",\n  \"vin\": \"<string>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"commissionDate\": \"<date>\",\n  \"costCenter\": \"<string>\",\n  \"jobAccountNumber\": \"<string>\",\n  \"registrationDate\": \"<date>\",\n  \"registrationCountry\": \"<string>\",\n  \"fallbackSpecification\": {\n    \"manufacturerName\": \"<string>\",\n    \"model\": \"<string>\",\n    \"vehicleType\": \"<string>\"\n  },\n  \"tensileLoad\": \"<integer>\",\n  \"internalId\": \"<string>\",\n  \"additionalId\": \"<string>\",\n  \"euLicenseNumber\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"licensePlateColor\": \"<string>\",\n  \"tax\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"subCompany\": \"<string>\",\n  \"tireStorageLocation\": \"<string>\",\n  \"atAkoGross\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atAkoNet\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atNova\": \"<number>\",\n  \"atVatExempt\": \"<boolean>\",\n  \"chMasterNumber\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42335ce9-9088-42e2-87dc-06b4345cf7f4",
+          "name": "QUERY paginated vehicles",
+          "request": {
+            "name": "QUERY paginated vehicles",
+            "description": {
+              "content": "Query vehicles based on specific criteria. The result is paginated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles",
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items in a page"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "Number of the page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Sorting key"
+                },
+                {
+                  "disabled": false,
+                  "key": "reverse",
+                  "value": "<boolean>",
+                  "description": "Sorting order"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uuid\": \"<uuid>\",\n  \"vin\": \"<string>\",\n  \"internalId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"state\": \"<string>\",\n  \"activeLicensePlate\": \"<string>\",\n  \"chMasterNumber\": \"<string>\",\n  \"lastModified\": {\n    \"atOrAfter\": \"<dateTime>\",\n    \"before\": \"<dateTime>\"\n  },\n  \"assignedToPlate\": {\n    \"plate\": \"<string>\",\n    \"when\": {\n      \"atOrAfter\": \"<dateTime>\",\n      \"before\": \"<dateTime>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "66b36b94-34f4-4b61-bc68-1372f88efa5c",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"uuid\": \"<uuid>\",\n  \"vin\": \"<string>\",\n  \"internalId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"state\": \"<string>\",\n  \"activeLicensePlate\": \"<string>\",\n  \"chMasterNumber\": \"<string>\",\n  \"lastModified\": {\n    \"atOrAfter\": \"<dateTime>\",\n    \"before\": \"<dateTime>\"\n  },\n  \"assignedToPlate\": {\n    \"plate\": \"<string>\",\n    \"when\": {\n      \"atOrAfter\": \"<dateTime>\",\n      \"before\": \"<dateTime>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"uuid\": \"0a6c6ad8-ae8f-2887-eb3e-780f408f79c4\",\n      \"vin\": \"string\",\n      \"internalId\": \"string\",\n      \"displayName\": \"string\",\n      \"state\": \"INACTIVE\",\n      \"activeLicensePlate\": \"string\",\n      \"chMasterNumber\": \"string\",\n      \"lastModified\": \"2016-11-14T03:19:43.437Z\"\n    },\n    {\n      \"uuid\": \"97dd5f16-e738-3299-0504-2a0c4cc5bb0d\",\n      \"vin\": \"string\",\n      \"internalId\": \"string\",\n      \"displayName\": \"string\",\n      \"state\": \"IN_PROCUREMENT\",\n      \"activeLicensePlate\": \"string\",\n      \"chMasterNumber\": \"string\",\n      \"lastModified\": \"1997-02-05T12:43:46.220Z\"\n    }\n  ],\n  \"page\": {\n    \"pageNumber\": 4499,\n    \"limit\": 953\n  },\n  \"totalItems\": 216\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ab2e902-a696-43a9-b31d-fab7c3e6ee02",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"uuid\": \"<uuid>\",\n  \"vin\": \"<string>\",\n  \"internalId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"state\": \"<string>\",\n  \"activeLicensePlate\": \"<string>\",\n  \"chMasterNumber\": \"<string>\",\n  \"lastModified\": {\n    \"atOrAfter\": \"<dateTime>\",\n    \"before\": \"<dateTime>\"\n  },\n  \"assignedToPlate\": {\n    \"plate\": \"<string>\",\n    \"when\": {\n      \"atOrAfter\": \"<dateTime>\",\n      \"before\": \"<dateTime>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76318367-dddf-4fb7-a0b2-b07117123400",
+          "name": "GET vehicle by uuid",
+          "request": {
+            "name": "GET vehicle by uuid",
+            "description": {
+              "content": "Get detailed information about a specific vehicle.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles",
+                ":uuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ee820aab-00bd-4c76-b124-e71c00bf1899",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"c7c6a9ad-22b1-6eb8-ac11-3b4dcdacf758\",\n  \"activeLicensePlate\": \"string\",\n  \"displayName\": \"string\",\n  \"customName\": \"string\",\n  \"vin\": \"string\",\n  \"commissionDate\": \"1975-11-14\",\n  \"fuelTankSize\": 1990.6293723333536,\n  \"fuelType\": \"HYBRID_GASOLINE_LPG\",\n  \"transmissionType\": \"MANUAL\",\n  \"costCenter\": \"string\",\n  \"jobAccountNumber\": \"string\",\n  \"registrationDate\": \"2020-06-28\",\n  \"registrationCountry\": \"string\",\n  \"emissionClass\": \"EURO_3\",\n  \"tareWeight\": 736,\n  \"loadCapacity\": 7988,\n  \"maxWeight\": 1793,\n  \"tensileLoad\": 2782,\n  \"trailerLoad\": 171,\n  \"combinedFuelConsumptionPerKm\": 4152.624324850004,\n  \"urbanFuelConsumptionPerKm\": 4978.721234732033,\n  \"extraUrbanFuelConsumptionPerKm\": 926.9419585521088,\n  \"combinedElectricityConsumptionPerKm\": 1376.632881239389,\n  \"urbanElectricityConsumptionPerKm\": 5366.378887465163,\n  \"extraUrbanElectricityConsumptionPerKm\": 2877.352161989305,\n  \"internalId\": \"string\",\n  \"additionalId\": \"string\",\n  \"euLicenseNumber\": \"string\",\n  \"yearOfConstruction\": 5916,\n  \"comment\": \"string\",\n  \"licensePlateColor\": \"GREEN\",\n  \"grossListPrice\": 4378.932621790088,\n  \"grossListPriceCurrency\": \"string\",\n  \"grossListPriceSource\": \"DAT\",\n  \"state\": \"DECOMMISSIONED\",\n  \"co2Emission\": 6020,\n  \"displacement\": 4557,\n  \"kilowatt\": 6577,\n  \"tax\": 7465.933757292213,\n  \"taxCurrency\": \"string\",\n  \"manufacturerName\": \"string\",\n  \"modelName\": \"string\",\n  \"baseModelDisplayName\": \"string\",\n  \"importVehicleModel\": \"string\",\n  \"subCompany\": \"string\",\n  \"vehicleColor\": \"string\",\n  \"interiorColor\": \"string\",\n  \"cushionColor\": \"string\",\n  \"vehicleAvailable\": true,\n  \"tireStorageLocation\": \"string\",\n  \"atAkoGross\": {\n    \"amount\": 3074.795835531782,\n    \"currency\": \"string\"\n  },\n  \"atAkoNet\": {\n    \"amount\": 2694.1549059374215,\n    \"currency\": \"string\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": 4212.171857899133,\n    \"currency\": \"string\"\n  },\n  \"atNova\": 1355.0509771985553,\n  \"atVatExempt\": true,\n  \"chMasterNumber\": \"string\",\n  \"vehicleType\": \"COST\",\n  \"handoverDate\": \"1991-04-28T10:09:18.593Z\",\n  \"location\": \"string\",\n  \"customFieldValuesByCategory\": [\n    {\n      \"uuid\": \"e568d260-157e-6861-6f97-b402aa946d0a\",\n      \"name\": \"string\",\n      \"position\": 6252,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"745df75a-ac8e-92ff-517f-adf1eeaef37f\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"2002-07-15T05:02:40.010Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 9406,\n          \"decimalValue\": 2395.203317264989,\n          \"monetaryAmountValue\": {\n            \"amount\": 4618.659442562123,\n            \"currency\": \"string\"\n          }\n        },\n        {\n          \"uuid\": \"80cd9e1c-eda6-0c6c-1417-2198e6341c82\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1972-01-22T17:25:21.684Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 6304,\n          \"decimalValue\": 7803.731532318564,\n          \"monetaryAmountValue\": {\n            \"amount\": 112.71159180274992,\n            \"currency\": \"string\"\n          }\n        }\n      ]\n    },\n    {\n      \"uuid\": \"38418ffb-5752-4b17-67c6-c05783396351\",\n      \"name\": \"string\",\n      \"position\": 5965,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"03412b93-b44b-7508-898c-ff212f029692\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1983-01-13T15:25:49.377Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 6857,\n          \"decimalValue\": 608.0188856275304,\n          \"monetaryAmountValue\": {\n            \"amount\": 4900.6497927246255,\n            \"currency\": \"string\"\n          }\n        },\n        {\n          \"uuid\": \"a0507ba2-4529-8ebc-12b3-750599c4cd3c\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"2022-08-23T13:15:57.626Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 2218,\n          \"decimalValue\": 7738.328681741679,\n          \"monetaryAmountValue\": {\n            \"amount\": 4751.058362878511,\n            \"currency\": \"string\"\n          }\n        }\n      ]\n    }\n  ],\n  \"organizationUuid\": \"54f68fb2-3f2a-457b-b286-b1367385619b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "235ef04f-ec65-4656-bdb2-d8e4f9f838b1",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1df39515-1f00-4155-b5ba-79ee886b50bc",
+              "name": "Vehicle not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d48aee3b-5201-48f3-b205-37c5b1ce6c65",
+          "name": "UPDATE a specific vehicle",
+          "request": {
+            "name": "UPDATE a specific vehicle",
+            "description": {
+              "content": "Post a map of key value pairs for fields with the new value. A value of `null` is accepted (where marked as nullable) and will clear that field. Cleared fields will not be shown in the response, as `null` fields are stripped by default. If a field is not present in the map it will not be altered. **Fields not marked as nullable can be left out of the map all together so as not to be changed**",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles",
+                ":uuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customName\": \"<string>\",\n  \"commissionDate\": \"<date>\",\n  \"registrationDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"fuelTankSize\": \"<number>\",\n  \"fuelType\": \"<string>\",\n  \"transmissionType\": \"<string>\",\n  \"jobAccountNumber\": \"<string>\",\n  \"registrationCountry\": \"<string>\",\n  \"emissionClass\": \"<string>\",\n  \"tareWeight\": \"<integer>\",\n  \"loadCapacity\": \"<integer>\",\n  \"maxWeight\": \"<integer>\",\n  \"tensileLoad\": \"<integer>\",\n  \"trailerLoad\": \"<integer>\",\n  \"combinedFuelConsumptionPerKm\": \"<number>\",\n  \"urbanFuelConsumptionPerKm\": \"<number>\",\n  \"extraUrbanFuelConsumptionPerKm\": \"<number>\",\n  \"combinedElectricityConsumptionPerKm\": \"<number>\",\n  \"urbanElectricityConsumptionPerKm\": \"<number>\",\n  \"extraUrbanElectricityConsumptionPerKm\": \"<number>\",\n  \"internalId\": \"<string>\",\n  \"additionalId\": \"<string>\",\n  \"euLicenseNumber\": \"<string>\",\n  \"yearOfConstruction\": \"<integer>\",\n  \"comment\": \"<string>\",\n  \"licensePlateColor\": \"<string>\",\n  \"grossListPrice\": \"<number>\",\n  \"grossListPriceCurrency\": \"<string>\",\n  \"grossListPriceSource\": \"<string>\",\n  \"co2Emission\": \"<integer>\",\n  \"displacement\": \"<integer>\",\n  \"kilowatt\": \"<integer>\",\n  \"manufacturerName\": \"<string>\",\n  \"vehicleColor\": \"<string>\",\n  \"interiorColor\": \"<string>\",\n  \"cushionColor\": \"<string>\",\n  \"vehicleAvailable\": \"<boolean>\",\n  \"tireStorageLocation\": \"<string>\",\n  \"atAkoGross\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atAkoNet\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atNova\": \"<number>\",\n  \"atVatExempt\": \"<boolean>\",\n  \"chMasterNumber\": \"<string>\",\n  \"vehicleType\": \"<string>\",\n  \"location\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f542ad5c-c67a-4a56-9980-33e0f2c67ab4",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customName\": \"<string>\",\n  \"commissionDate\": \"<date>\",\n  \"registrationDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"fuelTankSize\": \"<number>\",\n  \"fuelType\": \"<string>\",\n  \"transmissionType\": \"<string>\",\n  \"jobAccountNumber\": \"<string>\",\n  \"registrationCountry\": \"<string>\",\n  \"emissionClass\": \"<string>\",\n  \"tareWeight\": \"<integer>\",\n  \"loadCapacity\": \"<integer>\",\n  \"maxWeight\": \"<integer>\",\n  \"tensileLoad\": \"<integer>\",\n  \"trailerLoad\": \"<integer>\",\n  \"combinedFuelConsumptionPerKm\": \"<number>\",\n  \"urbanFuelConsumptionPerKm\": \"<number>\",\n  \"extraUrbanFuelConsumptionPerKm\": \"<number>\",\n  \"combinedElectricityConsumptionPerKm\": \"<number>\",\n  \"urbanElectricityConsumptionPerKm\": \"<number>\",\n  \"extraUrbanElectricityConsumptionPerKm\": \"<number>\",\n  \"internalId\": \"<string>\",\n  \"additionalId\": \"<string>\",\n  \"euLicenseNumber\": \"<string>\",\n  \"yearOfConstruction\": \"<integer>\",\n  \"comment\": \"<string>\",\n  \"licensePlateColor\": \"<string>\",\n  \"grossListPrice\": \"<number>\",\n  \"grossListPriceCurrency\": \"<string>\",\n  \"grossListPriceSource\": \"<string>\",\n  \"co2Emission\": \"<integer>\",\n  \"displacement\": \"<integer>\",\n  \"kilowatt\": \"<integer>\",\n  \"manufacturerName\": \"<string>\",\n  \"vehicleColor\": \"<string>\",\n  \"interiorColor\": \"<string>\",\n  \"cushionColor\": \"<string>\",\n  \"vehicleAvailable\": \"<boolean>\",\n  \"tireStorageLocation\": \"<string>\",\n  \"atAkoGross\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atAkoNet\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atNova\": \"<number>\",\n  \"atVatExempt\": \"<boolean>\",\n  \"chMasterNumber\": \"<string>\",\n  \"vehicleType\": \"<string>\",\n  \"location\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"3f5dae68-f9e7-16e9-11d2-7a118fd0e7d9\",\n  \"activeLicensePlate\": \"string\",\n  \"displayName\": \"string\",\n  \"customName\": \"string\",\n  \"vin\": \"string\",\n  \"commissionDate\": \"2007-11-11\",\n  \"fuelTankSize\": 6272.7185134285,\n  \"fuelType\": \"LPG\",\n  \"transmissionType\": \"MANUAL\",\n  \"costCenter\": \"string\",\n  \"jobAccountNumber\": \"string\",\n  \"registrationDate\": \"1980-05-14\",\n  \"registrationCountry\": \"string\",\n  \"emissionClass\": \"TIER_IV\",\n  \"tareWeight\": 5153,\n  \"loadCapacity\": 5607,\n  \"maxWeight\": 4826,\n  \"tensileLoad\": 9959,\n  \"trailerLoad\": 876,\n  \"combinedFuelConsumptionPerKm\": 2430.0217343692366,\n  \"urbanFuelConsumptionPerKm\": 4625.7879026530845,\n  \"extraUrbanFuelConsumptionPerKm\": 5389.734544091543,\n  \"combinedElectricityConsumptionPerKm\": 5234.586621894792,\n  \"urbanElectricityConsumptionPerKm\": 6549.899342961857,\n  \"extraUrbanElectricityConsumptionPerKm\": 9212.367007440971,\n  \"internalId\": \"string\",\n  \"additionalId\": \"string\",\n  \"euLicenseNumber\": \"string\",\n  \"yearOfConstruction\": 1047,\n  \"comment\": \"string\",\n  \"licensePlateColor\": \"BROWN\",\n  \"grossListPrice\": 965.7300611308228,\n  \"grossListPriceCurrency\": \"string\",\n  \"grossListPriceSource\": \"PROCUREMENT_OFFER\",\n  \"state\": \"ACTIVE\",\n  \"co2Emission\": 6689,\n  \"displacement\": 4609,\n  \"kilowatt\": 99,\n  \"tax\": 4961.028010406905,\n  \"taxCurrency\": \"string\",\n  \"manufacturerName\": \"string\",\n  \"modelName\": \"string\",\n  \"baseModelDisplayName\": \"string\",\n  \"importVehicleModel\": \"string\",\n  \"subCompany\": \"string\",\n  \"vehicleColor\": \"string\",\n  \"interiorColor\": \"string\",\n  \"cushionColor\": \"string\",\n  \"vehicleAvailable\": false,\n  \"tireStorageLocation\": \"string\",\n  \"atAkoGross\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atAkoNet\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atNova\": 8397.575672387926,\n  \"atVatExempt\": false,\n  \"chMasterNumber\": \"string\",\n  \"vehicleType\": \"BUS\",\n  \"handoverDate\": \"2011-09-05T23:43:34.739Z\",\n  \"location\": \"string\",\n  \"customFieldValuesByCategory\": [\n    {\n      \"uuid\": \"4bd71595-71b7-8859-f59e-e44762d44eea\",\n      \"name\": \"string\",\n      \"position\": 4625,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"f4cbe687-bfb3-592d-be43-f4085944ea1f\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1988-09-26T15:57:28.462Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 5781,\n          \"decimalValue\": 3417.0447044270213,\n          \"monetaryAmountValue\": {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\"\n          }\n        },\n        {\n          \"uuid\": \"c8ad88e8-167d-035c-2d82-0d800e56a53d\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1957-05-08T03:45:56.755Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 6199,\n          \"decimalValue\": 9214.924895038484,\n          \"monetaryAmountValue\": {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\"\n          }\n        }\n      ]\n    },\n    {\n      \"uuid\": \"9e02bfb9-e895-9cfa-4806-27d61cb6ab0f\",\n      \"name\": \"string\",\n      \"position\": 8732,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"35a09570-13b8-6c3d-2bd8-fb315059631d\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1990-06-01T11:52:13.628Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 8635,\n          \"decimalValue\": 3519.5753251823394,\n          \"monetaryAmountValue\": {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\"\n          }\n        },\n        {\n          \"uuid\": \"333ac3fd-1fb0-5776-a3d0-4348ee091112\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1993-12-06T17:24:16.653Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 8465,\n          \"decimalValue\": 2664.413442949005,\n          \"monetaryAmountValue\": {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\"\n          }\n        }\n      ]\n    }\n  ],\n  \"organizationUuid\": \"2f295a63-34a2-3f98-ee74-e4904eda69ce\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ea23eac-1a5f-421a-91eb-15da6cded9d2",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customName\": \"<string>\",\n  \"commissionDate\": \"<date>\",\n  \"registrationDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"fuelTankSize\": \"<number>\",\n  \"fuelType\": \"<string>\",\n  \"transmissionType\": \"<string>\",\n  \"jobAccountNumber\": \"<string>\",\n  \"registrationCountry\": \"<string>\",\n  \"emissionClass\": \"<string>\",\n  \"tareWeight\": \"<integer>\",\n  \"loadCapacity\": \"<integer>\",\n  \"maxWeight\": \"<integer>\",\n  \"tensileLoad\": \"<integer>\",\n  \"trailerLoad\": \"<integer>\",\n  \"combinedFuelConsumptionPerKm\": \"<number>\",\n  \"urbanFuelConsumptionPerKm\": \"<number>\",\n  \"extraUrbanFuelConsumptionPerKm\": \"<number>\",\n  \"combinedElectricityConsumptionPerKm\": \"<number>\",\n  \"urbanElectricityConsumptionPerKm\": \"<number>\",\n  \"extraUrbanElectricityConsumptionPerKm\": \"<number>\",\n  \"internalId\": \"<string>\",\n  \"additionalId\": \"<string>\",\n  \"euLicenseNumber\": \"<string>\",\n  \"yearOfConstruction\": \"<integer>\",\n  \"comment\": \"<string>\",\n  \"licensePlateColor\": \"<string>\",\n  \"grossListPrice\": \"<number>\",\n  \"grossListPriceCurrency\": \"<string>\",\n  \"grossListPriceSource\": \"<string>\",\n  \"co2Emission\": \"<integer>\",\n  \"displacement\": \"<integer>\",\n  \"kilowatt\": \"<integer>\",\n  \"manufacturerName\": \"<string>\",\n  \"vehicleColor\": \"<string>\",\n  \"interiorColor\": \"<string>\",\n  \"cushionColor\": \"<string>\",\n  \"vehicleAvailable\": \"<boolean>\",\n  \"tireStorageLocation\": \"<string>\",\n  \"atAkoGross\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atAkoNet\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atNova\": \"<number>\",\n  \"atVatExempt\": \"<boolean>\",\n  \"chMasterNumber\": \"<string>\",\n  \"vehicleType\": \"<string>\",\n  \"location\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c79b4a2e-90ab-4944-ad86-6ba3fac7b0de",
+              "name": "Vehicle not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customName\": \"<string>\",\n  \"commissionDate\": \"<date>\",\n  \"registrationDate\": \"<date>\",\n  \"organizationUuid\": \"<uuid>\",\n  \"fuelTankSize\": \"<number>\",\n  \"fuelType\": \"<string>\",\n  \"transmissionType\": \"<string>\",\n  \"jobAccountNumber\": \"<string>\",\n  \"registrationCountry\": \"<string>\",\n  \"emissionClass\": \"<string>\",\n  \"tareWeight\": \"<integer>\",\n  \"loadCapacity\": \"<integer>\",\n  \"maxWeight\": \"<integer>\",\n  \"tensileLoad\": \"<integer>\",\n  \"trailerLoad\": \"<integer>\",\n  \"combinedFuelConsumptionPerKm\": \"<number>\",\n  \"urbanFuelConsumptionPerKm\": \"<number>\",\n  \"extraUrbanFuelConsumptionPerKm\": \"<number>\",\n  \"combinedElectricityConsumptionPerKm\": \"<number>\",\n  \"urbanElectricityConsumptionPerKm\": \"<number>\",\n  \"extraUrbanElectricityConsumptionPerKm\": \"<number>\",\n  \"internalId\": \"<string>\",\n  \"additionalId\": \"<string>\",\n  \"euLicenseNumber\": \"<string>\",\n  \"yearOfConstruction\": \"<integer>\",\n  \"comment\": \"<string>\",\n  \"licensePlateColor\": \"<string>\",\n  \"grossListPrice\": \"<number>\",\n  \"grossListPriceCurrency\": \"<string>\",\n  \"grossListPriceSource\": \"<string>\",\n  \"co2Emission\": \"<integer>\",\n  \"displacement\": \"<integer>\",\n  \"kilowatt\": \"<integer>\",\n  \"manufacturerName\": \"<string>\",\n  \"vehicleColor\": \"<string>\",\n  \"interiorColor\": \"<string>\",\n  \"cushionColor\": \"<string>\",\n  \"vehicleAvailable\": \"<boolean>\",\n  \"tireStorageLocation\": \"<string>\",\n  \"atAkoGross\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atAkoNet\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atNova\": \"<number>\",\n  \"atVatExempt\": \"<boolean>\",\n  \"chMasterNumber\": \"<string>\",\n  \"vehicleType\": \"<string>\",\n  \"location\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f610acc3-354b-4c44-be3e-98ea8627bd13",
+          "name": "ARCHIVE a vehicle",
+          "request": {
+            "name": "ARCHIVE a vehicle",
+            "description": {
+              "content": "Avrios will end license plate and fuel card assignments on archive date, so that they can be assigned to other vehicles. No further costs from this vehicle will be taken into account after the archiving date. This is PERMANENT, archived vehicles CANNOT be re-activated. Archiving a vehicle will remove any ongoing decommissioning, this cannot be undone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles",
+                ":uuid",
+                "archive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"archiveDate\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fd213918-f614-4ac3-8959-9229056c46b9",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"archiveDate\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"3f5dae68-f9e7-16e9-11d2-7a118fd0e7d9\",\n  \"activeLicensePlate\": \"string\",\n  \"displayName\": \"string\",\n  \"customName\": \"string\",\n  \"vin\": \"string\",\n  \"commissionDate\": \"2007-11-11\",\n  \"fuelTankSize\": 6272.7185134285,\n  \"fuelType\": \"LPG\",\n  \"transmissionType\": \"MANUAL\",\n  \"costCenter\": \"string\",\n  \"jobAccountNumber\": \"string\",\n  \"registrationDate\": \"1980-05-14\",\n  \"registrationCountry\": \"string\",\n  \"emissionClass\": \"TIER_IV\",\n  \"tareWeight\": 5153,\n  \"loadCapacity\": 5607,\n  \"maxWeight\": 4826,\n  \"tensileLoad\": 9959,\n  \"trailerLoad\": 876,\n  \"combinedFuelConsumptionPerKm\": 2430.0217343692366,\n  \"urbanFuelConsumptionPerKm\": 4625.7879026530845,\n  \"extraUrbanFuelConsumptionPerKm\": 5389.734544091543,\n  \"combinedElectricityConsumptionPerKm\": 5234.586621894792,\n  \"urbanElectricityConsumptionPerKm\": 6549.899342961857,\n  \"extraUrbanElectricityConsumptionPerKm\": 9212.367007440971,\n  \"internalId\": \"string\",\n  \"additionalId\": \"string\",\n  \"euLicenseNumber\": \"string\",\n  \"yearOfConstruction\": 1047,\n  \"comment\": \"string\",\n  \"licensePlateColor\": \"BROWN\",\n  \"grossListPrice\": 965.7300611308228,\n  \"grossListPriceCurrency\": \"string\",\n  \"grossListPriceSource\": \"PROCUREMENT_OFFER\",\n  \"state\": \"ACTIVE\",\n  \"co2Emission\": 6689,\n  \"displacement\": 4609,\n  \"kilowatt\": 99,\n  \"tax\": 4961.028010406905,\n  \"taxCurrency\": \"string\",\n  \"manufacturerName\": \"string\",\n  \"modelName\": \"string\",\n  \"baseModelDisplayName\": \"string\",\n  \"importVehicleModel\": \"string\",\n  \"subCompany\": \"string\",\n  \"vehicleColor\": \"string\",\n  \"interiorColor\": \"string\",\n  \"cushionColor\": \"string\",\n  \"vehicleAvailable\": false,\n  \"tireStorageLocation\": \"string\",\n  \"atAkoGross\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atAkoNet\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atLuxuryTangent\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"atNova\": 8397.575672387926,\n  \"atVatExempt\": false,\n  \"chMasterNumber\": \"string\",\n  \"vehicleType\": \"BUS\",\n  \"handoverDate\": \"2011-09-05T23:43:34.739Z\",\n  \"location\": \"string\",\n  \"customFieldValuesByCategory\": [\n    {\n      \"uuid\": \"4bd71595-71b7-8859-f59e-e44762d44eea\",\n      \"name\": \"string\",\n      \"position\": 4625,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"f4cbe687-bfb3-592d-be43-f4085944ea1f\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1988-09-26T15:57:28.462Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 5781,\n          \"decimalValue\": 3417.0447044270213,\n          \"monetaryAmountValue\": {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\"\n          }\n        },\n        {\n          \"uuid\": \"c8ad88e8-167d-035c-2d82-0d800e56a53d\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1957-05-08T03:45:56.755Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 6199,\n          \"decimalValue\": 9214.924895038484,\n          \"monetaryAmountValue\": {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\"\n          }\n        }\n      ]\n    },\n    {\n      \"uuid\": \"9e02bfb9-e895-9cfa-4806-27d61cb6ab0f\",\n      \"name\": \"string\",\n      \"position\": 8732,\n      \"customFieldValues\": [\n        {\n          \"uuid\": \"35a09570-13b8-6c3d-2bd8-fb315059631d\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1990-06-01T11:52:13.628Z\",\n          \"booleanValue\": false,\n          \"integerValue\": 8635,\n          \"decimalValue\": 3519.5753251823394,\n          \"monetaryAmountValue\": {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\"\n          }\n        },\n        {\n          \"uuid\": \"333ac3fd-1fb0-5776-a3d0-4348ee091112\",\n          \"textValue\": \"string\",\n          \"dateValue\": \"1993-12-06T17:24:16.653Z\",\n          \"booleanValue\": true,\n          \"integerValue\": 8465,\n          \"decimalValue\": 2664.413442949005,\n          \"monetaryAmountValue\": {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\"\n          }\n        }\n      ]\n    }\n  ],\n  \"organizationUuid\": \"2f295a63-34a2-3f98-ee74-e4904eda69ce\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70add91e-0545-4d0c-9cab-3726641877ae",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"archiveDate\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a2c24227-6702-4881-9cfb-745a2d46f563",
+              "name": "Vehicle not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"archiveDate\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47a93d40-ea4d-4d74-8fd8-57f85b211e3e",
+          "name": "CREATE vehicle cost center history entry",
+          "request": {
+            "name": "CREATE vehicle cost center history entry",
+            "description": {
+              "content": "Creates new cost center for the specified vehicle. This will be validated and added to vehicle's cost center history.The entry must not have the same startDate as an existing vehicle cost center history entry.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles",
+                ":uuid",
+                "costCenter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startDate\": \"<date>\",\n  \"costCenter\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e4f82d93-b283-4a5c-bb21-93e417f2849c",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "costCenter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"<date>\",\n  \"costCenter\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"f035d5f8-01f9-1273-af2d-8f27d267a55a\",\n  \"costCenter\": \"string\",\n  \"dateRange\": {\n    \"startDate\": \"1999-09-06\",\n    \"endDate\": \"1987-10-26\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1aab3d3-15c1-413f-8efa-a4a4d87f12d4",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "costCenter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"<date>\",\n  \"costCenter\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "86e3b717-91bb-4b92-9be7-c47957ac634a",
+              "name": "Vehicle not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "costCenter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"<date>\",\n  \"costCenter\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "88449823-b1e5-41fd-a90e-b0d593cf25da",
+              "name": "The new cost center start startDate conflicts with an existing cost center. The conflicting cost center will be returned in an error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "costCenter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"<date>\",\n  \"costCenter\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d640982c-96d5-4073-a4ac-e2ff7bee8a63",
+          "name": "UPDATE vehicle custom field value",
+          "request": {
+            "name": "UPDATE vehicle custom field value",
+            "description": {
+              "content": "Update a custom field value for a vehicle, identified by vehicle UUID and custom field UUID. It doesn't matter whether the custom field value has been set for this vehicle previously.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles",
+                ":uuid",
+                "customFieldValues",
+                ":customFieldUuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "customFieldUuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"textValue\": \"<string>\",\n  \"dateValue\": \"<dateTime>\",\n  \"booleanValue\": \"<boolean>\",\n  \"integerValue\": \"<integer>\",\n  \"decimalValue\": \"<number>\",\n  \"monetaryAmountValue\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"exactlyOneValueSet\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c1b508de-e202-4ec4-b65e-a7930b01ea90",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "customFieldValues",
+                    ":customFieldUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customFieldUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"textValue\": \"<string>\",\n  \"dateValue\": \"<dateTime>\",\n  \"booleanValue\": \"<boolean>\",\n  \"integerValue\": \"<integer>\",\n  \"decimalValue\": \"<number>\",\n  \"monetaryAmountValue\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"exactlyOneValueSet\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"c52aa107-b1c2-9945-ba2f-db54488eb7f2\",\n  \"textValue\": \"string\",\n  \"dateValue\": \"1988-02-29T16:34:53.955Z\",\n  \"booleanValue\": true,\n  \"integerValue\": 1779,\n  \"decimalValue\": 3449.074634237359,\n  \"monetaryAmountValue\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9d304f9-10ce-430b-8fdc-cbce609cbd0e",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "customFieldValues",
+                    ":customFieldUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customFieldUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"textValue\": \"<string>\",\n  \"dateValue\": \"<dateTime>\",\n  \"booleanValue\": \"<boolean>\",\n  \"integerValue\": \"<integer>\",\n  \"decimalValue\": \"<number>\",\n  \"monetaryAmountValue\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"exactlyOneValueSet\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a068ea7c-f8bf-47df-9950-7bf0248c8231",
+              "name": "Vehicle or custom field not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "customFieldValues",
+                    ":customFieldUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "customFieldUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"textValue\": \"<string>\",\n  \"dateValue\": \"<dateTime>\",\n  \"booleanValue\": \"<boolean>\",\n  \"integerValue\": \"<integer>\",\n  \"decimalValue\": \"<number>\",\n  \"monetaryAmountValue\": {\n    \"amount\": \"<number>\",\n    \"currency\": \"<string>\"\n  },\n  \"exactlyOneValueSet\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bca8cb3-3c3f-41b8-8f3e-4ae523454337",
+          "name": "CREATE a vehicle's sub company",
+          "request": {
+            "name": "CREATE a vehicle's sub company",
+            "description": {
+              "content": "Creates a new sub company history entry for the specified vehicle. This will be validated and added to vehicle's sub company history.This sub company entry will end when the next one starts, or it will be indefinite, if last one chronological. The entry must not have the same startDate as an existing vehicle sub company history entry.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "vehicles",
+                ":uuid",
+                "subCompany"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "uuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subCompany\": \"<string>\",\n  \"startDate\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "795f26f6-df22-4dda-9ddd-bada8f8e197e",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "subCompany"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subCompany\": \"<string>\",\n  \"startDate\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"ae1fb44d-b649-e0dc-7e7b-0720087db938\",\n  \"subCompany\": \"string\",\n  \"dateRange\": {\n    \"startDate\": \"2022-10-23\",\n    \"endDate\": \"1979-08-11\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b079772-66da-47c5-bab5-cee801597ec1",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "subCompany"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subCompany\": \"<string>\",\n  \"startDate\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9c41cd14-7ec9-4f6d-bab7-10d5c4ce8042",
+              "name": "Vehicle not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "subCompany"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subCompany\": \"<string>\",\n  \"startDate\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "940f3b61-a889-48d5-a927-5fda2c217e45",
+              "name": "The new sub company startDate conflicts with an existing sub company. The conflicting sub company will be returned in an error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    ":uuid",
+                    "subCompany"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "uuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subCompany\": \"<string>\",\n  \"startDate\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.avrios.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7867fa67-a7cb-476c-b19a-992710d133d1",
+    "name": "Fleet API Specifications Custom fields Vehicles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,749 @@
+{
+  "item": [
+    {
+      "id": "af3cddf6-1e90-4206-a710-ade85548164f",
+      "name": "Invoices",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8feca514-2058-4d8b-8c7e-2bfb187e51c8",
+          "name": "GET paginated invoices",
+          "request": {
+            "name": "GET paginated invoices",
+            "description": {
+              "content": "Access pages of invoices.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items in a page"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "Number of the page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Sorting key"
+                },
+                {
+                  "disabled": false,
+                  "key": "reverse",
+                  "value": "<boolean>",
+                  "description": "Sorting order"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ed68f47-441e-447d-87a6-63a2ee536cc0",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"uuid\": \"594a7a4c-14f4-89f1-1f9c-3884e96801a0\",\n      \"state\": \"IMPORTED\",\n      \"invoiceDate\": \"1961-06-25\",\n      \"releaseDate\": \"2024-10-03T14:58:03.925Z\",\n      \"supplier\": \"string\",\n      \"invoiceNumber\": \"string\",\n      \"net\": 9516.322392696398,\n      \"gross\": 2350.6754605328397,\n      \"currency\": \"string\"\n    },\n    {\n      \"uuid\": \"3ab8dc63-c8ec-1ca8-68db-8c70e30f3ce6\",\n      \"state\": \"IN_PROGRESS\",\n      \"invoiceDate\": \"1983-09-02\",\n      \"releaseDate\": \"1947-04-21T01:36:04.374Z\",\n      \"supplier\": \"string\",\n      \"invoiceNumber\": \"string\",\n      \"net\": 6548.4398535121745,\n      \"gross\": 610.868392534275,\n      \"currency\": \"string\"\n    }\n  ],\n  \"page\": {\n    \"pageNumber\": 6582,\n    \"limit\": 7975\n  },\n  \"totalItems\": 5842\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4736eb20-c4bb-4094-b164-0f5ae13c053d",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1e4d5eb0-9b20-476e-86f3-437b28aff1de",
+          "name": "QUERY paginated invoices",
+          "request": {
+            "name": "QUERY paginated invoices",
+            "description": {
+              "content": "Query invoices based on specific criteria. The result is paginated",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "invoices",
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items in a page"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "Number of the page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Sorting key"
+                },
+                {
+                  "disabled": false,
+                  "key": "reverse",
+                  "value": "<boolean>",
+                  "description": "Sorting order"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invoiceNumber\": \"<string>\",\n  \"supplier\": \"<string>\",\n  \"invoiceDate\": {\n    \"onOrAfter\": \"<date>\",\n    \"before\": \"<date>\"\n  },\n  \"releaseDate\": {\n    \"atOrAfter\": \"<dateTime>\",\n    \"before\": \"<dateTime>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "78381e4d-0504-4c4f-bf36-e7d891f88b21",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "invoices",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invoiceNumber\": \"<string>\",\n  \"supplier\": \"<string>\",\n  \"invoiceDate\": {\n    \"onOrAfter\": \"<date>\",\n    \"before\": \"<date>\"\n  },\n  \"releaseDate\": {\n    \"atOrAfter\": \"<dateTime>\",\n    \"before\": \"<dateTime>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"uuid\": \"71bdc183-90e0-ffeb-8651-0d0b71fec335\",\n      \"state\": \"IMPORTED\",\n      \"invoiceDate\": \"1960-04-22\",\n      \"releaseDate\": \"1951-10-11T05:56:51.456Z\",\n      \"supplier\": \"string\",\n      \"invoiceNumber\": \"string\",\n      \"net\": 36.329426028237634,\n      \"gross\": 6934.212003942806,\n      \"currency\": \"string\"\n    },\n    {\n      \"uuid\": \"208fdedc-a9de-c6e4-48a1-6e9d1fa1da8e\",\n      \"state\": \"IMPORTED_WITH_ERRORS\",\n      \"invoiceDate\": \"1966-08-11\",\n      \"releaseDate\": \"1951-12-07T21:59:13.444Z\",\n      \"supplier\": \"string\",\n      \"invoiceNumber\": \"string\",\n      \"net\": 5642.555429829895,\n      \"gross\": 5490.937761161719,\n      \"currency\": \"string\"\n    }\n  ],\n  \"page\": {\n    \"pageNumber\": 5272,\n    \"limit\": 1161\n  },\n  \"totalItems\": 9852\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c94f203-2fb9-409f-a4af-8ec7c60b5ea0",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "invoices",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invoiceNumber\": \"<string>\",\n  \"supplier\": \"<string>\",\n  \"invoiceDate\": {\n    \"onOrAfter\": \"<date>\",\n    \"before\": \"<date>\"\n  },\n  \"releaseDate\": {\n    \"atOrAfter\": \"<dateTime>\",\n    \"before\": \"<dateTime>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73872677-848e-4010-9711-20c85cd9d9ba",
+          "name": "GET paginated invoice items",
+          "request": {
+            "name": "GET paginated invoice items",
+            "description": {
+              "content": "Access pages of invoice items.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "invoices",
+                ":invoiceUuid",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items in a page"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "Number of the page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Sorting key"
+                },
+                {
+                  "disabled": false,
+                  "key": "reverse",
+                  "value": "<boolean>",
+                  "description": "Sorting order"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "invoiceUuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e96c4ab8-f308-44bc-bed8-de448a805139",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "invoices",
+                    ":invoiceUuid",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "invoiceUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"uuid\": \"7c49879c-ec69-249f-55e8-22fdfcc47e27\",\n      \"itemType\": \"string\",\n      \"transactionTime\": \"2021-09-21T19:58:58.271Z\",\n      \"description\": \"string\",\n      \"costType\": \"string\",\n      \"costGroup\": \"string\",\n      \"productDescription\": \"string\",\n      \"vehicleUuid\": \"ec88205f-cac1-2851-b987-9d6e839befe4\",\n      \"driverUuid\": \"cbcd613d-ff54-9661-ee95-b5424314c387\",\n      \"quantity\": 6466.442699565731,\n      \"quantityUnit\": \"LITER\",\n      \"vatPercentage\": 1497.5388334075024,\n      \"net\": 1064.149109066327,\n      \"gross\": 5200.074910722212,\n      \"currency\": \"string\",\n      \"invoiceType\": \"OTHER\"\n    },\n    {\n      \"uuid\": \"28803926-d598-c4ad-1c6e-262f039e8012\",\n      \"itemType\": \"string\",\n      \"transactionTime\": \"2005-06-16T23:12:21.958Z\",\n      \"description\": \"string\",\n      \"costType\": \"string\",\n      \"costGroup\": \"string\",\n      \"productDescription\": \"string\",\n      \"vehicleUuid\": \"1b79fdbc-ac1f-12d9-f382-03324b35c994\",\n      \"driverUuid\": \"635a2a71-21e2-79f9-c944-da91d78793ad\",\n      \"quantity\": 9187.38011829426,\n      \"quantityUnit\": \"LITER\",\n      \"vatPercentage\": 7007.2308687104005,\n      \"net\": 1820.128453398433,\n      \"gross\": 3832.922737370683,\n      \"currency\": \"string\",\n      \"invoiceType\": \"OTHER\"\n    }\n  ],\n  \"page\": {\n    \"pageNumber\": 9568,\n    \"limit\": 3022\n  },\n  \"totalItems\": 8156\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7d87e1a-2773-47fe-983b-846a002eea0f",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "invoices",
+                    ":invoiceUuid",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reverse",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "invoiceUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6608b89-239c-4ee7-8b99-4e49bbe17f51",
+          "name": "GET invoice raw file upload",
+          "request": {
+            "name": "GET invoice raw file upload",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "invoices",
+                ":invoiceUuid",
+                "rawFile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "invoiceUuid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93e61374-2cb0-4fa8-9210-895bdfa0c04b",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "invoices",
+                    ":invoiceUuid",
+                    "rawFile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "invoiceUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "123e31cf-4300-447a-8f11-93401edf79d5",
+              "name": "Bad request - information on the invalid fields will be provided in the response body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "invoices",
+                    ":invoiceUuid",
+                    "rawFile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "invoiceUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d3e981cd-24e6-4aae-ac08-71e5911d17ef",
+              "name": "Invoice file upload not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "invoices",
+                    ":invoiceUuid",
+                    "rawFile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "invoiceUuid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.avrios.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d71d5667-950d-41d2-917e-c3395a01a7ff",
+    "name": "Fleet API Specifications Custom fields Invoices API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`.",
+      "type": "text/plain"
+    }
+  }
+}

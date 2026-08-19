@@ -1,0 +1,180 @@
+{
+  "item": [
+    {
+      "id": "6034fe63-d204-4317-9571-41f6ed7c1161",
+      "name": "Custom fields",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "93005423-759c-455c-bd43-45d6bad1a860",
+          "name": "GET all driver custom fields",
+          "request": {
+            "name": "GET all driver custom fields",
+            "description": {
+              "content": "Return all the custom fields (user-defined fields) associated with drivers. New custom fields can be defined for drivers through the Avrios UI.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "customFields",
+                "drivers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ce991aca-c31e-4ab3-9835-c64c4aa52a02",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "customFields",
+                    "drivers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"uuid\": \"4b911205-2e35-935c-4f67-e809b5945287\",\n    \"name\": \"string\",\n    \"identifier\": \"string\",\n    \"type\": \"BOOLEAN\",\n    \"category\": {\n      \"uuid\": \"3299095b-d527-c98f-a226-b3e37fc477d2\",\n      \"name\": \"string\"\n    }\n  },\n  {\n    \"uuid\": \"4ced93f3-79e5-e754-bac5-23ae2d0e08e1\",\n    \"name\": \"string\",\n    \"identifier\": \"string\",\n    \"type\": \"BOOLEAN\",\n    \"category\": {\n      \"uuid\": \"a150ce67-acca-1388-c162-68dd37dd6ba9\",\n      \"name\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa9efd71-4138-49b8-a9a8-fd422f3c2fe1",
+          "name": "GET all vehicle custom fields",
+          "request": {
+            "name": "GET all vehicle custom fields",
+            "description": {
+              "content": "Return all the custom fields (user-defined fields) associated with vehicles. New custom fields can be defined for vehicles through the Avrios UI.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "customFields",
+                "vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eb372b7b-add9-49fd-a11e-022fd66bc0fd",
+              "name": "Successful operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "customFields",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"uuid\": \"4b911205-2e35-935c-4f67-e809b5945287\",\n    \"name\": \"string\",\n    \"identifier\": \"string\",\n    \"type\": \"BOOLEAN\",\n    \"category\": {\n      \"uuid\": \"3299095b-d527-c98f-a226-b3e37fc477d2\",\n      \"name\": \"string\"\n    }\n  },\n  {\n    \"uuid\": \"4ced93f3-79e5-e754-bac5-23ae2d0e08e1\",\n    \"name\": \"string\",\n    \"identifier\": \"string\",\n    \"type\": \"BOOLEAN\",\n    \"category\": {\n      \"uuid\": \"a150ce67-acca-1388-c162-68dd37dd6ba9\",\n      \"name\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.avrios.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5e6f0dd0-8eb0-440a-8526-203771d9e1fe",
+    "name": "Fleet API Specifications Custom fields API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`.",
+      "type": "text/plain"
+    }
+  }
+}

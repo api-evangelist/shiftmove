@@ -1,0 +1,166 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fleet API Specifications Custom fields Vehicle assignments API",
+    "version": "1.2.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicle assignments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET vehicle assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/assignments",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items in a page"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Number of the page"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sorting key"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "query",
+                "description": "Sorting order"
+              }
+            ]
+          },
+          "docs": "Get all driver assignments of a specific vehicle."
+        },
+        {
+          "info": {
+            "name": "ASSIGN a specified driver to this vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/assignments",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Assign a driver (specified in the request body) to the vehicle under this url."
+        },
+        {
+          "info": {
+            "name": "QUERY vehicle assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/assignments/query",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items in a page"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Number of the page"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sorting key"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "query",
+                "description": "Sorting order"
+              }
+            ]
+          },
+          "docs": "Query driver assignments of a specific vehicle."
+        },
+        {
+          "info": {
+            "name": "DELETE vehicle assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/assignments/:assignmentUuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "assignmentUuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete driver to vehicle assignment identified by uuid path parameter."
+        },
+        {
+          "info": {
+            "name": "UPDATE the duration of an existing assignment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/assignments/:assignmentUuid/duration",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "assignmentUuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Change the timing of a specific assignment. Body is a map of fields to update."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

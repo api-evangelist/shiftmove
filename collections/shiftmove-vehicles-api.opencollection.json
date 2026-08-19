@@ -1,0 +1,216 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fleet API Specifications Custom fields Vehicles API",
+    "version": "1.2.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET paginated vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/vehicles",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items in a page"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Number of the page"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sorting key"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "query",
+                "description": "Sorting order"
+              }
+            ]
+          },
+          "docs": "Access pages of vehicles."
+        },
+        {
+          "info": {
+            "name": "CREATE a new vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles"
+          },
+          "docs": "Create a new vehicle as defined within the request body."
+        },
+        {
+          "info": {
+            "name": "QUERY paginated vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/query",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items in a page"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Number of the page"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sorting key"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "query",
+                "description": "Sorting order"
+              }
+            ]
+          },
+          "docs": "Query vehicles based on specific criteria. The result is paginated."
+        },
+        {
+          "info": {
+            "name": "GET vehicle by uuid",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get detailed information about a specific vehicle."
+        },
+        {
+          "info": {
+            "name": "UPDATE a specific vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Post a map of key value pairs for fields with the new value. A value of `null` is accepted (where marked as nullable) and will clear that field. Cleared fields will not be shown in the response, as `null` fields are stripped by default. If a field is not present in the map it will not be altered. **Fields not marked as nullable can be left out of the map all together so as not to be changed**"
+        },
+        {
+          "info": {
+            "name": "ARCHIVE a vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/archive",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Avrios will end license plate and fuel card assignments on archive date, so that they can be assigned to other vehicles. No further costs from this vehicle will be taken into account after the archiving date. This is PERMANENT, archived vehicles CANNOT be re-activated. Archiving a vehicle will remove any ongoing decommissioning, this cannot be undone."
+        },
+        {
+          "info": {
+            "name": "CREATE vehicle cost center history entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/costCenter",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Creates new cost center for the specified vehicle. This will be validated and added to vehicle's cost center history.The entry must not have the same startDate as an existing vehicle cost center history entry."
+        },
+        {
+          "info": {
+            "name": "UPDATE vehicle custom field value",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/customFieldValues/:customFieldUuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "customFieldUuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a custom field value for a vehicle, identified by vehicle UUID and custom field UUID. It doesn't matter whether the custom field value has been set for this vehicle previously."
+        },
+        {
+          "info": {
+            "name": "CREATE a vehicle's sub company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/subCompany",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Creates a new sub company history entry for the specified vehicle. This will be validated and added to vehicle's sub company history.This sub company entry will end when the next one starts, or it will be indefinite, if last one chronological. The entry must not have the same startDate as an existing vehicle sub company history entry."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

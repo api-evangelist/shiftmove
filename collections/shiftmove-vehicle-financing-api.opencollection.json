@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fleet API Specifications Custom fields Vehicle financing API",
+    "version": "1.2.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicle financing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET current financing contract",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/financing/current",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the current financing contract of the specified vehicle."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

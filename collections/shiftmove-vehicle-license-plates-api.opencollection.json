@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fleet API Specifications Custom fields Vehicle license plates API",
+    "version": "1.2.3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicle license plates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET vehicle license plates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/licensePlates",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items in a page"
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Number of the page"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Sorting key"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "query",
+                "description": "Sorting order"
+              }
+            ]
+          },
+          "docs": "Get all license plates over time of a specific vehicle."
+        },
+        {
+          "info": {
+            "name": "ASSIGN a license plate to this vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/licensePlates",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Assign a license plate (specified in the request body) to the vehicle under this url."
+        },
+        {
+          "info": {
+            "name": "DELETE vehicle license plate",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/licensePlates/:licensePlateUuid",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "licensePlateUuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete license plate identified by uuid path parameter from vehicle."
+        },
+        {
+          "info": {
+            "name": "UPDATE the duration of an existing license plate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/vehicles/:uuid/licensePlates/:licensePlateUuid/duration",
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "licensePlateUuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Change the timing of a specific license plate. Body is a map of fields to update."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
