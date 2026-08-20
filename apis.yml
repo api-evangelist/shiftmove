@@ -49,6 +49,15 @@ tags:
 - Telematics
 - Vehicles
 - Fleet API
+- Software-as-a-Service
+tags_raw:
+- Company
+- Fleet Management
+- Mobility
+- Automotive
+- Telematics
+- Vehicles
+- Fleet API
 - SaaS
 maintainers:
 - FN: Kin Lane
@@ -62,6 +71,8 @@ apis:
   humanURL: https://developers.avrios.com/
   baseURL: https://api.avrios.com
   tags:
+  - Custom Fields
+  tags_raw:
   - Custom fields
   properties:
   - type: OpenAPI
@@ -126,6 +137,8 @@ apis:
   humanURL: https://developers.avrios.com/
   baseURL: https://api.avrios.com
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -158,6 +171,8 @@ apis:
   humanURL: https://developers.avrios.com/
   baseURL: https://api.avrios.com
   tags:
+  - Vehicle Financing
+  tags_raw:
   - Vehicle financing
   properties:
   - type: OpenAPI
