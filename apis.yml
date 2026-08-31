@@ -183,7 +183,7 @@ apis:
   humanURL: https://developers.avrios.com/
   baseURL: https://api.avrios.com
   tags:
-  - Vehicle Financing
+  - Vehicle financing
   tags_raw:
   - Vehicle financing
   properties:
