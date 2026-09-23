@@ -1,16 +1,7 @@
 {
   "provider": "shiftmove",
   "sources": [
-    "shiftmove-custom-fields-api-openapi.yml",
-    "shiftmove-driver-assignments-api-openapi.yml",
-    "shiftmove-drivers-api-openapi.yml",
-    "shiftmove-invoices-api-openapi.yml",
-    "shiftmove-organizations-api-openapi.yml",
-    "shiftmove-vehicle-assignments-api-openapi.yml",
-    "shiftmove-vehicle-financing-api-openapi.yml",
-    "shiftmove-vehicle-license-plates-api-openapi.yml",
-    "shiftmove-vehicle-usages-api-openapi.yml",
-    "shiftmove-vehicles-api-openapi.yml"
+    "_original/shiftmove-fleet-openapi.json"
   ],
   "outputs": [
     "shiftmove-custom-fields-api-openapi.yml",
@@ -27,6 +18,21 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "shiftmove-fleet-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "shiftmove-custom-fields-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shiftmove-driver-assignments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shiftmove-drivers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shiftmove-invoices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shiftmove-organizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shiftmove-vehicle-assignments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shiftmove-vehicle-financing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shiftmove-vehicle-license-plates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shiftmove-vehicle-usages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "shiftmove-vehicles-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

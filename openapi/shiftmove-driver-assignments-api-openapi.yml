@@ -1,13 +1,14 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
   version: 1.2.3
-  title: Fleet API Specifications Custom fields Driver assignments API
+  title: Fleet API Specifications Driver assignments API
   x-logo:
     url: logo.svg
-  description: "# Introduction\nThe Avrios Fleet-API allows syncing fleet data with our system. The provided API allows you to persist, update, delete and query various entities. Refer to the current [Release Notes](release-notes.html) for relevant changes in the API. \n# Access and usage\n## Authorization\nIn order to use the API a basic auth header must be set on each request: `Authorization: Basic {base64 of username:password}`.\n## Rate limiting\nRequests are limited to 300 requests per minute.\n## Response objects \nIn all API responses, only populated fields will be returned - `null` fields are stripped from the response object.\n## Update endpoints\nWhen updating existing entities, unless otherwise specified we will only update properties sent in the request, and all properties are optional. Clearing a property can be performed by explicitly sending `null`.\n## Date interpretation \nFor consistency with the Avrios UI, some APIs accept dates in the format `yyyy-MM-dd` rather than timestamps. If these are used for filtering or business logic, they will be interpreted as the first second of the day in the company timezone (e.g. `2020-01-01` in CET becomes `2019-12-31T23:00:00Z)`."
-host: api.avrios.com
-schemes:
-- https
+  description: '# Introduction
+
+    The Avrios Fleet-API allows syncing fleet data with our system.'
+servers:
+- url: https://api.avrios.com
 tags:
 - name: Driver assignments
 paths:
@@ -18,52 +19,57 @@ paths:
       summary: GET driver assignments
       description: Get all vehicle assignments of a specific driver.
       operationId: findDriverAssignments
-      produces:
-      - application/json
       parameters:
       - name: uuid
         in: path
         required: true
-        type: string
-        format: uuid
+        schema:
+          type: string
+          format: uuid
       - name: limit
         in: query
         description: Number of items in a page
         required: false
-        type: integer
-        maximum: 100
-        minimum: 1
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
       - name: pageNumber
         in: query
         description: Number of the page
         required: false
-        type: integer
-        minimum: 1
+        schema:
+          type: integer
+          minimum: 1
       - name: sortBy
         in: query
         description: Sorting key
         required: false
-        type: string
-        enum:
-        - uuid
-        - vehicleUuid
-        - driverUuid
-        - duration_startDate
-        - duration_endDate
-        - active
+        schema:
+          type: string
+          enum:
+          - uuid
+          - vehicleUuid
+          - driverUuid
+          - duration_startDate
+          - duration_endDate
+          - active
       - name: reverse
         in: query
         description: Sorting order
         required: false
-        type: boolean
-        enum:
-        - 'false'
-        - 'true'
+        schema:
+          type: boolean
+          enum:
+          - 'false'
+          - 'true'
       responses:
         '200':
           description: Successful operation.
-          schema:
-            $ref: '#/definitions/ApiPageAssignmentDto'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiPageAssignmentDto'
         '400':
           description: Bad request - information on the invalid fields will be provided in the response body
         '404':
@@ -74,30 +80,31 @@ paths:
       summary: ASSIGN a specified vehicle to this driver
       description: Assign a vehicle (specified in the request body) to the driver under this url.
       operationId: createDriverAssignment
-      produces:
-      - application/json
       parameters:
       - name: uuid
         in: path
         required: true
-        type: string
-        format: uuid
-      - in: body
-        name: body
-        required: false
         schema:
-          $ref: '#/definitions/CreateAssignmentByDriverRequest'
+          type: string
+          format: uuid
       responses:
         '200':
           description: Successful operation.
-          schema:
-            $ref: '#/definitions/AssignmentDto'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentDto'
         '400':
           description: Bad request - information on the invalid fields will be provided in the response body
         '404':
           description: Driver or vehicle not found.
         '409':
           description: The new assignment is conflicted with one or multiple ones. The conflicting assignments will be returned in an error response.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAssignmentByDriverRequest'
   /v1/drivers/{uuid}/assignments/query:
     post:
       tags:
@@ -105,61 +112,66 @@ paths:
       summary: QUERY driver assignments
       description: Query vehicle assignments of a specific driver.
       operationId: queryDriverAssignments
-      produces:
-      - application/json
       parameters:
       - name: uuid
         in: path
         required: true
-        type: string
-        format: uuid
-      - in: body
-        name: body
-        required: false
         schema:
-          $ref: '#/definitions/DriverAssignmentQueryApiParams'
+          type: string
+          format: uuid
       - name: limit
         in: query
         description: Number of items in a page
         required: false
-        type: integer
-        maximum: 100
-        minimum: 1
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
       - name: pageNumber
         in: query
         description: Number of the page
         required: false
-        type: integer
-        minimum: 1
+        schema:
+          type: integer
+          minimum: 1
       - name: sortBy
         in: query
         description: Sorting key
         required: false
-        type: string
-        enum:
-        - uuid
-        - vehicleUuid
-        - driverUuid
-        - duration_startDate
-        - duration_endDate
-        - active
+        schema:
+          type: string
+          enum:
+          - uuid
+          - vehicleUuid
+          - driverUuid
+          - duration_startDate
+          - duration_endDate
+          - active
       - name: reverse
         in: query
         description: Sorting order
         required: false
-        type: boolean
-        enum:
-        - 'false'
-        - 'true'
+        schema:
+          type: boolean
+          enum:
+          - 'false'
+          - 'true'
       responses:
         '200':
           description: Successful operation.
-          schema:
-            $ref: '#/definitions/ApiPageAssignmentDto'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiPageAssignmentDto'
         '400':
           description: Bad request - information on the invalid fields will be provided in the response body
         '404':
           description: Driver not found.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DriverAssignmentQueryApiParams'
   /v1/drivers/{uuid}/assignments/{assignmentUuid}:
     delete:
       tags:
@@ -167,24 +179,26 @@ paths:
       summary: DELETE driver assignment
       description: Delete vehicle to driver assignment identified by uuid path parameter.
       operationId: deleteDriverAssignment
-      produces:
-      - application/json
       parameters:
       - name: uuid
         in: path
         required: true
-        type: string
-        format: uuid
+        schema:
+          type: string
+          format: uuid
       - name: assignmentUuid
         in: path
         required: true
-        type: string
-        format: uuid
+        schema:
+          type: string
+          format: uuid
       responses:
         '200':
           description: successful operation
-          schema:
-            $ref: '#/definitions/Void'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Void'
         '204':
           description: Successful operation - no content is expected.
         '400':
@@ -198,125 +212,128 @@ paths:
       summary: UPDATE the duration of an existing assignment
       description: Change the timing of a specific assignment. Body is a map of fields to update.
       operationId: updateDriverAssignment
-      produces:
-      - application/json
       parameters:
       - name: uuid
         in: path
         required: true
-        type: string
-        format: uuid
+        schema:
+          type: string
+          format: uuid
       - name: assignmentUuid
         in: path
         required: true
-        type: string
-        format: uuid
-      - in: body
-        name: body
-        required: false
         schema:
-          $ref: '#/definitions/DurationUpdateApiParams'
+          type: string
+          format: uuid
       responses:
         '200':
           description: Successful operation.
-          schema:
-            $ref: '#/definitions/AssignmentDto'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignmentDto'
         '400':
           description: Bad request - information on the invalid fields will be provided in the response body
         '404':
           description: Driver or assignment not found.
         '409':
           description: The new assignment timing conflicts with one or multiple ones. The conflicting assignments will be returned in an error response.
-definitions:
-  ApiPageInformation:
-    type: object
-    properties:
-      pageNumber:
-        type: integer
-        format: int32
-      limit:
-        type: integer
-        format: int32
-  AssignmentDto:
-    type: object
-    properties:
-      uuid:
-        type: string
-        format: uuid
-      vehicleUuid:
-        type: string
-        format: uuid
-      driverUuid:
-        type: string
-        format: uuid
-      duration:
-        $ref: '#/definitions/DurationDto'
-      active:
-        type: boolean
-  Void:
-    type: object
-  DriverAssignmentQueryApiParams:
-    type: object
-    properties:
-      vehicleUuid:
-        type: string
-        format: uuid
-      when:
-        description: Date range assignments active within. Cannot have a value when `starting` or `ending` have a value.
-        $ref: '#/definitions/InstantRangeApiParams'
-      starting:
-        $ref: '#/definitions/InstantRangeApiParams'
-      ending:
-        $ref: '#/definitions/InstantRangeApiParams'
-  CreateAssignmentByDriverRequest:
-    type: object
-    properties:
-      vehicleUuid:
-        type: string
-        format: uuid
-      duration:
-        $ref: '#/definitions/DurationDto'
-  DurationUpdateApiParams:
-    type: object
-    properties:
-      startDate:
-        type: string
-        nullable: false
-        format: date-time
-      endDate:
-        type: string
-        nullable: true
-        format: date-time
-  InstantRangeApiParams:
-    type: object
-    properties:
-      atOrAfter:
-        type: string
-        format: date-time
-      before:
-        type: string
-        format: date-time
-  ApiPageAssignmentDto:
-    type: object
-    properties:
-      items:
-        type: array
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DurationUpdateApiParams'
+components:
+  schemas:
+    DurationDto:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+    Void:
+      type: object
+    DurationUpdateApiParams:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    CreateAssignmentByDriverRequest:
+      type: object
+      properties:
+        vehicleUuid:
+          type: string
+          format: uuid
+        duration:
+          $ref: '#/components/schemas/DurationDto'
+    AssignmentDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        vehicleUuid:
+          type: string
+          format: uuid
+        driverUuid:
+          type: string
+          format: uuid
+        duration:
+          $ref: '#/components/schemas/DurationDto'
+        active:
+          type: boolean
+    DriverAssignmentQueryApiParams:
+      type: object
+      properties:
+        vehicleUuid:
+          type: string
+          format: uuid
+        when:
+          description: Date range assignments active within. Cannot have a value when `starting` or `ending` have a value.
+          $ref: '#/components/schemas/InstantRangeApiParams'
+        starting:
+          $ref: '#/components/schemas/InstantRangeApiParams'
+        ending:
+          $ref: '#/components/schemas/InstantRangeApiParams'
+    ApiPageAssignmentDto:
+      type: object
+      properties:
         items:
-          $ref: '#/definitions/AssignmentDto'
-      page:
-        $ref: '#/definitions/ApiPageInformation'
-      totalItems:
-        type: integer
-        format: int64
-  DurationDto:
-    type: object
-    properties:
-      startDate:
-        type: string
-        format: date-time
-      endDate:
-        type: string
-        format: date-time
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignmentDto'
+        page:
+          $ref: '#/components/schemas/ApiPageInformation'
+        totalItems:
+          type: integer
+          format: int64
+    ApiPageInformation:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    InstantRangeApiParams:
+      type: object
+      properties:
+        atOrAfter:
+          type: string
+          format: date-time
+        before:
+          type: string
+          format: date-time
 x-tagGroups:
 - name: Vehicles
   tags:
