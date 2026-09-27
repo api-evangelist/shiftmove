@@ -245,28 +245,18 @@ paths:
               $ref: '#/components/schemas/DurationUpdateApiParams'
 components:
   schemas:
-    DurationDto:
+    ApiPageAssignmentDto:
       type: object
       properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
-    Void:
-      type: object
-    DurationUpdateApiParams:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignmentDto'
+        page:
+          $ref: '#/components/schemas/ApiPageInformation'
+        totalItems:
+          type: integer
+          format: int64
     CreateAssignmentByDriverRequest:
       type: object
       properties:
@@ -275,6 +265,8 @@ components:
           format: uuid
         duration:
           $ref: '#/components/schemas/DurationDto'
+    Void:
+      type: object
     AssignmentDto:
       type: object
       properties:
@@ -304,18 +296,17 @@ components:
           $ref: '#/components/schemas/InstantRangeApiParams'
         ending:
           $ref: '#/components/schemas/InstantRangeApiParams'
-    ApiPageAssignmentDto:
+    DurationUpdateApiParams:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssignmentDto'
-        page:
-          $ref: '#/components/schemas/ApiPageInformation'
-        totalItems:
-          type: integer
-          format: int64
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
     ApiPageInformation:
       type: object
       properties:
@@ -325,6 +316,15 @@ components:
         limit:
           type: integer
           format: int32
+    DurationDto:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
     InstantRangeApiParams:
       type: object
       properties:

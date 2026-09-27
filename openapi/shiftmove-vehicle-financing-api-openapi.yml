@@ -39,6 +39,15 @@ paths:
           description: Vehicle not found.
 components:
   schemas:
+    DurationDto:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
     AmountWithTaxExternalDto:
       type: object
       properties:
@@ -77,15 +86,6 @@ components:
         currencyUnit:
           type: string
           description: ISO 4217 alphabetic currency code
-    DurationDto:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
 x-tagGroups:
 - name: Vehicles
   tags:

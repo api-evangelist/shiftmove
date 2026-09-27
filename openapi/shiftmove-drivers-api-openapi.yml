@@ -265,125 +265,41 @@ paths:
               $ref: '#/components/schemas/DriverStateHistoryApiParams'
 components:
   schemas:
-    DriverDto:
+    PhoneNumberApiParams:
       type: object
       properties:
-        uuid:
+        number:
           type: string
-          format: uuid
-        state:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - LEAVE
-        startDate:
-          type: string
-          format: date
-        gender:
-          type: string
-          enum:
-          - MALE
-          - FEMALE
-        firstName:
-          type: string
-        middleName:
-          type: string
-        lastName:
-          type: string
-        emailWork:
-          type: string
-          description: A valid email address.
-        emailWorkType:
-          type: string
-          enum:
-          - MANUAL
-          - AUTOMATIC
-        emailPrivate:
-          type: string
-          description: A valid email address.
-        phoneNumber:
-          $ref: '#/components/schemas/PhoneNumberDto'
-        mobilePhoneNumber:
-          $ref: '#/components/schemas/PhoneNumberDto'
-        notificationChannel:
-          type: string
-          enum:
-          - EMAIL
-          - SMS
-        address:
-          type: string
-        zipCode:
-          type: string
-        city:
-          type: string
+          description: A valid phone number.
         country:
           type: string
           description: ISO 3166-1 Alpha-2 country code
-        language:
+    PhoneNumberDto:
+      type: object
+      properties:
+        number:
           type: string
-          description: ISO 639-1 Language Code
-        nationality:
+          description: A valid phone number.
+        country:
           type: string
           description: ISO 3166-1 Alpha-2 country code
-        placeOfBirth:
-          type: string
-        birthDate:
-          type: string
-          format: date
-        internalId:
-          type: string
-        costCenter:
-          type: string
-        subCompany:
-          type: string
-        department:
-          type: string
-        location:
-          type: string
-        comment:
-          type: string
-        distanceToWorkplace:
-          type: number
-        employeePayment:
-          type: number
-        eligibleForDriverBriefings:
-          type: boolean
-        eligibleForDriverLicenseChecks:
-          type: boolean
-        managementType:
-          type: string
-          enum:
-          - MANUAL
-          - AUTOMATIC
-        customFieldValuesByCategory:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomFieldCategoryWithValuesDto'
-        organizationUuid:
-          type: string
-          format: uuid
-    MinimalDriverDto:
+    DriverStateHistoryDto:
       type: object
       properties:
         uuid:
           type: string
           format: uuid
-        firstName:
+        driverUuid:
           type: string
-        lastName:
-          type: string
-        internalId:
-          type: string
+          format: uuid
         state:
           type: string
           enum:
           - ACTIVE
           - INACTIVE
           - LEAVE
-        lastModified:
-          type: string
-          format: date-time
+        dateRange:
+          $ref: '#/components/schemas/DateRangeDto'
     DriverCreateApiParams:
       type: object
       properties:
@@ -462,15 +378,52 @@ components:
           type: number
         employeePayment:
           type: number
-    PhoneNumberDto:
+    DateRangeDto:
       type: object
       properties:
-        number:
+        startDate:
           type: string
-          description: A valid phone number.
-        country:
+          format: date
+          description: Inclusive start date.
+        endDate:
           type: string
-          description: ISO 3166-1 Alpha-2 country code
+          format: date
+          description: Exclusive end date.
+    CustomFieldValueDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        textValue:
+          type: string
+        dateValue:
+          type: string
+          format: date-time
+        booleanValue:
+          type: boolean
+        integerValue:
+          type: integer
+          format: int32
+        decimalValue:
+          type: number
+        monetaryAmountValue:
+          $ref: '#/components/schemas/MonetaryAmountDto'
+    CustomFieldCategoryWithValuesDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        position:
+          type: integer
+          format: int32
+        customFieldValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFieldValueDto'
     MonetaryAmountDto:
       type: object
       properties:
@@ -479,76 +432,6 @@ components:
         currency:
           type: string
           description: ISO 4217 alphabetic currency code
-    DriverStateHistoryDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        driverUuid:
-          type: string
-          format: uuid
-        state:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - LEAVE
-        dateRange:
-          $ref: '#/components/schemas/DateRangeDto'
-    DriverStateHistoryApiParams:
-      type: object
-      properties:
-        date:
-          type: string
-          format: date
-        state:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - LEAVE
-    ApiPageInformation:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-    DriverQueryApiParams:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        firstName:
-          type: string
-        lastName:
-          type: string
-        internalId:
-          type: string
-        state:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - LEAVE
-        lastModified:
-          $ref: '#/components/schemas/InstantRangeApiParams'
-    ApiPageMinimalDriverDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/MinimalDriverDto'
-        page:
-          $ref: '#/components/schemas/ApiPageInformation'
-        totalItems:
-          type: integer
-          format: int64
     DriverUpdateApiParams:
       type: object
       properties:
@@ -664,6 +547,104 @@ components:
           type:
           - number
           - 'null'
+    DriverDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - LEAVE
+        startDate:
+          type: string
+          format: date
+        gender:
+          type: string
+          enum:
+          - MALE
+          - FEMALE
+        firstName:
+          type: string
+        middleName:
+          type: string
+        lastName:
+          type: string
+        emailWork:
+          type: string
+          description: A valid email address.
+        emailWorkType:
+          type: string
+          enum:
+          - MANUAL
+          - AUTOMATIC
+        emailPrivate:
+          type: string
+          description: A valid email address.
+        phoneNumber:
+          $ref: '#/components/schemas/PhoneNumberDto'
+        mobilePhoneNumber:
+          $ref: '#/components/schemas/PhoneNumberDto'
+        notificationChannel:
+          type: string
+          enum:
+          - EMAIL
+          - SMS
+        address:
+          type: string
+        zipCode:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+          description: ISO 3166-1 Alpha-2 country code
+        language:
+          type: string
+          description: ISO 639-1 Language Code
+        nationality:
+          type: string
+          description: ISO 3166-1 Alpha-2 country code
+        placeOfBirth:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        internalId:
+          type: string
+        costCenter:
+          type: string
+        subCompany:
+          type: string
+        department:
+          type: string
+        location:
+          type: string
+        comment:
+          type: string
+        distanceToWorkplace:
+          type: number
+        employeePayment:
+          type: number
+        eligibleForDriverBriefings:
+          type: boolean
+        eligibleForDriverLicenseChecks:
+          type: boolean
+        managementType:
+          type: string
+          enum:
+          - MANUAL
+          - AUTOMATIC
+        customFieldValuesByCategory:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFieldCategoryWithValuesDto'
+        organizationUuid:
+          type: string
+          format: uuid
     MonetaryAmountApiParams:
       type: object
       properties:
@@ -672,21 +653,89 @@ components:
         currency:
           type: string
           description: ISO 4217 alphabetic currency code
-    CustomFieldCategoryWithValuesDto:
+    ApiPageMinimalDriverDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MinimalDriverDto'
+        page:
+          $ref: '#/components/schemas/ApiPageInformation'
+        totalItems:
+          type: integer
+          format: int64
+    ApiPageInformation:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    MinimalDriverDto:
       type: object
       properties:
         uuid:
           type: string
           format: uuid
-        name:
+        firstName:
           type: string
-        position:
-          type: integer
-          format: int32
-        customFieldValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomFieldValueDto'
+        lastName:
+          type: string
+        internalId:
+          type: string
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - LEAVE
+        lastModified:
+          type: string
+          format: date-time
+    DriverQueryApiParams:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        internalId:
+          type: string
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - LEAVE
+        lastModified:
+          $ref: '#/components/schemas/InstantRangeApiParams'
+    DriverStateHistoryApiParams:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - LEAVE
+    InstantRangeApiParams:
+      type: object
+      properties:
+        atOrAfter:
+          type: string
+          format: date-time
+        before:
+          type: string
+          format: date-time
     CustomFieldValueUpdateRequest:
       type: object
       properties:
@@ -706,55 +755,6 @@ components:
           $ref: '#/components/schemas/MonetaryAmountApiParams'
         exactlyOneValueSet:
           type: boolean
-    PhoneNumberApiParams:
-      type: object
-      properties:
-        number:
-          type: string
-          description: A valid phone number.
-        country:
-          type: string
-          description: ISO 3166-1 Alpha-2 country code
-    CustomFieldValueDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        textValue:
-          type: string
-        dateValue:
-          type: string
-          format: date-time
-        booleanValue:
-          type: boolean
-        integerValue:
-          type: integer
-          format: int32
-        decimalValue:
-          type: number
-        monetaryAmountValue:
-          $ref: '#/components/schemas/MonetaryAmountDto'
-    InstantRangeApiParams:
-      type: object
-      properties:
-        atOrAfter:
-          type: string
-          format: date-time
-        before:
-          type: string
-          format: date-time
-    DateRangeDto:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date
-          description: Inclusive start date.
-        endDate:
-          type: string
-          format: date
-          description: Exclusive end date.
 x-tagGroups:
 - name: Vehicles
   tags:

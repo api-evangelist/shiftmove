@@ -177,6 +177,47 @@ paths:
               $ref: '#/components/schemas/DurationUpdateApiParams'
 components:
   schemas:
+    Void:
+      type: object
+    ApiPageLicensePlateDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicensePlateDto'
+        page:
+          $ref: '#/components/schemas/ApiPageInformation'
+        totalItems:
+          type: integer
+          format: int64
+    DurationUpdateApiParams:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ApiPageInformation:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    CreateLicensePlateRequest:
+      type: object
+      properties:
+        plate:
+          type: string
+        duration:
+          $ref: '#/components/schemas/DurationDto'
     DurationDto:
       type: object
       properties:
@@ -198,47 +239,6 @@ components:
           $ref: '#/components/schemas/DurationDto'
         active:
           type: boolean
-    Void:
-      type: object
-    DurationUpdateApiParams:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    ApiPageLicensePlateDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LicensePlateDto'
-        page:
-          $ref: '#/components/schemas/ApiPageInformation'
-        totalItems:
-          type: integer
-          format: int64
-    CreateLicensePlateRequest:
-      type: object
-      properties:
-        plate:
-          type: string
-        duration:
-          $ref: '#/components/schemas/DurationDto'
-    ApiPageInformation:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
 x-tagGroups:
 - name: Vehicles
   tags:

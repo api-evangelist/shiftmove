@@ -46,14 +46,6 @@ paths:
                   $ref: '#/components/schemas/CustomFieldDto'
 components:
   schemas:
-    CustomFieldCategoryDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        name:
-          type: string
     CustomFieldDto:
       type: object
       properties:
@@ -75,6 +67,14 @@ components:
           - MONETARY_AMOUNT
         category:
           $ref: '#/components/schemas/CustomFieldCategoryDto'
+    CustomFieldCategoryDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
 x-tagGroups:
 - name: Vehicles
   tags:
