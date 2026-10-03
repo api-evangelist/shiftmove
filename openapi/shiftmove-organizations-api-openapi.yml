@@ -65,6 +65,15 @@ paths:
           description: Bad request - information on the invalid fields will be provided in the response body
 components:
   schemas:
+    ApiPageInformation:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
     ApiPageOrganizationDto:
       type: object
       properties:
@@ -77,15 +86,6 @@ components:
         totalItems:
           type: integer
           format: int64
-    ApiPageInformation:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
     OrganizationDto:
       type: object
       properties:

@@ -346,237 +346,6 @@ components:
           type: string
           format: date
           description: Exclusive end date.
-    VehicleSubCompanyHistoryDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        subCompany:
-          type: string
-        dateRange:
-          $ref: '#/components/schemas/DateRangeDto'
-    ArchiveVehicleApiParams:
-      type: object
-      properties:
-        archiveDate:
-          type: string
-          format: date
-    ApiPageMinimalVehicleDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/MinimalVehicleDto'
-        page:
-          $ref: '#/components/schemas/ApiPageInformation'
-        totalItems:
-          type: integer
-          format: int64
-    MinimalVehicleDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        vin:
-          type: string
-        internalId:
-          type: string
-        displayName:
-          type: string
-        state:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - DECOMMISSIONED
-          - IN_PROCUREMENT
-          - ARCHIVED
-        activeLicensePlate:
-          type: string
-        chMasterNumber:
-          type: string
-        lastModified:
-          type: string
-          format: date-time
-    CustomFieldValueDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        textValue:
-          type: string
-        dateValue:
-          type: string
-          format: date-time
-        booleanValue:
-          type: boolean
-        integerValue:
-          type: integer
-          format: int32
-        decimalValue:
-          type: number
-        monetaryAmountValue:
-          $ref: '#/components/schemas/MonetaryAmountDto'
-    VehicleCostCenterHistoryDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        costCenter:
-          type: string
-        dateRange:
-          $ref: '#/components/schemas/DateRangeDto'
-    CostCenterApiParams:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date
-        costCenter:
-          type: string
-    VehicleCreationApiParams:
-      type: object
-      properties:
-        activeLicensePlate:
-          type: string
-        customName:
-          type: string
-          description: Used to override the vehicle's displayName, which is a generated property that otherwise defaults to the current license plate.
-        vin:
-          type: string
-        organizationUuid:
-          type: string
-          format: uuid
-          description: If not provided the organization will be set to that of the API token
-        commissionDate:
-          type: string
-          format: date
-        costCenter:
-          type: string
-        jobAccountNumber:
-          type: string
-        registrationDate:
-          type: string
-          format: date
-        registrationCountry:
-          type: string
-          description: ISO 3166-1 Alpha-2 country code
-        fallbackSpecification:
-          description: This will be used if no vehicle description can be sourced for the given VIN
-          $ref: '#/components/schemas/FallbackSpecification'
-        tensileLoad:
-          type: integer
-          format: int32
-        internalId:
-          type: string
-        additionalId:
-          type: string
-        euLicenseNumber:
-          type: string
-        comment:
-          type: string
-        licensePlateColor:
-          type: string
-          enum:
-          - BLACK
-          - BLUE
-          - BROWN
-          - GREEN
-          - RED
-          - YELLOW
-          - WHITE
-        tax:
-          $ref: '#/components/schemas/MonetaryAmountApiParams'
-        subCompany:
-          type: string
-        tireStorageLocation:
-          type: string
-        atAkoGross:
-          $ref: '#/components/schemas/MonetaryAmountApiParams'
-        atAkoNet:
-          $ref: '#/components/schemas/MonetaryAmountApiParams'
-        atLuxuryTangent:
-          $ref: '#/components/schemas/MonetaryAmountApiParams'
-        atNova:
-          type: number
-        atVatExempt:
-          type: boolean
-        chMasterNumber:
-          type: string
-    FallbackSpecification:
-      type: object
-      properties:
-        manufacturerName:
-          type: string
-        model:
-          type: string
-        vehicleType:
-          type: string
-          enum:
-          - BUILD_UP
-          - BUS
-          - CAR
-          - COST
-          - EXCAVATOR
-          - INDUSTRIAL_TRUCK
-          - SPECIAL
-          - TWO_WHEELER
-          - TRUCK
-          - TRACTOR
-          - TRAILER
-          - VAN
-          - SWAP_BODY
-    ApiPageInformation:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-    InstantRangeApiParams:
-      type: object
-      properties:
-        atOrAfter:
-          type: string
-          format: date-time
-        before:
-          type: string
-          format: date-time
-    VehicleQueryApiParams:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        vin:
-          type: string
-        internalId:
-          type: string
-        displayName:
-          type: string
-        state:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - DECOMMISSIONED
-          - IN_PROCUREMENT
-          - ARCHIVED
-        activeLicensePlate:
-          type: string
-        chMasterNumber:
-          type: string
-        lastModified:
-          $ref: '#/components/schemas/InstantRangeApiParams'
-        assignedToPlate:
-          $ref: '#/components/schemas/LicensePlateQueryApiParams'
     MonetaryAmountDto:
       type: object
       properties:
@@ -585,365 +354,13 @@ components:
         currency:
           type: string
           description: ISO 4217 alphabetic currency code
-    MonetaryAmountApiParams:
+    LicensePlateQueryApiParams:
       type: object
       properties:
-        amount:
-          type: number
-        currency:
+        plate:
           type: string
-          description: ISO 4217 alphabetic currency code
-    VehicleSubCompanyApiParams:
-      type: object
-      properties:
-        subCompany:
-          type: string
-        startDate:
-          type: string
-          format: date
-    VehicleDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-          readOnly: true
-        activeLicensePlate:
-          type: string
-          readOnly: true
-        displayName:
-          type: string
-          readOnly: true
-        customName:
-          type: string
-        vin:
-          type: string
-          readOnly: true
-        commissionDate:
-          type: string
-          format: date
-        fuelTankSize:
-          type: number
-        fuelType:
-          type: string
-          enum:
-          - CNG
-          - DIESEL
-          - ELECTRIC
-          - GAS
-          - GASOLINE
-          - HYBRID_DIESEL
-          - HYBRID_DIESEL_CNG
-          - HYBRID_DIESEL_LNG
-          - HYBRID_DIESEL_LPG
-          - HYBRID_GASOLINE
-          - HYBRID_GASOLINE_CNG
-          - HYBRID_GASOLINE_LNG
-          - HYBRID_GASOLINE_LPG
-          - LPG
-          - LNG
-          - OTHER
-        transmissionType:
-          type: string
-          enum:
-          - AUTOMATIC
-          - MANUAL
-        costCenter:
-          type: string
-          readOnly: true
-        jobAccountNumber:
-          type: string
-        registrationDate:
-          type: string
-          format: date
-          readOnly: true
-        registrationCountry:
-          type: string
-          description: ISO 3166-1 Alpha-2 country code
-        emissionClass:
-          type: string
-          enum:
-          - EURO_0
-          - EURO_1
-          - EURO_2
-          - EURO_3
-          - EURO_4
-          - EURO_5
-          - EURO_5A
-          - EURO_5B
-          - EURO_6
-          - EURO_6A
-          - EURO_6B
-          - EURO_6C
-          - EURO_6C_EVAP
-          - EURO_6D_TEMP
-          - EURO_6D_TEMP_EVAP
-          - EURO_6D_TEMP_ISC
-          - EURO_6D_TEMP_EVAP_ISC
-          - EURO_6D_ISC
-          - EURO_6D_ISC_FCM
-          - EURO_6D
-          - EURO_6E
-          - EURO_6E_BIS
-          - EURO_6E_BIS_FCM
-          - EURO_I
-          - EURO_II
-          - EURO_III
-          - EURO_IV
-          - EURO_V
-          - EURO_VI
-          - D3
-          - D4
-          - E00
-          - E01
-          - E02
-          - E03
-          - E04
-          - E05
-          - E06
-          - D50
-          - D51
-          - D52
-          - D53
-          - D54
-          - F50
-          - F51
-          - F52
-          - F53
-          - F54
-          - B00
-          - B01
-          - B02
-          - B03
-          - B04
-          - B5A
-          - B5B
-          - B6A
-          - B6B
-          - B6C
-          - B6D
-          - B6E
-          - AX
-          - A00
-          - A01
-          - A02
-          - A03
-          - A04
-          - A05
-          - A06
-          - A07
-          - A08
-          - A09
-          - A10
-          - A11
-          - A12
-          - A13
-          - A14
-          - A15
-          - A16
-          - A17
-          - A18
-          - A19
-          - A20
-          - A21
-          - A22
-          - A23
-          - A24
-          - A25
-          - A26
-          - A27
-          - C00
-          - C01
-          - C02
-          - C03
-          - D00
-          - D01
-          - D02
-          - D03
-          - D04
-          - F00
-          - F01
-          - F02
-          - F03
-          - F04
-          - STUFE_I
-          - STUFE_II
-          - STUFE_III_A
-          - STUFE_III_B
-          - STUFE_IV
-          - STUFE_V
-          - TIER_I
-          - TIER_II
-          - TIER_III
-          - TIER_IV_INTERIM
-          - TIER_IV
-          - TIER_V
-        tareWeight:
-          type: integer
-          format: int32
-        loadCapacity:
-          type: integer
-          format: int32
-        maxWeight:
-          type: integer
-          format: int32
-        tensileLoad:
-          type: integer
-          format: int32
-        trailerLoad:
-          type: integer
-          format: int32
-        combinedFuelConsumptionPerKm:
-          type: number
-        urbanFuelConsumptionPerKm:
-          type: number
-        extraUrbanFuelConsumptionPerKm:
-          type: number
-        combinedElectricityConsumptionPerKm:
-          type: number
-        urbanElectricityConsumptionPerKm:
-          type: number
-        extraUrbanElectricityConsumptionPerKm:
-          type: number
-        internalId:
-          type: string
-        additionalId:
-          type: string
-        euLicenseNumber:
-          type: string
-        yearOfConstruction:
-          type: integer
-          format: int32
-        comment:
-          type: string
-        licensePlateColor:
-          type: string
-          enum:
-          - BLACK
-          - BLUE
-          - BROWN
-          - GREEN
-          - RED
-          - YELLOW
-          - WHITE
-        grossListPrice:
-          type: number
-        grossListPriceCurrency:
-          type: string
-          description: ISO 4217 alphabetic currency code
-        grossListPriceSource:
-          type: string
-          enum:
-          - DAT
-          - PROCUREMENT_OFFER
-          - MANUAL
-        state:
-          type: string
-          readOnly: true
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - DECOMMISSIONED
-          - IN_PROCUREMENT
-          - ARCHIVED
-        co2Emission:
-          type: integer
-          format: int32
-        displacement:
-          type: integer
-          format: int32
-        kilowatt:
-          type: integer
-          format: int32
-        tax:
-          type: number
-          readOnly: true
-        taxCurrency:
-          type: string
-          description: ISO 4217 alphabetic currency code
-          readOnly: true
-        manufacturerName:
-          type: string
-        modelName:
-          type: string
-          readOnly: true
-        baseModelDisplayName:
-          type: string
-          description: 'DEPRECATED: use modelName instead (will be removed in next release)'
-          readOnly: true
-        importVehicleModel:
-          type: string
-          description: 'DEPRECATED: use modelName instead (will be removed in next release)'
-          readOnly: true
-        subCompany:
-          type: string
-          readOnly: true
-        vehicleColor:
-          type: string
-        interiorColor:
-          type: string
-        cushionColor:
-          type: string
-        vehicleAvailable:
-          type: boolean
-        tireStorageLocation:
-          type: string
-        atAkoGross:
-          $ref: '#/components/schemas/MonetaryAmountDto'
-        atAkoNet:
-          $ref: '#/components/schemas/MonetaryAmountDto'
-        atLuxuryTangent:
-          $ref: '#/components/schemas/MonetaryAmountDto'
-        atNova:
-          type: number
-        atVatExempt:
-          type: boolean
-        chMasterNumber:
-          type: string
-        vehicleType:
-          type: string
-          enum:
-          - BUILD_UP
-          - BUS
-          - CAR
-          - COST
-          - EXCAVATOR
-          - INDUSTRIAL_TRUCK
-          - SPECIAL
-          - TWO_WHEELER
-          - TRUCK
-          - TRACTOR
-          - TRAILER
-          - VAN
-          - SWAP_BODY
-        handoverDate:
-          type: string
-          format: date-time
-          readOnly: true
-        location:
-          type: string
-        customFieldValuesByCategory:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomFieldCategoryWithValuesDto'
-        organizationUuid:
-          type: string
-          format: uuid
-    CustomFieldCategoryWithValuesDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        name:
-          type: string
-        position:
-          type: integer
-          format: int32
-        customFieldValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomFieldValueDto'
+        when:
+          $ref: '#/components/schemas/InstantRangeApiParams'
     VehicleUpdateApiParams:
       type: object
       properties:
@@ -1283,13 +700,124 @@ components:
           type:
           - string
           - 'null'
-    LicensePlateQueryApiParams:
+    CostCenterApiParams:
       type: object
       properties:
-        plate:
+        startDate:
           type: string
-        when:
-          $ref: '#/components/schemas/InstantRangeApiParams'
+          format: date
+        costCenter:
+          type: string
+    InstantRangeApiParams:
+      type: object
+      properties:
+        atOrAfter:
+          type: string
+          format: date-time
+        before:
+          type: string
+          format: date-time
+    VehicleCreationApiParams:
+      type: object
+      properties:
+        activeLicensePlate:
+          type: string
+        customName:
+          type: string
+          description: Used to override the vehicle's displayName, which is a generated property that otherwise defaults to the current license plate.
+        vin:
+          type: string
+        organizationUuid:
+          type: string
+          format: uuid
+          description: If not provided the organization will be set to that of the API token
+        commissionDate:
+          type: string
+          format: date
+        costCenter:
+          type: string
+        jobAccountNumber:
+          type: string
+        registrationDate:
+          type: string
+          format: date
+        registrationCountry:
+          type: string
+          description: ISO 3166-1 Alpha-2 country code
+        fallbackSpecification:
+          description: This will be used if no vehicle description can be sourced for the given VIN
+          $ref: '#/components/schemas/FallbackSpecification'
+        tensileLoad:
+          type: integer
+          format: int32
+        internalId:
+          type: string
+        additionalId:
+          type: string
+        euLicenseNumber:
+          type: string
+        comment:
+          type: string
+        licensePlateColor:
+          type: string
+          enum:
+          - BLACK
+          - BLUE
+          - BROWN
+          - GREEN
+          - RED
+          - YELLOW
+          - WHITE
+        tax:
+          $ref: '#/components/schemas/MonetaryAmountApiParams'
+        subCompany:
+          type: string
+        tireStorageLocation:
+          type: string
+        atAkoGross:
+          $ref: '#/components/schemas/MonetaryAmountApiParams'
+        atAkoNet:
+          $ref: '#/components/schemas/MonetaryAmountApiParams'
+        atLuxuryTangent:
+          $ref: '#/components/schemas/MonetaryAmountApiParams'
+        atNova:
+          type: number
+        atVatExempt:
+          type: boolean
+        chMasterNumber:
+          type: string
+    FallbackSpecification:
+      type: object
+      properties:
+        manufacturerName:
+          type: string
+        model:
+          type: string
+        vehicleType:
+          type: string
+          enum:
+          - BUILD_UP
+          - BUS
+          - CAR
+          - COST
+          - EXCAVATOR
+          - INDUSTRIAL_TRUCK
+          - SPECIAL
+          - TWO_WHEELER
+          - TRUCK
+          - TRACTOR
+          - TRAILER
+          - VAN
+          - SWAP_BODY
+    ApiPageInformation:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
     CustomFieldValueUpdateRequest:
       type: object
       properties:
@@ -1309,6 +837,478 @@ components:
           $ref: '#/components/schemas/MonetaryAmountApiParams'
         exactlyOneValueSet:
           type: boolean
+    VehicleSubCompanyHistoryDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        subCompany:
+          type: string
+        dateRange:
+          $ref: '#/components/schemas/DateRangeDto'
+    CustomFieldCategoryWithValuesDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        position:
+          type: integer
+          format: int32
+        customFieldValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFieldValueDto'
+    ArchiveVehicleApiParams:
+      type: object
+      properties:
+        archiveDate:
+          type: string
+          format: date
+    VehicleDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
+        activeLicensePlate:
+          type: string
+          readOnly: true
+        displayName:
+          type: string
+          readOnly: true
+        customName:
+          type: string
+        vin:
+          type: string
+          readOnly: true
+        commissionDate:
+          type: string
+          format: date
+        fuelTankSize:
+          type: number
+        fuelType:
+          type: string
+          enum:
+          - CNG
+          - DIESEL
+          - ELECTRIC
+          - GAS
+          - GASOLINE
+          - HYBRID_DIESEL
+          - HYBRID_DIESEL_CNG
+          - HYBRID_DIESEL_LNG
+          - HYBRID_DIESEL_LPG
+          - HYBRID_GASOLINE
+          - HYBRID_GASOLINE_CNG
+          - HYBRID_GASOLINE_LNG
+          - HYBRID_GASOLINE_LPG
+          - LPG
+          - LNG
+          - OTHER
+        transmissionType:
+          type: string
+          enum:
+          - AUTOMATIC
+          - MANUAL
+        costCenter:
+          type: string
+          readOnly: true
+        jobAccountNumber:
+          type: string
+        registrationDate:
+          type: string
+          format: date
+          readOnly: true
+        registrationCountry:
+          type: string
+          description: ISO 3166-1 Alpha-2 country code
+        emissionClass:
+          type: string
+          enum:
+          - EURO_0
+          - EURO_1
+          - EURO_2
+          - EURO_3
+          - EURO_4
+          - EURO_5
+          - EURO_5A
+          - EURO_5B
+          - EURO_6
+          - EURO_6A
+          - EURO_6B
+          - EURO_6C
+          - EURO_6C_EVAP
+          - EURO_6D_TEMP
+          - EURO_6D_TEMP_EVAP
+          - EURO_6D_TEMP_ISC
+          - EURO_6D_TEMP_EVAP_ISC
+          - EURO_6D_ISC
+          - EURO_6D_ISC_FCM
+          - EURO_6D
+          - EURO_6E
+          - EURO_6E_BIS
+          - EURO_6E_BIS_FCM
+          - EURO_I
+          - EURO_II
+          - EURO_III
+          - EURO_IV
+          - EURO_V
+          - EURO_VI
+          - D3
+          - D4
+          - E00
+          - E01
+          - E02
+          - E03
+          - E04
+          - E05
+          - E06
+          - D50
+          - D51
+          - D52
+          - D53
+          - D54
+          - F50
+          - F51
+          - F52
+          - F53
+          - F54
+          - B00
+          - B01
+          - B02
+          - B03
+          - B04
+          - B5A
+          - B5B
+          - B6A
+          - B6B
+          - B6C
+          - B6D
+          - B6E
+          - AX
+          - A00
+          - A01
+          - A02
+          - A03
+          - A04
+          - A05
+          - A06
+          - A07
+          - A08
+          - A09
+          - A10
+          - A11
+          - A12
+          - A13
+          - A14
+          - A15
+          - A16
+          - A17
+          - A18
+          - A19
+          - A20
+          - A21
+          - A22
+          - A23
+          - A24
+          - A25
+          - A26
+          - A27
+          - C00
+          - C01
+          - C02
+          - C03
+          - D00
+          - D01
+          - D02
+          - D03
+          - D04
+          - F00
+          - F01
+          - F02
+          - F03
+          - F04
+          - STUFE_I
+          - STUFE_II
+          - STUFE_III_A
+          - STUFE_III_B
+          - STUFE_IV
+          - STUFE_V
+          - TIER_I
+          - TIER_II
+          - TIER_III
+          - TIER_IV_INTERIM
+          - TIER_IV
+          - TIER_V
+        tareWeight:
+          type: integer
+          format: int32
+        loadCapacity:
+          type: integer
+          format: int32
+        maxWeight:
+          type: integer
+          format: int32
+        tensileLoad:
+          type: integer
+          format: int32
+        trailerLoad:
+          type: integer
+          format: int32
+        combinedFuelConsumptionPerKm:
+          type: number
+        urbanFuelConsumptionPerKm:
+          type: number
+        extraUrbanFuelConsumptionPerKm:
+          type: number
+        combinedElectricityConsumptionPerKm:
+          type: number
+        urbanElectricityConsumptionPerKm:
+          type: number
+        extraUrbanElectricityConsumptionPerKm:
+          type: number
+        internalId:
+          type: string
+        additionalId:
+          type: string
+        euLicenseNumber:
+          type: string
+        yearOfConstruction:
+          type: integer
+          format: int32
+        comment:
+          type: string
+        licensePlateColor:
+          type: string
+          enum:
+          - BLACK
+          - BLUE
+          - BROWN
+          - GREEN
+          - RED
+          - YELLOW
+          - WHITE
+        grossListPrice:
+          type: number
+        grossListPriceCurrency:
+          type: string
+          description: ISO 4217 alphabetic currency code
+        grossListPriceSource:
+          type: string
+          enum:
+          - DAT
+          - PROCUREMENT_OFFER
+          - MANUAL
+        state:
+          type: string
+          readOnly: true
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - DECOMMISSIONED
+          - IN_PROCUREMENT
+          - ARCHIVED
+        co2Emission:
+          type: integer
+          format: int32
+        displacement:
+          type: integer
+          format: int32
+        kilowatt:
+          type: integer
+          format: int32
+        tax:
+          type: number
+          readOnly: true
+        taxCurrency:
+          type: string
+          description: ISO 4217 alphabetic currency code
+          readOnly: true
+        manufacturerName:
+          type: string
+        modelName:
+          type: string
+          readOnly: true
+        baseModelDisplayName:
+          type: string
+          description: 'DEPRECATED: use modelName instead (will be removed in next release)'
+          readOnly: true
+        importVehicleModel:
+          type: string
+          description: 'DEPRECATED: use modelName instead (will be removed in next release)'
+          readOnly: true
+        subCompany:
+          type: string
+          readOnly: true
+        vehicleColor:
+          type: string
+        interiorColor:
+          type: string
+        cushionColor:
+          type: string
+        vehicleAvailable:
+          type: boolean
+        tireStorageLocation:
+          type: string
+        atAkoGross:
+          $ref: '#/components/schemas/MonetaryAmountDto'
+        atAkoNet:
+          $ref: '#/components/schemas/MonetaryAmountDto'
+        atLuxuryTangent:
+          $ref: '#/components/schemas/MonetaryAmountDto'
+        atNova:
+          type: number
+        atVatExempt:
+          type: boolean
+        chMasterNumber:
+          type: string
+        vehicleType:
+          type: string
+          enum:
+          - BUILD_UP
+          - BUS
+          - CAR
+          - COST
+          - EXCAVATOR
+          - INDUSTRIAL_TRUCK
+          - SPECIAL
+          - TWO_WHEELER
+          - TRUCK
+          - TRACTOR
+          - TRAILER
+          - VAN
+          - SWAP_BODY
+        handoverDate:
+          type: string
+          format: date-time
+          readOnly: true
+        location:
+          type: string
+        customFieldValuesByCategory:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFieldCategoryWithValuesDto'
+        organizationUuid:
+          type: string
+          format: uuid
+    VehicleQueryApiParams:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        vin:
+          type: string
+        internalId:
+          type: string
+        displayName:
+          type: string
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - DECOMMISSIONED
+          - IN_PROCUREMENT
+          - ARCHIVED
+        activeLicensePlate:
+          type: string
+        chMasterNumber:
+          type: string
+        lastModified:
+          $ref: '#/components/schemas/InstantRangeApiParams'
+        assignedToPlate:
+          $ref: '#/components/schemas/LicensePlateQueryApiParams'
+    MinimalVehicleDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        vin:
+          type: string
+        internalId:
+          type: string
+        displayName:
+          type: string
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - DECOMMISSIONED
+          - IN_PROCUREMENT
+          - ARCHIVED
+        activeLicensePlate:
+          type: string
+        chMasterNumber:
+          type: string
+        lastModified:
+          type: string
+          format: date-time
+    ApiPageMinimalVehicleDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MinimalVehicleDto'
+        page:
+          $ref: '#/components/schemas/ApiPageInformation'
+        totalItems:
+          type: integer
+          format: int64
+    VehicleCostCenterHistoryDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        costCenter:
+          type: string
+        dateRange:
+          $ref: '#/components/schemas/DateRangeDto'
+    VehicleSubCompanyApiParams:
+      type: object
+      properties:
+        subCompany:
+          type: string
+        startDate:
+          type: string
+          format: date
+    CustomFieldValueDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        textValue:
+          type: string
+        dateValue:
+          type: string
+          format: date-time
+        booleanValue:
+          type: boolean
+        integerValue:
+          type: integer
+          format: int32
+        decimalValue:
+          type: number
+        monetaryAmountValue:
+          $ref: '#/components/schemas/MonetaryAmountDto'
+    MonetaryAmountApiParams:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+          description: ISO 4217 alphabetic currency code
 x-tagGroups:
 - name: Vehicles
   tags:

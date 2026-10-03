@@ -177,30 +177,28 @@ paths:
               $ref: '#/components/schemas/DurationUpdateApiParams'
 components:
   schemas:
-    Void:
-      type: object
-    ApiPageLicensePlateDto:
+    LicensePlateDto:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LicensePlateDto'
-        page:
-          $ref: '#/components/schemas/ApiPageInformation'
-        totalItems:
-          type: integer
-          format: int64
-    DurationUpdateApiParams:
+        uuid:
+          type: string
+          format: uuid
+        plate:
+          type: string
+        duration:
+          $ref: '#/components/schemas/DurationDto'
+        active:
+          type: boolean
+    Void:
+      type: object
+    DurationDto:
       type: object
       properties:
         startDate:
           type: string
           format: date-time
         endDate:
-          type:
-          - string
-          - 'null'
+          type: string
           format: date-time
     ApiPageInformation:
       type: object
@@ -218,27 +216,29 @@ components:
           type: string
         duration:
           $ref: '#/components/schemas/DurationDto'
-    DurationDto:
+    DurationUpdateApiParams:
       type: object
       properties:
         startDate:
           type: string
           format: date-time
         endDate:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-    LicensePlateDto:
+    ApiPageLicensePlateDto:
       type: object
       properties:
-        uuid:
-          type: string
-          format: uuid
-        plate:
-          type: string
-        duration:
-          $ref: '#/components/schemas/DurationDto'
-        active:
-          type: boolean
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicensePlateDto'
+        page:
+          $ref: '#/components/schemas/ApiPageInformation'
+        totalItems:
+          type: integer
+          format: int64
 x-tagGroups:
 - name: Vehicles
   tags:

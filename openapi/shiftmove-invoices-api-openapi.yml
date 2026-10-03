@@ -218,24 +218,13 @@ paths:
           description: Invoice file upload not found.
 components:
   schemas:
-    InvoiceQueryApiParams:
-      type: object
-      properties:
-        invoiceNumber:
-          type: string
-        supplier:
-          type: string
-        invoiceDate:
-          $ref: '#/components/schemas/DateRangeApiParams'
-        releaseDate:
-          $ref: '#/components/schemas/InstantRangeApiParams'
-    ApiPageInvoiceItemDto:
+    ApiPageInvoiceExternalDto:
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/InvoiceItemDto'
+            $ref: '#/components/schemas/InvoiceExternalDto'
         page:
           $ref: '#/components/schemas/ApiPageInformation'
         totalItems:
@@ -299,17 +288,6 @@ components:
           enum:
           - FUEL
           - OTHER
-    Void:
-      type: object
-    DateRangeApiParams:
-      type: object
-      properties:
-        onOrAfter:
-          type: string
-          format: date
-        before:
-          type: string
-          format: date
     InvoiceExternalDto:
       type: object
       properties:
@@ -341,18 +319,17 @@ components:
         currency:
           type: string
           description: ISO 4217 alphabetic currency code
-    ApiPageInvoiceExternalDto:
+    DateRangeApiParams:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvoiceExternalDto'
-        page:
-          $ref: '#/components/schemas/ApiPageInformation'
-        totalItems:
-          type: integer
-          format: int64
+        onOrAfter:
+          type: string
+          format: date
+        before:
+          type: string
+          format: date
+    Void:
+      type: object
     ApiPageInformation:
       type: object
       properties:
@@ -371,6 +348,29 @@ components:
         before:
           type: string
           format: date-time
+    InvoiceQueryApiParams:
+      type: object
+      properties:
+        invoiceNumber:
+          type: string
+        supplier:
+          type: string
+        invoiceDate:
+          $ref: '#/components/schemas/DateRangeApiParams'
+        releaseDate:
+          $ref: '#/components/schemas/InstantRangeApiParams'
+    ApiPageInvoiceItemDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItemDto'
+        page:
+          $ref: '#/components/schemas/ApiPageInformation'
+        totalItems:
+          type: integer
+          format: int64
 x-tagGroups:
 - name: Vehicles
   tags:

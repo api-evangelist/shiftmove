@@ -39,15 +39,6 @@ paths:
           description: Vehicle not found.
 components:
   schemas:
-    DurationDto:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
     AmountWithTaxExternalDto:
       type: object
       properties:
@@ -59,6 +50,15 @@ components:
           type: number
         taxAmount:
           type: number
+    DurationDto:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
     FinancingDto:
       type: object
       properties:

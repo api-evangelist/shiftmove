@@ -245,6 +245,67 @@ paths:
               $ref: '#/components/schemas/DurationUpdateApiParams'
 components:
   schemas:
+    CreateAssignmentByDriverRequest:
+      type: object
+      properties:
+        vehicleUuid:
+          type: string
+          format: uuid
+        duration:
+          $ref: '#/components/schemas/DurationDto'
+    DriverAssignmentQueryApiParams:
+      type: object
+      properties:
+        vehicleUuid:
+          type: string
+          format: uuid
+        when:
+          description: Date range assignments active within. Cannot have a value when `starting` or `ending` have a value.
+          $ref: '#/components/schemas/InstantRangeApiParams'
+        starting:
+          $ref: '#/components/schemas/InstantRangeApiParams'
+        ending:
+          $ref: '#/components/schemas/InstantRangeApiParams'
+    Void:
+      type: object
+    DurationDto:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+    ApiPageInformation:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    InstantRangeApiParams:
+      type: object
+      properties:
+        atOrAfter:
+          type: string
+          format: date-time
+        before:
+          type: string
+          format: date-time
+    DurationUpdateApiParams:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
     ApiPageAssignmentDto:
       type: object
       properties:
@@ -257,16 +318,6 @@ components:
         totalItems:
           type: integer
           format: int64
-    CreateAssignmentByDriverRequest:
-      type: object
-      properties:
-        vehicleUuid:
-          type: string
-          format: uuid
-        duration:
-          $ref: '#/components/schemas/DurationDto'
-    Void:
-      type: object
     AssignmentDto:
       type: object
       properties:
@@ -283,57 +334,6 @@ components:
           $ref: '#/components/schemas/DurationDto'
         active:
           type: boolean
-    DriverAssignmentQueryApiParams:
-      type: object
-      properties:
-        vehicleUuid:
-          type: string
-          format: uuid
-        when:
-          description: Date range assignments active within. Cannot have a value when `starting` or `ending` have a value.
-          $ref: '#/components/schemas/InstantRangeApiParams'
-        starting:
-          $ref: '#/components/schemas/InstantRangeApiParams'
-        ending:
-          $ref: '#/components/schemas/InstantRangeApiParams'
-    DurationUpdateApiParams:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    ApiPageInformation:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-    DurationDto:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
-    InstantRangeApiParams:
-      type: object
-      properties:
-        atOrAfter:
-          type: string
-          format: date-time
-        before:
-          type: string
-          format: date-time
 x-tagGroups:
 - name: Vehicles
   tags:
