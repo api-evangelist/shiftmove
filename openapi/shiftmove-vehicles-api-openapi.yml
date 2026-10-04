@@ -335,25 +335,33 @@ paths:
               $ref: '#/components/schemas/VehicleSubCompanyApiParams'
 components:
   schemas:
-    DateRangeDto:
+    MinimalVehicleDto:
       type: object
       properties:
-        startDate:
+        uuid:
           type: string
-          format: date
-          description: Inclusive start date.
-        endDate:
+          format: uuid
+        vin:
           type: string
-          format: date
-          description: Exclusive end date.
-    MonetaryAmountDto:
-      type: object
-      properties:
-        amount:
-          type: number
-        currency:
+        internalId:
           type: string
-          description: ISO 4217 alphabetic currency code
+        displayName:
+          type: string
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - DECOMMISSIONED
+          - IN_PROCUREMENT
+          - ARCHIVED
+        activeLicensePlate:
+          type: string
+        chMasterNumber:
+          type: string
+        lastModified:
+          type: string
+          format: date-time
     LicensePlateQueryApiParams:
       type: object
       properties:
@@ -361,6 +369,58 @@ components:
           type: string
         when:
           $ref: '#/components/schemas/InstantRangeApiParams'
+    VehicleQueryApiParams:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        vin:
+          type: string
+        internalId:
+          type: string
+        displayName:
+          type: string
+        state:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - DECOMMISSIONED
+          - IN_PROCUREMENT
+          - ARCHIVED
+        activeLicensePlate:
+          type: string
+        chMasterNumber:
+          type: string
+        lastModified:
+          $ref: '#/components/schemas/InstantRangeApiParams'
+        assignedToPlate:
+          $ref: '#/components/schemas/LicensePlateQueryApiParams'
+    VehicleSubCompanyApiParams:
+      type: object
+      properties:
+        subCompany:
+          type: string
+        startDate:
+          type: string
+          format: date
+    VehicleCostCenterHistoryDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        costCenter:
+          type: string
+        dateRange:
+          $ref: '#/components/schemas/DateRangeDto'
+    ArchiveVehicleApiParams:
+      type: object
+      properties:
+        archiveDate:
+          type: string
+          format: date
     VehicleUpdateApiParams:
       type: object
       properties:
@@ -700,14 +760,6 @@ components:
           type:
           - string
           - 'null'
-    CostCenterApiParams:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date
-        costCenter:
-          type: string
     InstantRangeApiParams:
       type: object
       properties:
@@ -717,110 +769,23 @@ components:
         before:
           type: string
           format: date-time
-    VehicleCreationApiParams:
+    DateRangeDto:
       type: object
       properties:
-        activeLicensePlate:
+        startDate:
           type: string
-        customName:
+          format: date
+          description: Inclusive start date.
+        endDate:
           type: string
-          description: Used to override the vehicle's displayName, which is a generated property that otherwise defaults to the current license plate.
-        vin:
-          type: string
-        organizationUuid:
+          format: date
+          description: Exclusive end date.
+    CustomFieldValueDto:
+      type: object
+      properties:
+        uuid:
           type: string
           format: uuid
-          description: If not provided the organization will be set to that of the API token
-        commissionDate:
-          type: string
-          format: date
-        costCenter:
-          type: string
-        jobAccountNumber:
-          type: string
-        registrationDate:
-          type: string
-          format: date
-        registrationCountry:
-          type: string
-          description: ISO 3166-1 Alpha-2 country code
-        fallbackSpecification:
-          description: This will be used if no vehicle description can be sourced for the given VIN
-          $ref: '#/components/schemas/FallbackSpecification'
-        tensileLoad:
-          type: integer
-          format: int32
-        internalId:
-          type: string
-        additionalId:
-          type: string
-        euLicenseNumber:
-          type: string
-        comment:
-          type: string
-        licensePlateColor:
-          type: string
-          enum:
-          - BLACK
-          - BLUE
-          - BROWN
-          - GREEN
-          - RED
-          - YELLOW
-          - WHITE
-        tax:
-          $ref: '#/components/schemas/MonetaryAmountApiParams'
-        subCompany:
-          type: string
-        tireStorageLocation:
-          type: string
-        atAkoGross:
-          $ref: '#/components/schemas/MonetaryAmountApiParams'
-        atAkoNet:
-          $ref: '#/components/schemas/MonetaryAmountApiParams'
-        atLuxuryTangent:
-          $ref: '#/components/schemas/MonetaryAmountApiParams'
-        atNova:
-          type: number
-        atVatExempt:
-          type: boolean
-        chMasterNumber:
-          type: string
-    FallbackSpecification:
-      type: object
-      properties:
-        manufacturerName:
-          type: string
-        model:
-          type: string
-        vehicleType:
-          type: string
-          enum:
-          - BUILD_UP
-          - BUS
-          - CAR
-          - COST
-          - EXCAVATOR
-          - INDUSTRIAL_TRUCK
-          - SPECIAL
-          - TWO_WHEELER
-          - TRUCK
-          - TRACTOR
-          - TRAILER
-          - VAN
-          - SWAP_BODY
-    ApiPageInformation:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-    CustomFieldValueUpdateRequest:
-      type: object
-      properties:
         textValue:
           type: string
         dateValue:
@@ -834,19 +799,7 @@ components:
         decimalValue:
           type: number
         monetaryAmountValue:
-          $ref: '#/components/schemas/MonetaryAmountApiParams'
-        exactlyOneValueSet:
-          type: boolean
-    VehicleSubCompanyHistoryDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        subCompany:
-          type: string
-        dateRange:
-          $ref: '#/components/schemas/DateRangeDto'
+          $ref: '#/components/schemas/MonetaryAmountDto'
     CustomFieldCategoryWithValuesDto:
       type: object
       properties:
@@ -862,12 +815,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomFieldValueDto'
-    ArchiveVehicleApiParams:
+    ApiPageMinimalVehicleDto:
       type: object
       properties:
-        archiveDate:
-          type: string
-          format: date
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MinimalVehicleDto'
+        page:
+          $ref: '#/components/schemas/ApiPageInformation'
+        totalItems:
+          type: integer
+          format: int64
     VehicleDto:
       type: object
       properties:
@@ -1196,97 +1155,32 @@ components:
         organizationUuid:
           type: string
           format: uuid
-    VehicleQueryApiParams:
+    FallbackSpecification:
       type: object
       properties:
-        uuid:
+        manufacturerName:
           type: string
-          format: uuid
-        vin:
+        model:
           type: string
-        internalId:
-          type: string
-        displayName:
-          type: string
-        state:
+        vehicleType:
           type: string
           enum:
-          - ACTIVE
-          - INACTIVE
-          - DECOMMISSIONED
-          - IN_PROCUREMENT
-          - ARCHIVED
-        activeLicensePlate:
-          type: string
-        chMasterNumber:
-          type: string
-        lastModified:
-          $ref: '#/components/schemas/InstantRangeApiParams'
-        assignedToPlate:
-          $ref: '#/components/schemas/LicensePlateQueryApiParams'
-    MinimalVehicleDto:
+          - BUILD_UP
+          - BUS
+          - CAR
+          - COST
+          - EXCAVATOR
+          - INDUSTRIAL_TRUCK
+          - SPECIAL
+          - TWO_WHEELER
+          - TRUCK
+          - TRACTOR
+          - TRAILER
+          - VAN
+          - SWAP_BODY
+    CustomFieldValueUpdateRequest:
       type: object
       properties:
-        uuid:
-          type: string
-          format: uuid
-        vin:
-          type: string
-        internalId:
-          type: string
-        displayName:
-          type: string
-        state:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - DECOMMISSIONED
-          - IN_PROCUREMENT
-          - ARCHIVED
-        activeLicensePlate:
-          type: string
-        chMasterNumber:
-          type: string
-        lastModified:
-          type: string
-          format: date-time
-    ApiPageMinimalVehicleDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/MinimalVehicleDto'
-        page:
-          $ref: '#/components/schemas/ApiPageInformation'
-        totalItems:
-          type: integer
-          format: int64
-    VehicleCostCenterHistoryDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        costCenter:
-          type: string
-        dateRange:
-          $ref: '#/components/schemas/DateRangeDto'
-    VehicleSubCompanyApiParams:
-      type: object
-      properties:
-        subCompany:
-          type: string
-        startDate:
-          type: string
-          format: date
-    CustomFieldValueDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
         textValue:
           type: string
         dateValue:
@@ -1300,7 +1194,95 @@ components:
         decimalValue:
           type: number
         monetaryAmountValue:
-          $ref: '#/components/schemas/MonetaryAmountDto'
+          $ref: '#/components/schemas/MonetaryAmountApiParams'
+        exactlyOneValueSet:
+          type: boolean
+    VehicleCreationApiParams:
+      type: object
+      properties:
+        activeLicensePlate:
+          type: string
+        customName:
+          type: string
+          description: Used to override the vehicle's displayName, which is a generated property that otherwise defaults to the current license plate.
+        vin:
+          type: string
+        organizationUuid:
+          type: string
+          format: uuid
+          description: If not provided the organization will be set to that of the API token
+        commissionDate:
+          type: string
+          format: date
+        costCenter:
+          type: string
+        jobAccountNumber:
+          type: string
+        registrationDate:
+          type: string
+          format: date
+        registrationCountry:
+          type: string
+          description: ISO 3166-1 Alpha-2 country code
+        fallbackSpecification:
+          description: This will be used if no vehicle description can be sourced for the given VIN
+          $ref: '#/components/schemas/FallbackSpecification'
+        tensileLoad:
+          type: integer
+          format: int32
+        internalId:
+          type: string
+        additionalId:
+          type: string
+        euLicenseNumber:
+          type: string
+        comment:
+          type: string
+        licensePlateColor:
+          type: string
+          enum:
+          - BLACK
+          - BLUE
+          - BROWN
+          - GREEN
+          - RED
+          - YELLOW
+          - WHITE
+        tax:
+          $ref: '#/components/schemas/MonetaryAmountApiParams'
+        subCompany:
+          type: string
+        tireStorageLocation:
+          type: string
+        atAkoGross:
+          $ref: '#/components/schemas/MonetaryAmountApiParams'
+        atAkoNet:
+          $ref: '#/components/schemas/MonetaryAmountApiParams'
+        atLuxuryTangent:
+          $ref: '#/components/schemas/MonetaryAmountApiParams'
+        atNova:
+          type: number
+        atVatExempt:
+          type: boolean
+        chMasterNumber:
+          type: string
+    MonetaryAmountDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+          description: ISO 4217 alphabetic currency code
+    ApiPageInformation:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
     MonetaryAmountApiParams:
       type: object
       properties:
@@ -1309,6 +1291,24 @@ components:
         currency:
           type: string
           description: ISO 4217 alphabetic currency code
+    CostCenterApiParams:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date
+        costCenter:
+          type: string
+    VehicleSubCompanyHistoryDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        subCompany:
+          type: string
+        dateRange:
+          $ref: '#/components/schemas/DateRangeDto'
 x-tagGroups:
 - name: Vehicles
   tags:

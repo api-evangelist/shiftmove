@@ -39,26 +39,6 @@ paths:
           description: Vehicle not found.
 components:
   schemas:
-    AmountWithTaxExternalDto:
-      type: object
-      properties:
-        amountNet:
-          type: number
-        amountGross:
-          type: number
-        taxPercent:
-          type: number
-        taxAmount:
-          type: number
-    DurationDto:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
     FinancingDto:
       type: object
       properties:
@@ -86,6 +66,26 @@ components:
         currencyUnit:
           type: string
           description: ISO 4217 alphabetic currency code
+    AmountWithTaxExternalDto:
+      type: object
+      properties:
+        amountNet:
+          type: number
+        amountGross:
+          type: number
+        taxPercent:
+          type: number
+        taxAmount:
+          type: number
+    DurationDto:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
 x-tagGroups:
 - name: Vehicles
   tags:

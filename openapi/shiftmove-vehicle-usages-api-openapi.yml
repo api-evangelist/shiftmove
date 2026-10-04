@@ -104,6 +104,56 @@ paths:
               $ref: '#/components/schemas/VehicleUsageCreationApiRequest'
 components:
   schemas:
+    ApiPageInformation:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    VehicleManualUsageDto:
+      type: object
+      properties:
+        usageType:
+          type: string
+          enum:
+          - DISTANCE
+          - OPERATING_HOURS
+        usageValue:
+          type: number
+        date:
+          type: string
+          format: date-time
+        vehicleUuid:
+          type: string
+          format: uuid
+    ApiPageUsageDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsageDto'
+        page:
+          $ref: '#/components/schemas/ApiPageInformation'
+        totalItems:
+          type: integer
+          format: int64
+    VehicleUsageCreationApiRequest:
+      type: object
+      properties:
+        usageType:
+          type: string
+          enum:
+          - DISTANCE
+          - OPERATING_HOURS
+        usageValue:
+          type: number
+        date:
+          type: string
+          format: date-time
     UsageDto:
       type: object
       properties:
@@ -136,56 +186,6 @@ components:
           enum:
           - DISTANCE
           - OPERATING_HOURS
-    ApiPageUsageDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UsageDto'
-        page:
-          $ref: '#/components/schemas/ApiPageInformation'
-        totalItems:
-          type: integer
-          format: int64
-    ApiPageInformation:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-    VehicleManualUsageDto:
-      type: object
-      properties:
-        usageType:
-          type: string
-          enum:
-          - DISTANCE
-          - OPERATING_HOURS
-        usageValue:
-          type: number
-        date:
-          type: string
-          format: date-time
-        vehicleUuid:
-          type: string
-          format: uuid
-    VehicleUsageCreationApiRequest:
-      type: object
-      properties:
-        usageType:
-          type: string
-          enum:
-          - DISTANCE
-          - OPERATING_HOURS
-        usageValue:
-          type: number
-        date:
-          type: string
-          format: date-time
 x-tagGroups:
 - name: Vehicles
   tags:

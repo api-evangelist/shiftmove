@@ -245,14 +245,6 @@ paths:
               $ref: '#/components/schemas/DurationUpdateApiParams'
 components:
   schemas:
-    CreateAssignmentByDriverRequest:
-      type: object
-      properties:
-        vehicleUuid:
-          type: string
-          format: uuid
-        duration:
-          $ref: '#/components/schemas/DurationDto'
     DriverAssignmentQueryApiParams:
       type: object
       properties:
@@ -266,17 +258,14 @@ components:
           $ref: '#/components/schemas/InstantRangeApiParams'
         ending:
           $ref: '#/components/schemas/InstantRangeApiParams'
-    Void:
-      type: object
-    DurationDto:
+    CreateAssignmentByDriverRequest:
       type: object
       properties:
-        startDate:
+        vehicleUuid:
           type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
+          format: uuid
+        duration:
+          $ref: '#/components/schemas/DurationDto'
     ApiPageInformation:
       type: object
       properties:
@@ -286,13 +275,13 @@ components:
         limit:
           type: integer
           format: int32
-    InstantRangeApiParams:
+    DurationDto:
       type: object
       properties:
-        atOrAfter:
+        startDate:
           type: string
           format: date-time
-        before:
+        endDate:
           type: string
           format: date-time
     DurationUpdateApiParams:
@@ -306,18 +295,8 @@ components:
           - string
           - 'null'
           format: date-time
-    ApiPageAssignmentDto:
+    Void:
       type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssignmentDto'
-        page:
-          $ref: '#/components/schemas/ApiPageInformation'
-        totalItems:
-          type: integer
-          format: int64
     AssignmentDto:
       type: object
       properties:
@@ -334,6 +313,27 @@ components:
           $ref: '#/components/schemas/DurationDto'
         active:
           type: boolean
+    InstantRangeApiParams:
+      type: object
+      properties:
+        atOrAfter:
+          type: string
+          format: date-time
+        before:
+          type: string
+          format: date-time
+    ApiPageAssignmentDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignmentDto'
+        page:
+          $ref: '#/components/schemas/ApiPageInformation'
+        totalItems:
+          type: integer
+          format: int64
 x-tagGroups:
 - name: Vehicles
   tags:

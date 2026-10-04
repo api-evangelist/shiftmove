@@ -245,25 +245,6 @@ paths:
               $ref: '#/components/schemas/DurationUpdateApiParams'
 components:
   schemas:
-    CreateAssignmentByVehicleRequest:
-      type: object
-      properties:
-        driverUuid:
-          type: string
-          format: uuid
-        duration:
-          $ref: '#/components/schemas/DurationDto'
-    Void:
-      type: object
-    DurationDto:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
     ApiPageInformation:
       type: object
       properties:
@@ -273,15 +254,6 @@ components:
         limit:
           type: integer
           format: int32
-    InstantRangeApiParams:
-      type: object
-      properties:
-        atOrAfter:
-          type: string
-          format: date-time
-        before:
-          type: string
-          format: date-time
     VehicleAssignmentQueryApiParams:
       type: object
       properties:
@@ -295,16 +267,14 @@ components:
           $ref: '#/components/schemas/InstantRangeApiParams'
         ending:
           $ref: '#/components/schemas/InstantRangeApiParams'
-    DurationUpdateApiParams:
+    DurationDto:
       type: object
       properties:
         startDate:
           type: string
           format: date-time
         endDate:
-          type:
-          - string
-          - 'null'
+          type: string
           format: date-time
     ApiPageAssignmentDto:
       type: object
@@ -318,6 +288,8 @@ components:
         totalItems:
           type: integer
           format: int64
+    Void:
+      type: object
     AssignmentDto:
       type: object
       properties:
@@ -334,6 +306,34 @@ components:
           $ref: '#/components/schemas/DurationDto'
         active:
           type: boolean
+    InstantRangeApiParams:
+      type: object
+      properties:
+        atOrAfter:
+          type: string
+          format: date-time
+        before:
+          type: string
+          format: date-time
+    CreateAssignmentByVehicleRequest:
+      type: object
+      properties:
+        driverUuid:
+          type: string
+          format: uuid
+        duration:
+          $ref: '#/components/schemas/DurationDto'
+    DurationUpdateApiParams:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
 x-tagGroups:
 - name: Vehicles
   tags:

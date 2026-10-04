@@ -177,56 +177,6 @@ paths:
               $ref: '#/components/schemas/DurationUpdateApiParams'
 components:
   schemas:
-    LicensePlateDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        plate:
-          type: string
-        duration:
-          $ref: '#/components/schemas/DurationDto'
-        active:
-          type: boolean
-    Void:
-      type: object
-    DurationDto:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
-    ApiPageInformation:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-    CreateLicensePlateRequest:
-      type: object
-      properties:
-        plate:
-          type: string
-        duration:
-          $ref: '#/components/schemas/DurationDto'
-    DurationUpdateApiParams:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
     ApiPageLicensePlateDto:
       type: object
       properties:
@@ -239,6 +189,56 @@ components:
         totalItems:
           type: integer
           format: int64
+    ApiPageInformation:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    DurationDto:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+    LicensePlateDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        plate:
+          type: string
+        duration:
+          $ref: '#/components/schemas/DurationDto'
+        active:
+          type: boolean
+    CreateLicensePlateRequest:
+      type: object
+      properties:
+        plate:
+          type: string
+        duration:
+          $ref: '#/components/schemas/DurationDto'
+    Void:
+      type: object
+    DurationUpdateApiParams:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
 x-tagGroups:
 - name: Vehicles
   tags:
