@@ -1,0 +1,12 @@
+{
+ "url": "https://developers.avrios.com/specs.json",
+ "requested_url": "https://developers.avrios.com/specs.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 120763,
+ "sha256": "78fc4b6095136b0370861aca5b1446e41a42c559814d41712a137df084b0efca",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
