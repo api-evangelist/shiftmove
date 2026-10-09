@@ -1,18 +1,21 @@
-generated: '2026-07-21'
+generated: '2026-09-23'
 method: generated
-source: openapi/shiftmove-fleet-openapi.json
+source: openapi/shiftmove-custom-fields-api-openapi.yml, openapi/shiftmove-driver-assignments-api-openapi.yml,
+  openapi/shiftmove-drivers-api-openapi.yml, openapi/shiftmove-invoices-api-openapi.yml, openapi/shiftmove-organizations-api-openapi.yml,
+  openapi/shiftmove-vehicle-assignments-api-openapi.yml, openapi/shiftmove-vehicle-financing-api-openapi.yml,
+  openapi/shiftmove-vehicle-license-plates-api-openapi.yml, openapi/shiftmove-vehicle-usages-api-openapi.yml,
+  openapi/shiftmove-vehicles-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 40
   by_action_class:
-    connected: 15
-    acting: 25
+    connected: 20
+    acting: 20
   by_consequence:
-    read: 15
-    write: 24
-    physical: 1
+    read: 20
+    write: 20
   human_in_the_loop_required: 0
 operations:
 - path: /v1/customFields/drivers
@@ -35,74 +38,6 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v1/drivers
-  method: get
-  operationId: getAllDrivers
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/drivers
-  method: post
-  operationId: createDriver
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/drivers/query
-  method: post
-  operationId: queryDrivers
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/drivers/{uuid}
-  method: get
-  operationId: findDriverByUuid
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/drivers/{uuid}
-  method: post
-  operationId: updateDriverByUuid
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /v1/drivers/{uuid}/assignments
   method: get
   operationId: findDriverAssignments
@@ -133,18 +68,12 @@ operations:
   method: post
   operationId: queryDriverAssignments
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/drivers/{uuid}/assignments/{assignmentUuid}
   method: delete
   operationId: deleteDriverAssignment
@@ -164,6 +93,68 @@ operations:
 - path: /v1/drivers/{uuid}/assignments/{assignmentUuid}/duration
   method: post
   operationId: updateDriverAssignment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/drivers
+  method: get
+  operationId: getAllDrivers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/drivers
+  method: post
+  operationId: createDriver
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/drivers/query
+  method: post
+  operationId: queryDrivers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/drivers/{uuid}
+  method: get
+  operationId: findDriverByUuid
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/drivers/{uuid}
+  method: post
+  operationId: updateDriverByUuid
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -223,20 +214,12 @@ operations:
   method: post
   operationId: queryInvoices
   x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/invoices/{invoiceUuid}/items
   method: get
   operationId: getAllInvoicesItems
@@ -267,90 +250,6 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v1/vehicles
-  method: get
-  operationId: getAllVehicles
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/vehicles
-  method: post
-  operationId: createVehicle
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/vehicles/query
-  method: post
-  operationId: queryVehicles
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/vehicles/{uuid}
-  method: get
-  operationId: findVehicleByUuid
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/vehicles/{uuid}
-  method: post
-  operationId: updateVehicleByUuid
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/vehicles/{uuid}/archive
-  method: post
-  operationId: archiveVehicle
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /v1/vehicles/{uuid}/assignments
   method: get
   operationId: findVehicleAssignments
@@ -381,18 +280,12 @@ operations:
   method: post
   operationId: queryVehicleAssignments
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/vehicles/{uuid}/assignments/{assignmentUuid}
   method: delete
   operationId: deleteVehicleAssignment
@@ -412,38 +305,6 @@ operations:
 - path: /v1/vehicles/{uuid}/assignments/{assignmentUuid}/duration
   method: post
   operationId: updateVehicleAssignment
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/vehicles/{uuid}/costCenter
-  method: post
-  operationId: updateVehicleCostCenter
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/vehicles/{uuid}/customFieldValues/{customFieldUuid}
-  method: post
-  operationId: setVehicleCustomFieldValue
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -525,22 +386,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v1/vehicles/{uuid}/subCompany
-  method: post
-  operationId: createVehicleSubCompany
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /v1/vehicles/{uuid}/usages
   method: get
   operationId: findVehicleUsage
@@ -554,6 +399,132 @@ operations:
 - path: /v1/vehicles/{uuid}/usages
   method: post
   operationId: createVehicleUsage
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/vehicles
+  method: get
+  operationId: getAllVehicles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/vehicles
+  method: post
+  operationId: createVehicle
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/vehicles/query
+  method: post
+  operationId: queryVehicles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/vehicles/{uuid}
+  method: get
+  operationId: findVehicleByUuid
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/vehicles/{uuid}
+  method: post
+  operationId: updateVehicleByUuid
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/vehicles/{uuid}/archive
+  method: post
+  operationId: archiveVehicle
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/vehicles/{uuid}/costCenter
+  method: post
+  operationId: updateVehicleCostCenter
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/vehicles/{uuid}/customFieldValues/{customFieldUuid}
+  method: post
+  operationId: setVehicleCustomFieldValue
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/vehicles/{uuid}/subCompany
+  method: post
+  operationId: createVehicleSubCompany
   x-agentic-access:
     action-class: acting
     consequence: write
